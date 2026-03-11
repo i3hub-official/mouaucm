@@ -206,7 +206,6 @@ export type SystemConfigWhereInput = {
   isPublic?: Prisma.BoolFilter<"SystemConfig"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"SystemConfig"> | Date | string
   updatedBy?: Prisma.StringNullableFilter<"SystemConfig"> | string | null
-  updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type SystemConfigOrderByWithRelationInput = {
@@ -218,7 +217,6 @@ export type SystemConfigOrderByWithRelationInput = {
   isPublic?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedByUser?: Prisma.UserOrderByWithRelationInput
 }
 
 export type SystemConfigWhereUniqueInput = Prisma.AtLeast<{
@@ -233,7 +231,6 @@ export type SystemConfigWhereUniqueInput = Prisma.AtLeast<{
   isPublic?: Prisma.BoolFilter<"SystemConfig"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"SystemConfig"> | Date | string
   updatedBy?: Prisma.StringNullableFilter<"SystemConfig"> | string | null
-  updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "key">
 
 export type SystemConfigOrderByWithAggregationInput = {
@@ -272,7 +269,7 @@ export type SystemConfigCreateInput = {
   category?: string
   isPublic?: boolean
   updatedAt?: Date | string
-  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedConfigsInput
+  updatedBy?: string | null
 }
 
 export type SystemConfigUncheckedCreateInput = {
@@ -294,7 +291,7 @@ export type SystemConfigUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedConfigsNestedInput
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SystemConfigUncheckedUpdateInput = {
@@ -327,6 +324,7 @@ export type SystemConfigUpdateManyMutationInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SystemConfigUncheckedUpdateManyInput = {
@@ -338,16 +336,6 @@ export type SystemConfigUncheckedUpdateManyInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type SystemConfigListRelationFilter = {
-  every?: Prisma.SystemConfigWhereInput
-  some?: Prisma.SystemConfigWhereInput
-  none?: Prisma.SystemConfigWhereInput
-}
-
-export type SystemConfigOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type SystemConfigCountOrderByAggregateInput = {
@@ -383,148 +371,6 @@ export type SystemConfigMinOrderByAggregateInput = {
   updatedBy?: Prisma.SortOrder
 }
 
-export type SystemConfigCreateNestedManyWithoutUpdatedByUserInput = {
-  create?: Prisma.XOR<Prisma.SystemConfigCreateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput> | Prisma.SystemConfigCreateWithoutUpdatedByUserInput[] | Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput[]
-  connectOrCreate?: Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput | Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput[]
-  createMany?: Prisma.SystemConfigCreateManyUpdatedByUserInputEnvelope
-  connect?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-}
-
-export type SystemConfigUncheckedCreateNestedManyWithoutUpdatedByUserInput = {
-  create?: Prisma.XOR<Prisma.SystemConfigCreateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput> | Prisma.SystemConfigCreateWithoutUpdatedByUserInput[] | Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput[]
-  connectOrCreate?: Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput | Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput[]
-  createMany?: Prisma.SystemConfigCreateManyUpdatedByUserInputEnvelope
-  connect?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-}
-
-export type SystemConfigUpdateManyWithoutUpdatedByUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SystemConfigCreateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput> | Prisma.SystemConfigCreateWithoutUpdatedByUserInput[] | Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput[]
-  connectOrCreate?: Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput | Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput[]
-  upsert?: Prisma.SystemConfigUpsertWithWhereUniqueWithoutUpdatedByUserInput | Prisma.SystemConfigUpsertWithWhereUniqueWithoutUpdatedByUserInput[]
-  createMany?: Prisma.SystemConfigCreateManyUpdatedByUserInputEnvelope
-  set?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  disconnect?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  delete?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  connect?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  update?: Prisma.SystemConfigUpdateWithWhereUniqueWithoutUpdatedByUserInput | Prisma.SystemConfigUpdateWithWhereUniqueWithoutUpdatedByUserInput[]
-  updateMany?: Prisma.SystemConfigUpdateManyWithWhereWithoutUpdatedByUserInput | Prisma.SystemConfigUpdateManyWithWhereWithoutUpdatedByUserInput[]
-  deleteMany?: Prisma.SystemConfigScalarWhereInput | Prisma.SystemConfigScalarWhereInput[]
-}
-
-export type SystemConfigUncheckedUpdateManyWithoutUpdatedByUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SystemConfigCreateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput> | Prisma.SystemConfigCreateWithoutUpdatedByUserInput[] | Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput[]
-  connectOrCreate?: Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput | Prisma.SystemConfigCreateOrConnectWithoutUpdatedByUserInput[]
-  upsert?: Prisma.SystemConfigUpsertWithWhereUniqueWithoutUpdatedByUserInput | Prisma.SystemConfigUpsertWithWhereUniqueWithoutUpdatedByUserInput[]
-  createMany?: Prisma.SystemConfigCreateManyUpdatedByUserInputEnvelope
-  set?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  disconnect?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  delete?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  connect?: Prisma.SystemConfigWhereUniqueInput | Prisma.SystemConfigWhereUniqueInput[]
-  update?: Prisma.SystemConfigUpdateWithWhereUniqueWithoutUpdatedByUserInput | Prisma.SystemConfigUpdateWithWhereUniqueWithoutUpdatedByUserInput[]
-  updateMany?: Prisma.SystemConfigUpdateManyWithWhereWithoutUpdatedByUserInput | Prisma.SystemConfigUpdateManyWithWhereWithoutUpdatedByUserInput[]
-  deleteMany?: Prisma.SystemConfigScalarWhereInput | Prisma.SystemConfigScalarWhereInput[]
-}
-
-export type SystemConfigCreateWithoutUpdatedByUserInput = {
-  id?: string
-  key: string
-  value: string
-  description?: string | null
-  category?: string
-  isPublic?: boolean
-  updatedAt?: Date | string
-}
-
-export type SystemConfigUncheckedCreateWithoutUpdatedByUserInput = {
-  id?: string
-  key: string
-  value: string
-  description?: string | null
-  category?: string
-  isPublic?: boolean
-  updatedAt?: Date | string
-}
-
-export type SystemConfigCreateOrConnectWithoutUpdatedByUserInput = {
-  where: Prisma.SystemConfigWhereUniqueInput
-  create: Prisma.XOR<Prisma.SystemConfigCreateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput>
-}
-
-export type SystemConfigCreateManyUpdatedByUserInputEnvelope = {
-  data: Prisma.SystemConfigCreateManyUpdatedByUserInput | Prisma.SystemConfigCreateManyUpdatedByUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type SystemConfigUpsertWithWhereUniqueWithoutUpdatedByUserInput = {
-  where: Prisma.SystemConfigWhereUniqueInput
-  update: Prisma.XOR<Prisma.SystemConfigUpdateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedUpdateWithoutUpdatedByUserInput>
-  create: Prisma.XOR<Prisma.SystemConfigCreateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedCreateWithoutUpdatedByUserInput>
-}
-
-export type SystemConfigUpdateWithWhereUniqueWithoutUpdatedByUserInput = {
-  where: Prisma.SystemConfigWhereUniqueInput
-  data: Prisma.XOR<Prisma.SystemConfigUpdateWithoutUpdatedByUserInput, Prisma.SystemConfigUncheckedUpdateWithoutUpdatedByUserInput>
-}
-
-export type SystemConfigUpdateManyWithWhereWithoutUpdatedByUserInput = {
-  where: Prisma.SystemConfigScalarWhereInput
-  data: Prisma.XOR<Prisma.SystemConfigUpdateManyMutationInput, Prisma.SystemConfigUncheckedUpdateManyWithoutUpdatedByUserInput>
-}
-
-export type SystemConfigScalarWhereInput = {
-  AND?: Prisma.SystemConfigScalarWhereInput | Prisma.SystemConfigScalarWhereInput[]
-  OR?: Prisma.SystemConfigScalarWhereInput[]
-  NOT?: Prisma.SystemConfigScalarWhereInput | Prisma.SystemConfigScalarWhereInput[]
-  id?: Prisma.StringFilter<"SystemConfig"> | string
-  key?: Prisma.StringFilter<"SystemConfig"> | string
-  value?: Prisma.StringFilter<"SystemConfig"> | string
-  description?: Prisma.StringNullableFilter<"SystemConfig"> | string | null
-  category?: Prisma.StringFilter<"SystemConfig"> | string
-  isPublic?: Prisma.BoolFilter<"SystemConfig"> | boolean
-  updatedAt?: Prisma.DateTimeFilter<"SystemConfig"> | Date | string
-  updatedBy?: Prisma.StringNullableFilter<"SystemConfig"> | string | null
-}
-
-export type SystemConfigCreateManyUpdatedByUserInput = {
-  id?: string
-  key: string
-  value: string
-  description?: string | null
-  category?: string
-  isPublic?: boolean
-  updatedAt?: Date | string
-}
-
-export type SystemConfigUpdateWithoutUpdatedByUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  key?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SystemConfigUncheckedUpdateWithoutUpdatedByUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  key?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SystemConfigUncheckedUpdateManyWithoutUpdatedByUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  key?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
-  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 
 
 export type SystemConfigSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -536,7 +382,6 @@ export type SystemConfigSelect<ExtArgs extends runtime.Types.Extensions.Internal
   isPublic?: boolean
   updatedAt?: boolean
   updatedBy?: boolean
-  updatedByUser?: boolean | Prisma.SystemConfig$updatedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["systemConfig"]>
 
 export type SystemConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -548,7 +393,6 @@ export type SystemConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   isPublic?: boolean
   updatedAt?: boolean
   updatedBy?: boolean
-  updatedByUser?: boolean | Prisma.SystemConfig$updatedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["systemConfig"]>
 
 export type SystemConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -560,7 +404,6 @@ export type SystemConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   isPublic?: boolean
   updatedAt?: boolean
   updatedBy?: boolean
-  updatedByUser?: boolean | Prisma.SystemConfig$updatedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["systemConfig"]>
 
 export type SystemConfigSelectScalar = {
@@ -575,21 +418,10 @@ export type SystemConfigSelectScalar = {
 }
 
 export type SystemConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "value" | "description" | "category" | "isPublic" | "updatedAt" | "updatedBy", ExtArgs["result"]["systemConfig"]>
-export type SystemConfigInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  updatedByUser?: boolean | Prisma.SystemConfig$updatedByUserArgs<ExtArgs>
-}
-export type SystemConfigIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  updatedByUser?: boolean | Prisma.SystemConfig$updatedByUserArgs<ExtArgs>
-}
-export type SystemConfigIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  updatedByUser?: boolean | Prisma.SystemConfig$updatedByUserArgs<ExtArgs>
-}
 
 export type $SystemConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SystemConfig"
-  objects: {
-    updatedByUser: Prisma.$UserPayload<ExtArgs> | null
-  }
+  objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     key: string
@@ -993,7 +825,6 @@ readonly fields: SystemConfigFieldRefs;
  */
 export interface Prisma__SystemConfigClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  updatedByUser<T extends Prisma.SystemConfig$updatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SystemConfig$updatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1048,10 +879,6 @@ export type SystemConfigFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
-  /**
    * Filter, which SystemConfig to fetch.
    */
   where: Prisma.SystemConfigWhereUniqueInput
@@ -1070,10 +897,6 @@ export type SystemConfigFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
-  /**
    * Filter, which SystemConfig to fetch.
    */
   where: Prisma.SystemConfigWhereUniqueInput
@@ -1091,10 +914,6 @@ export type SystemConfigFindFirstArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the SystemConfig
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
   /**
    * Filter, which SystemConfig to fetch.
    */
@@ -1144,10 +963,6 @@ export type SystemConfigFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Exten
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
-  /**
    * Filter, which SystemConfig to fetch.
    */
   where?: Prisma.SystemConfigWhereInput
@@ -1196,10 +1011,6 @@ export type SystemConfigFindManyArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
-  /**
    * Filter, which SystemConfigs to fetch.
    */
   where?: Prisma.SystemConfigWhereInput
@@ -1243,10 +1054,6 @@ export type SystemConfigCreateArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
-  /**
    * The data needed to create a SystemConfig.
    */
   data: Prisma.XOR<Prisma.SystemConfigCreateInput, Prisma.SystemConfigUncheckedCreateInput>
@@ -1280,10 +1087,6 @@ export type SystemConfigCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    */
   data: Prisma.SystemConfigCreateManyInput | Prisma.SystemConfigCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1298,10 +1101,6 @@ export type SystemConfigUpdateArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the SystemConfig
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
   /**
    * The data needed to update a SystemConfig.
    */
@@ -1354,10 +1153,6 @@ export type SystemConfigUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * Limit how many SystemConfigs to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1372,10 +1167,6 @@ export type SystemConfigUpsertArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the SystemConfig
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
   /**
    * The filter to search for the SystemConfig to update in case it exists.
    */
@@ -1403,10 +1194,6 @@ export type SystemConfigDeleteArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
-  /**
    * Filter which SystemConfig to delete.
    */
   where: Prisma.SystemConfigWhereUniqueInput
@@ -1427,25 +1214,6 @@ export type SystemConfigDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * SystemConfig.updatedByUser
- */
-export type SystemConfig$updatedByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * SystemConfig without action
  */
 export type SystemConfigDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1457,8 +1225,4 @@ export type SystemConfigDefaultArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the SystemConfig
    */
   omit?: Prisma.SystemConfigOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SystemConfigInclude<ExtArgs> | null
 }

@@ -44,7 +44,6 @@ export type LectureMinAggregateOutputType = {
   orderIndex: number | null
   isPublished: boolean | null
   publishedAt: Date | null
-  scheduledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   courseId: string | null
@@ -58,7 +57,6 @@ export type LectureMaxAggregateOutputType = {
   orderIndex: number | null
   isPublished: boolean | null
   publishedAt: Date | null
-  scheduledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   courseId: string | null
@@ -73,7 +71,6 @@ export type LectureCountAggregateOutputType = {
   orderIndex: number
   isPublished: number
   publishedAt: number
-  scheduledAt: number
   createdAt: number
   updatedAt: number
   courseId: number
@@ -99,7 +96,6 @@ export type LectureMinAggregateInputType = {
   orderIndex?: true
   isPublished?: true
   publishedAt?: true
-  scheduledAt?: true
   createdAt?: true
   updatedAt?: true
   courseId?: true
@@ -113,7 +109,6 @@ export type LectureMaxAggregateInputType = {
   orderIndex?: true
   isPublished?: true
   publishedAt?: true
-  scheduledAt?: true
   createdAt?: true
   updatedAt?: true
   courseId?: true
@@ -128,7 +123,6 @@ export type LectureCountAggregateInputType = {
   orderIndex?: true
   isPublished?: true
   publishedAt?: true
-  scheduledAt?: true
   createdAt?: true
   updatedAt?: true
   courseId?: true
@@ -230,7 +224,6 @@ export type LectureGroupByOutputType = {
   orderIndex: number
   isPublished: boolean
   publishedAt: Date | null
-  scheduledAt: Date | null
   createdAt: Date
   updatedAt: Date
   courseId: string
@@ -268,13 +261,11 @@ export type LectureWhereInput = {
   orderIndex?: Prisma.IntFilter<"Lecture"> | number
   isPublished?: Prisma.BoolFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
-  scheduledAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   courseId?: Prisma.StringFilter<"Lecture"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
-  attendances?: Prisma.AttendanceListRelationFilter
 }
 
 export type LectureOrderByWithRelationInput = {
@@ -286,13 +277,11 @@ export type LectureOrderByWithRelationInput = {
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
-  attendances?: Prisma.AttendanceOrderByRelationAggregateInput
 }
 
 export type LectureWhereUniqueInput = Prisma.AtLeast<{
@@ -307,13 +296,11 @@ export type LectureWhereUniqueInput = Prisma.AtLeast<{
   orderIndex?: Prisma.IntFilter<"Lecture"> | number
   isPublished?: Prisma.BoolFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
-  scheduledAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   courseId?: Prisma.StringFilter<"Lecture"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
-  attendances?: Prisma.AttendanceListRelationFilter
 }, "id">
 
 export type LectureOrderByWithAggregationInput = {
@@ -325,7 +312,6 @@ export type LectureOrderByWithAggregationInput = {
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
@@ -348,7 +334,6 @@ export type LectureScalarWhereWithAggregatesInput = {
   orderIndex?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
   isPublished?: Prisma.BoolWithAggregatesFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lecture"> | Date | string | null
-  scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Lecture"> | Date | string
   courseId?: Prisma.StringWithAggregatesFilter<"Lecture"> | string
@@ -363,12 +348,10 @@ export type LectureCreateInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
-  attendances?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateInput = {
@@ -380,12 +363,10 @@ export type LectureUncheckedCreateInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   courseId: string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
-  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUpdateInput = {
@@ -397,12 +378,10 @@ export type LectureUpdateInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
-  attendances?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateInput = {
@@ -414,12 +393,10 @@ export type LectureUncheckedUpdateInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
-  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureCreateManyInput = {
@@ -431,7 +408,6 @@ export type LectureCreateManyInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   courseId: string
@@ -446,7 +422,6 @@ export type LectureUpdateManyMutationInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -460,7 +435,6 @@ export type LectureUncheckedUpdateManyInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -485,7 +459,6 @@ export type LectureCountOrderByAggregateInput = {
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
@@ -504,7 +477,6 @@ export type LectureMaxOrderByAggregateInput = {
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
@@ -518,7 +490,6 @@ export type LectureMinOrderByAggregateInput = {
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
@@ -590,20 +561,6 @@ export type LectureUpdateOneRequiredWithoutSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LectureUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.LectureUpdateWithoutSubmissionsInput>, Prisma.LectureUncheckedUpdateWithoutSubmissionsInput>
 }
 
-export type LectureCreateNestedOneWithoutAttendancesInput = {
-  create?: Prisma.XOR<Prisma.LectureCreateWithoutAttendancesInput, Prisma.LectureUncheckedCreateWithoutAttendancesInput>
-  connectOrCreate?: Prisma.LectureCreateOrConnectWithoutAttendancesInput
-  connect?: Prisma.LectureWhereUniqueInput
-}
-
-export type LectureUpdateOneRequiredWithoutAttendancesNestedInput = {
-  create?: Prisma.XOR<Prisma.LectureCreateWithoutAttendancesInput, Prisma.LectureUncheckedCreateWithoutAttendancesInput>
-  connectOrCreate?: Prisma.LectureCreateOrConnectWithoutAttendancesInput
-  upsert?: Prisma.LectureUpsertWithoutAttendancesInput
-  connect?: Prisma.LectureWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LectureUpdateToOneWithWhereWithoutAttendancesInput, Prisma.LectureUpdateWithoutAttendancesInput>, Prisma.LectureUncheckedUpdateWithoutAttendancesInput>
-}
-
 export type LectureCreateWithoutCourseInput = {
   id?: string
   title: string
@@ -613,11 +570,9 @@ export type LectureCreateWithoutCourseInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
-  attendances?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateWithoutCourseInput = {
@@ -629,11 +584,9 @@ export type LectureUncheckedCreateWithoutCourseInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
-  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureCreateOrConnectWithoutCourseInput = {
@@ -674,7 +627,6 @@ export type LectureScalarWhereInput = {
   orderIndex?: Prisma.IntFilter<"Lecture"> | number
   isPublished?: Prisma.BoolFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
-  scheduledAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   courseId?: Prisma.StringFilter<"Lecture"> | string
@@ -689,11 +641,9 @@ export type LectureCreateWithoutSubmissionsInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
-  attendances?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateWithoutSubmissionsInput = {
@@ -705,11 +655,9 @@ export type LectureUncheckedCreateWithoutSubmissionsInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   courseId: string
-  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureCreateOrConnectWithoutSubmissionsInput = {
@@ -737,11 +685,9 @@ export type LectureUpdateWithoutSubmissionsInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
-  attendances?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateWithoutSubmissionsInput = {
@@ -753,91 +699,9 @@ export type LectureUncheckedUpdateWithoutSubmissionsInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
-  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
-}
-
-export type LectureCreateWithoutAttendancesInput = {
-  id?: string
-  title: string
-  description?: string | null
-  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  duration?: number | null
-  orderIndex?: number
-  isPublished?: boolean
-  publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  course: Prisma.CourseCreateNestedOneWithoutLecturesInput
-  submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
-}
-
-export type LectureUncheckedCreateWithoutAttendancesInput = {
-  id?: string
-  title: string
-  description?: string | null
-  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  duration?: number | null
-  orderIndex?: number
-  isPublished?: boolean
-  publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  courseId: string
-  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
-}
-
-export type LectureCreateOrConnectWithoutAttendancesInput = {
-  where: Prisma.LectureWhereUniqueInput
-  create: Prisma.XOR<Prisma.LectureCreateWithoutAttendancesInput, Prisma.LectureUncheckedCreateWithoutAttendancesInput>
-}
-
-export type LectureUpsertWithoutAttendancesInput = {
-  update: Prisma.XOR<Prisma.LectureUpdateWithoutAttendancesInput, Prisma.LectureUncheckedUpdateWithoutAttendancesInput>
-  create: Prisma.XOR<Prisma.LectureCreateWithoutAttendancesInput, Prisma.LectureUncheckedCreateWithoutAttendancesInput>
-  where?: Prisma.LectureWhereInput
-}
-
-export type LectureUpdateToOneWithWhereWithoutAttendancesInput = {
-  where?: Prisma.LectureWhereInput
-  data: Prisma.XOR<Prisma.LectureUpdateWithoutAttendancesInput, Prisma.LectureUncheckedUpdateWithoutAttendancesInput>
-}
-
-export type LectureUpdateWithoutAttendancesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
-  submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
-}
-
-export type LectureUncheckedUpdateWithoutAttendancesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseId?: Prisma.StringFieldUpdateOperationsInput | string
-  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureCreateManyCourseInput = {
@@ -849,7 +713,6 @@ export type LectureCreateManyCourseInput = {
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -863,11 +726,9 @@ export type LectureUpdateWithoutCourseInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
-  attendances?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateWithoutCourseInput = {
@@ -879,11 +740,9 @@ export type LectureUncheckedUpdateWithoutCourseInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
-  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateManyWithoutCourseInput = {
@@ -895,7 +754,6 @@ export type LectureUncheckedUpdateManyWithoutCourseInput = {
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -907,12 +765,10 @@ export type LectureUncheckedUpdateManyWithoutCourseInput = {
 
 export type LectureCountOutputType = {
   submissions: number
-  attendances: number
 }
 
 export type LectureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submissions?: boolean | LectureCountOutputTypeCountSubmissionsArgs
-  attendances?: boolean | LectureCountOutputTypeCountAttendancesArgs
 }
 
 /**
@@ -932,13 +788,6 @@ export type LectureCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.T
   where?: Prisma.SubmissionWhereInput
 }
 
-/**
- * LectureCountOutputType without action
- */
-export type LectureCountOutputTypeCountAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AttendanceWhereInput
-}
-
 
 export type LectureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -949,13 +798,11 @@ export type LectureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Lecture$submissionsArgs<ExtArgs>
-  attendances?: boolean | Prisma.Lecture$attendancesArgs<ExtArgs>
   _count?: boolean | Prisma.LectureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
 
@@ -968,7 +815,6 @@ export type LectureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courseId?: boolean
@@ -984,7 +830,6 @@ export type LectureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courseId?: boolean
@@ -1000,17 +845,15 @@ export type LectureSelectScalar = {
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   courseId?: boolean
 }
 
-export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "content" | "duration" | "orderIndex" | "isPublished" | "publishedAt" | "scheduledAt" | "createdAt" | "updatedAt" | "courseId", ExtArgs["result"]["lecture"]>
+export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "content" | "duration" | "orderIndex" | "isPublished" | "publishedAt" | "createdAt" | "updatedAt" | "courseId", ExtArgs["result"]["lecture"]>
 export type LectureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Lecture$submissionsArgs<ExtArgs>
-  attendances?: boolean | Prisma.Lecture$attendancesArgs<ExtArgs>
   _count?: boolean | Prisma.LectureCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LectureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1025,7 +868,6 @@ export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     course: Prisma.$CoursePayload<ExtArgs>
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
-    attendances: Prisma.$AttendancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1036,7 +878,6 @@ export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     orderIndex: number
     isPublished: boolean
     publishedAt: Date | null
-    scheduledAt: Date | null
     createdAt: Date
     updatedAt: Date
     courseId: string
@@ -1436,7 +1277,6 @@ export interface Prisma__LectureClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   submissions<T extends Prisma.Lecture$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lecture$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  attendances<T extends Prisma.Lecture$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lecture$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1474,7 +1314,6 @@ export interface LectureFieldRefs {
   readonly orderIndex: Prisma.FieldRef<"Lecture", 'Int'>
   readonly isPublished: Prisma.FieldRef<"Lecture", 'Boolean'>
   readonly publishedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
-  readonly scheduledAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly courseId: Prisma.FieldRef<"Lecture", 'String'>
@@ -1895,30 +1734,6 @@ export type Lecture$submissionsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SubmissionScalarFieldEnum | Prisma.SubmissionScalarFieldEnum[]
-}
-
-/**
- * Lecture.attendances
- */
-export type Lecture$attendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Attendance
-   */
-  select?: Prisma.AttendanceSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Attendance
-   */
-  omit?: Prisma.AttendanceOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AttendanceInclude<ExtArgs> | null
-  where?: Prisma.AttendanceWhereInput
-  orderBy?: Prisma.AttendanceOrderByWithRelationInput | Prisma.AttendanceOrderByWithRelationInput[]
-  cursor?: Prisma.AttendanceWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
 }
 
 /**

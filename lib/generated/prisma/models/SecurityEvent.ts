@@ -235,7 +235,6 @@ export type SecurityEventWhereInput = {
   resolvedBy?: Prisma.StringNullableFilter<"SecurityEvent"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SecurityEvent"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  resolvedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type SecurityEventOrderByWithRelationInput = {
@@ -252,7 +251,6 @@ export type SecurityEventOrderByWithRelationInput = {
   resolvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  resolvedByUser?: Prisma.UserOrderByWithRelationInput
 }
 
 export type SecurityEventWhereUniqueInput = Prisma.AtLeast<{
@@ -272,7 +270,6 @@ export type SecurityEventWhereUniqueInput = Prisma.AtLeast<{
   resolvedBy?: Prisma.StringNullableFilter<"SecurityEvent"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SecurityEvent"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  resolvedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type SecurityEventOrderByWithAggregationInput = {
@@ -321,9 +318,9 @@ export type SecurityEventCreateInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   resolved?: boolean
   resolvedAt?: Date | string | null
+  resolvedBy?: string | null
   createdAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutSecurityEventsInput
-  resolvedByUser?: Prisma.UserCreateNestedOneWithoutResolvedEventsInput
 }
 
 export type SecurityEventUncheckedCreateInput = {
@@ -351,9 +348,9 @@ export type SecurityEventUpdateInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutSecurityEventsNestedInput
-  resolvedByUser?: Prisma.UserUpdateOneWithoutResolvedEventsNestedInput
 }
 
 export type SecurityEventUncheckedUpdateInput = {
@@ -396,6 +393,7 @@ export type SecurityEventUpdateManyMutationInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -474,24 +472,10 @@ export type SecurityEventCreateNestedManyWithoutUserInput = {
   connect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
 }
 
-export type SecurityEventCreateNestedManyWithoutResolvedByUserInput = {
-  create?: Prisma.XOR<Prisma.SecurityEventCreateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput> | Prisma.SecurityEventCreateWithoutResolvedByUserInput[] | Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput[]
-  connectOrCreate?: Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput | Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput[]
-  createMany?: Prisma.SecurityEventCreateManyResolvedByUserInputEnvelope
-  connect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-}
-
 export type SecurityEventUncheckedCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.SecurityEventCreateWithoutUserInput, Prisma.SecurityEventUncheckedCreateWithoutUserInput> | Prisma.SecurityEventCreateWithoutUserInput[] | Prisma.SecurityEventUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.SecurityEventCreateOrConnectWithoutUserInput | Prisma.SecurityEventCreateOrConnectWithoutUserInput[]
   createMany?: Prisma.SecurityEventCreateManyUserInputEnvelope
-  connect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-}
-
-export type SecurityEventUncheckedCreateNestedManyWithoutResolvedByUserInput = {
-  create?: Prisma.XOR<Prisma.SecurityEventCreateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput> | Prisma.SecurityEventCreateWithoutResolvedByUserInput[] | Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput[]
-  connectOrCreate?: Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput | Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput[]
-  createMany?: Prisma.SecurityEventCreateManyResolvedByUserInputEnvelope
   connect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
 }
 
@@ -509,20 +493,6 @@ export type SecurityEventUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.SecurityEventScalarWhereInput | Prisma.SecurityEventScalarWhereInput[]
 }
 
-export type SecurityEventUpdateManyWithoutResolvedByUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SecurityEventCreateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput> | Prisma.SecurityEventCreateWithoutResolvedByUserInput[] | Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput[]
-  connectOrCreate?: Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput | Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput[]
-  upsert?: Prisma.SecurityEventUpsertWithWhereUniqueWithoutResolvedByUserInput | Prisma.SecurityEventUpsertWithWhereUniqueWithoutResolvedByUserInput[]
-  createMany?: Prisma.SecurityEventCreateManyResolvedByUserInputEnvelope
-  set?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  disconnect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  delete?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  connect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  update?: Prisma.SecurityEventUpdateWithWhereUniqueWithoutResolvedByUserInput | Prisma.SecurityEventUpdateWithWhereUniqueWithoutResolvedByUserInput[]
-  updateMany?: Prisma.SecurityEventUpdateManyWithWhereWithoutResolvedByUserInput | Prisma.SecurityEventUpdateManyWithWhereWithoutResolvedByUserInput[]
-  deleteMany?: Prisma.SecurityEventScalarWhereInput | Prisma.SecurityEventScalarWhereInput[]
-}
-
 export type SecurityEventUncheckedUpdateManyWithoutUserNestedInput = {
   create?: Prisma.XOR<Prisma.SecurityEventCreateWithoutUserInput, Prisma.SecurityEventUncheckedCreateWithoutUserInput> | Prisma.SecurityEventCreateWithoutUserInput[] | Prisma.SecurityEventUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.SecurityEventCreateOrConnectWithoutUserInput | Prisma.SecurityEventCreateOrConnectWithoutUserInput[]
@@ -537,20 +507,6 @@ export type SecurityEventUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.SecurityEventScalarWhereInput | Prisma.SecurityEventScalarWhereInput[]
 }
 
-export type SecurityEventUncheckedUpdateManyWithoutResolvedByUserNestedInput = {
-  create?: Prisma.XOR<Prisma.SecurityEventCreateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput> | Prisma.SecurityEventCreateWithoutResolvedByUserInput[] | Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput[]
-  connectOrCreate?: Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput | Prisma.SecurityEventCreateOrConnectWithoutResolvedByUserInput[]
-  upsert?: Prisma.SecurityEventUpsertWithWhereUniqueWithoutResolvedByUserInput | Prisma.SecurityEventUpsertWithWhereUniqueWithoutResolvedByUserInput[]
-  createMany?: Prisma.SecurityEventCreateManyResolvedByUserInputEnvelope
-  set?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  disconnect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  delete?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  connect?: Prisma.SecurityEventWhereUniqueInput | Prisma.SecurityEventWhereUniqueInput[]
-  update?: Prisma.SecurityEventUpdateWithWhereUniqueWithoutResolvedByUserInput | Prisma.SecurityEventUpdateWithWhereUniqueWithoutResolvedByUserInput[]
-  updateMany?: Prisma.SecurityEventUpdateManyWithWhereWithoutResolvedByUserInput | Prisma.SecurityEventUpdateManyWithWhereWithoutResolvedByUserInput[]
-  deleteMany?: Prisma.SecurityEventScalarWhereInput | Prisma.SecurityEventScalarWhereInput[]
-}
-
 export type SecurityEventCreateWithoutUserInput = {
   id?: string
   eventType: string
@@ -561,8 +517,8 @@ export type SecurityEventCreateWithoutUserInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   resolved?: boolean
   resolvedAt?: Date | string | null
+  resolvedBy?: string | null
   createdAt?: Date | string
-  resolvedByUser?: Prisma.UserCreateNestedOneWithoutResolvedEventsInput
 }
 
 export type SecurityEventUncheckedCreateWithoutUserInput = {
@@ -586,44 +542,6 @@ export type SecurityEventCreateOrConnectWithoutUserInput = {
 
 export type SecurityEventCreateManyUserInputEnvelope = {
   data: Prisma.SecurityEventCreateManyUserInput | Prisma.SecurityEventCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type SecurityEventCreateWithoutResolvedByUserInput = {
-  id?: string
-  eventType: string
-  severity?: string
-  description: string
-  ipAddress?: string | null
-  userAgent?: string | null
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  resolved?: boolean
-  resolvedAt?: Date | string | null
-  createdAt?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutSecurityEventsInput
-}
-
-export type SecurityEventUncheckedCreateWithoutResolvedByUserInput = {
-  id?: string
-  userId?: string | null
-  eventType: string
-  severity?: string
-  description: string
-  ipAddress?: string | null
-  userAgent?: string | null
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  resolved?: boolean
-  resolvedAt?: Date | string | null
-  createdAt?: Date | string
-}
-
-export type SecurityEventCreateOrConnectWithoutResolvedByUserInput = {
-  where: Prisma.SecurityEventWhereUniqueInput
-  create: Prisma.XOR<Prisma.SecurityEventCreateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput>
-}
-
-export type SecurityEventCreateManyResolvedByUserInputEnvelope = {
-  data: Prisma.SecurityEventCreateManyResolvedByUserInput | Prisma.SecurityEventCreateManyResolvedByUserInput[]
   skipDuplicates?: boolean
 }
 
@@ -661,22 +579,6 @@ export type SecurityEventScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"SecurityEvent"> | Date | string
 }
 
-export type SecurityEventUpsertWithWhereUniqueWithoutResolvedByUserInput = {
-  where: Prisma.SecurityEventWhereUniqueInput
-  update: Prisma.XOR<Prisma.SecurityEventUpdateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedUpdateWithoutResolvedByUserInput>
-  create: Prisma.XOR<Prisma.SecurityEventCreateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedCreateWithoutResolvedByUserInput>
-}
-
-export type SecurityEventUpdateWithWhereUniqueWithoutResolvedByUserInput = {
-  where: Prisma.SecurityEventWhereUniqueInput
-  data: Prisma.XOR<Prisma.SecurityEventUpdateWithoutResolvedByUserInput, Prisma.SecurityEventUncheckedUpdateWithoutResolvedByUserInput>
-}
-
-export type SecurityEventUpdateManyWithWhereWithoutResolvedByUserInput = {
-  where: Prisma.SecurityEventScalarWhereInput
-  data: Prisma.XOR<Prisma.SecurityEventUpdateManyMutationInput, Prisma.SecurityEventUncheckedUpdateManyWithoutResolvedByUserInput>
-}
-
 export type SecurityEventCreateManyUserInput = {
   id?: string
   eventType: string
@@ -691,20 +593,6 @@ export type SecurityEventCreateManyUserInput = {
   createdAt?: Date | string
 }
 
-export type SecurityEventCreateManyResolvedByUserInput = {
-  id?: string
-  userId?: string | null
-  eventType: string
-  severity?: string
-  description: string
-  ipAddress?: string | null
-  userAgent?: string | null
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  resolved?: boolean
-  resolvedAt?: Date | string | null
-  createdAt?: Date | string
-}
-
 export type SecurityEventUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eventType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -715,8 +603,8 @@ export type SecurityEventUpdateWithoutUserInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  resolvedByUser?: Prisma.UserUpdateOneWithoutResolvedEventsNestedInput
 }
 
 export type SecurityEventUncheckedUpdateWithoutUserInput = {
@@ -747,48 +635,6 @@ export type SecurityEventUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type SecurityEventUpdateWithoutResolvedByUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.StringFieldUpdateOperationsInput | string
-  severity?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutSecurityEventsNestedInput
-}
-
-export type SecurityEventUncheckedUpdateWithoutResolvedByUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventType?: Prisma.StringFieldUpdateOperationsInput | string
-  severity?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type SecurityEventUncheckedUpdateManyWithoutResolvedByUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventType?: Prisma.StringFieldUpdateOperationsInput | string
-  severity?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 
 
 export type SecurityEventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -805,7 +651,6 @@ export type SecurityEventSelect<ExtArgs extends runtime.Types.Extensions.Interna
   resolvedBy?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.SecurityEvent$userArgs<ExtArgs>
-  resolvedByUser?: boolean | Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["securityEvent"]>
 
 export type SecurityEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -822,7 +667,6 @@ export type SecurityEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   resolvedBy?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.SecurityEvent$userArgs<ExtArgs>
-  resolvedByUser?: boolean | Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["securityEvent"]>
 
 export type SecurityEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -839,7 +683,6 @@ export type SecurityEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   resolvedBy?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.SecurityEvent$userArgs<ExtArgs>
-  resolvedByUser?: boolean | Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["securityEvent"]>
 
 export type SecurityEventSelectScalar = {
@@ -860,22 +703,18 @@ export type SecurityEventSelectScalar = {
 export type SecurityEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "eventType" | "severity" | "description" | "ipAddress" | "userAgent" | "metadata" | "resolved" | "resolvedAt" | "resolvedBy" | "createdAt", ExtArgs["result"]["securityEvent"]>
 export type SecurityEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.SecurityEvent$userArgs<ExtArgs>
-  resolvedByUser?: boolean | Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>
 }
 export type SecurityEventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.SecurityEvent$userArgs<ExtArgs>
-  resolvedByUser?: boolean | Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>
 }
 export type SecurityEventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.SecurityEvent$userArgs<ExtArgs>
-  resolvedByUser?: boolean | Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>
 }
 
 export type $SecurityEventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SecurityEvent"
   objects: {
     user: Prisma.$UserPayload<ExtArgs> | null
-    resolvedByUser: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1285,7 +1124,6 @@ readonly fields: SecurityEventFieldRefs;
 export interface Prisma__SecurityEventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.SecurityEvent$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SecurityEvent$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  resolvedByUser<T extends Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SecurityEvent$resolvedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1726,25 +1564,6 @@ export type SecurityEventDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
  * SecurityEvent.user
  */
 export type SecurityEvent$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * SecurityEvent.resolvedByUser
- */
-export type SecurityEvent$resolvedByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

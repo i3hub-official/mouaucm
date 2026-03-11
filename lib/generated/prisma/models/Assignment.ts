@@ -28,13 +28,11 @@ export type AggregateAssignment = {
 
 export type AssignmentAvgAggregateOutputType = {
   maxScore: number | null
-  weight: number | null
   allowedAttempts: number | null
 }
 
 export type AssignmentSumAggregateOutputType = {
   maxScore: number | null
-  weight: number | null
   allowedAttempts: number | null
 }
 
@@ -45,15 +43,12 @@ export type AssignmentMinAggregateOutputType = {
   instructions: string | null
   dueDate: Date | null
   maxScore: number | null
-  weight: number | null
   allowedAttempts: number | null
   assignmentUrl: string | null
   isPublished: boolean | null
   allowLateSubmission: boolean | null
-  scheduledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  deletedAt: Date | null
   courseId: string | null
   teacherId: string | null
 }
@@ -65,15 +60,12 @@ export type AssignmentMaxAggregateOutputType = {
   instructions: string | null
   dueDate: Date | null
   maxScore: number | null
-  weight: number | null
   allowedAttempts: number | null
   assignmentUrl: string | null
   isPublished: boolean | null
   allowLateSubmission: boolean | null
-  scheduledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  deletedAt: Date | null
   courseId: string | null
   teacherId: string | null
 }
@@ -85,15 +77,12 @@ export type AssignmentCountAggregateOutputType = {
   instructions: number
   dueDate: number
   maxScore: number
-  weight: number
   allowedAttempts: number
   assignmentUrl: number
   isPublished: number
   allowLateSubmission: number
-  scheduledAt: number
   createdAt: number
   updatedAt: number
-  deletedAt: number
   courseId: number
   teacherId: number
   _all: number
@@ -102,13 +91,11 @@ export type AssignmentCountAggregateOutputType = {
 
 export type AssignmentAvgAggregateInputType = {
   maxScore?: true
-  weight?: true
   allowedAttempts?: true
 }
 
 export type AssignmentSumAggregateInputType = {
   maxScore?: true
-  weight?: true
   allowedAttempts?: true
 }
 
@@ -119,15 +106,12 @@ export type AssignmentMinAggregateInputType = {
   instructions?: true
   dueDate?: true
   maxScore?: true
-  weight?: true
   allowedAttempts?: true
   assignmentUrl?: true
   isPublished?: true
   allowLateSubmission?: true
-  scheduledAt?: true
   createdAt?: true
   updatedAt?: true
-  deletedAt?: true
   courseId?: true
   teacherId?: true
 }
@@ -139,15 +123,12 @@ export type AssignmentMaxAggregateInputType = {
   instructions?: true
   dueDate?: true
   maxScore?: true
-  weight?: true
   allowedAttempts?: true
   assignmentUrl?: true
   isPublished?: true
   allowLateSubmission?: true
-  scheduledAt?: true
   createdAt?: true
   updatedAt?: true
-  deletedAt?: true
   courseId?: true
   teacherId?: true
 }
@@ -159,15 +140,12 @@ export type AssignmentCountAggregateInputType = {
   instructions?: true
   dueDate?: true
   maxScore?: true
-  weight?: true
   allowedAttempts?: true
   assignmentUrl?: true
   isPublished?: true
   allowLateSubmission?: true
-  scheduledAt?: true
   createdAt?: true
   updatedAt?: true
-  deletedAt?: true
   courseId?: true
   teacherId?: true
   _all?: true
@@ -266,15 +244,12 @@ export type AssignmentGroupByOutputType = {
   instructions: string | null
   dueDate: Date
   maxScore: number
-  weight: number
   allowedAttempts: number
   assignmentUrl: string | null
   isPublished: boolean
   allowLateSubmission: boolean
-  scheduledAt: Date | null
   createdAt: Date
   updatedAt: Date
-  deletedAt: Date | null
   courseId: string
   teacherId: string | null
   _count: AssignmentCountAggregateOutputType | null
@@ -309,15 +284,12 @@ export type AssignmentWhereInput = {
   instructions?: Prisma.StringNullableFilter<"Assignment"> | string | null
   dueDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   maxScore?: Prisma.IntFilter<"Assignment"> | number
-  weight?: Prisma.FloatFilter<"Assignment"> | number
   allowedAttempts?: Prisma.IntFilter<"Assignment"> | number
   assignmentUrl?: Prisma.StringNullableFilter<"Assignment"> | string | null
   isPublished?: Prisma.BoolFilter<"Assignment"> | boolean
   allowLateSubmission?: Prisma.BoolFilter<"Assignment"> | boolean
-  scheduledAt?: Prisma.DateTimeNullableFilter<"Assignment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
-  deletedAt?: Prisma.DateTimeNullableFilter<"Assignment"> | Date | string | null
   courseId?: Prisma.StringFilter<"Assignment"> | string
   teacherId?: Prisma.StringNullableFilter<"Assignment"> | string | null
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -332,15 +304,12 @@ export type AssignmentOrderByWithRelationInput = {
   instructions?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
   assignmentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   allowLateSubmission?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   teacherId?: Prisma.SortOrderInput | Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
@@ -358,15 +327,12 @@ export type AssignmentWhereUniqueInput = Prisma.AtLeast<{
   instructions?: Prisma.StringNullableFilter<"Assignment"> | string | null
   dueDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   maxScore?: Prisma.IntFilter<"Assignment"> | number
-  weight?: Prisma.FloatFilter<"Assignment"> | number
   allowedAttempts?: Prisma.IntFilter<"Assignment"> | number
   assignmentUrl?: Prisma.StringNullableFilter<"Assignment"> | string | null
   isPublished?: Prisma.BoolFilter<"Assignment"> | boolean
   allowLateSubmission?: Prisma.BoolFilter<"Assignment"> | boolean
-  scheduledAt?: Prisma.DateTimeNullableFilter<"Assignment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
-  deletedAt?: Prisma.DateTimeNullableFilter<"Assignment"> | Date | string | null
   courseId?: Prisma.StringFilter<"Assignment"> | string
   teacherId?: Prisma.StringNullableFilter<"Assignment"> | string | null
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -381,15 +347,12 @@ export type AssignmentOrderByWithAggregationInput = {
   instructions?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
   assignmentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   allowLateSubmission?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   teacherId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AssignmentCountOrderByAggregateInput
@@ -409,15 +372,12 @@ export type AssignmentScalarWhereWithAggregatesInput = {
   instructions?: Prisma.StringNullableWithAggregatesFilter<"Assignment"> | string | null
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"Assignment"> | Date | string
   maxScore?: Prisma.IntWithAggregatesFilter<"Assignment"> | number
-  weight?: Prisma.FloatWithAggregatesFilter<"Assignment"> | number
   allowedAttempts?: Prisma.IntWithAggregatesFilter<"Assignment"> | number
   assignmentUrl?: Prisma.StringNullableWithAggregatesFilter<"Assignment"> | string | null
   isPublished?: Prisma.BoolWithAggregatesFilter<"Assignment"> | boolean
   allowLateSubmission?: Prisma.BoolWithAggregatesFilter<"Assignment"> | boolean
-  scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Assignment"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Assignment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Assignment"> | Date | string
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Assignment"> | Date | string | null
   courseId?: Prisma.StringWithAggregatesFilter<"Assignment"> | string
   teacherId?: Prisma.StringNullableWithAggregatesFilter<"Assignment"> | string | null
 }
@@ -429,15 +389,12 @@ export type AssignmentCreateInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutAssignmentsInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutAssignmentsInput
   submissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutAssignmentInput
@@ -450,15 +407,12 @@ export type AssignmentUncheckedCreateInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   courseId: string
   teacherId?: string | null
   submissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
@@ -471,15 +425,12 @@ export type AssignmentUpdateInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutAssignmentsNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutAssignmentsNestedInput
   submissions?: Prisma.AssignmentSubmissionUpdateManyWithoutAssignmentNestedInput
@@ -492,15 +443,12 @@ export type AssignmentUncheckedUpdateInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   teacherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
@@ -513,15 +461,12 @@ export type AssignmentCreateManyInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   courseId: string
   teacherId?: string | null
 }
@@ -533,15 +478,12 @@ export type AssignmentUpdateManyMutationInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AssignmentUncheckedUpdateManyInput = {
@@ -551,15 +493,12 @@ export type AssignmentUncheckedUpdateManyInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   teacherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -581,22 +520,18 @@ export type AssignmentCountOrderByAggregateInput = {
   instructions?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
   assignmentUrl?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   allowLateSubmission?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
 }
 
 export type AssignmentAvgOrderByAggregateInput = {
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
 }
 
@@ -607,15 +542,12 @@ export type AssignmentMaxOrderByAggregateInput = {
   instructions?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
   assignmentUrl?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   allowLateSubmission?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
 }
@@ -627,22 +559,18 @@ export type AssignmentMinOrderByAggregateInput = {
   instructions?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
   assignmentUrl?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   allowLateSubmission?: Prisma.SortOrder
-  scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
 }
 
 export type AssignmentSumOrderByAggregateInput = {
   maxScore?: Prisma.SortOrder
-  weight?: Prisma.SortOrder
   allowedAttempts?: Prisma.SortOrder
 }
 
@@ -756,15 +684,12 @@ export type AssignmentCreateWithoutTeacherInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutAssignmentsInput
   submissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutAssignmentInput
 }
@@ -776,15 +701,12 @@ export type AssignmentUncheckedCreateWithoutTeacherInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   courseId: string
   submissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
 }
@@ -825,15 +747,12 @@ export type AssignmentScalarWhereInput = {
   instructions?: Prisma.StringNullableFilter<"Assignment"> | string | null
   dueDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   maxScore?: Prisma.IntFilter<"Assignment"> | number
-  weight?: Prisma.FloatFilter<"Assignment"> | number
   allowedAttempts?: Prisma.IntFilter<"Assignment"> | number
   assignmentUrl?: Prisma.StringNullableFilter<"Assignment"> | string | null
   isPublished?: Prisma.BoolFilter<"Assignment"> | boolean
   allowLateSubmission?: Prisma.BoolFilter<"Assignment"> | boolean
-  scheduledAt?: Prisma.DateTimeNullableFilter<"Assignment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
-  deletedAt?: Prisma.DateTimeNullableFilter<"Assignment"> | Date | string | null
   courseId?: Prisma.StringFilter<"Assignment"> | string
   teacherId?: Prisma.StringNullableFilter<"Assignment"> | string | null
 }
@@ -845,15 +764,12 @@ export type AssignmentCreateWithoutCourseInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   teacher?: Prisma.TeacherCreateNestedOneWithoutAssignmentsInput
   submissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutAssignmentInput
 }
@@ -865,15 +781,12 @@ export type AssignmentUncheckedCreateWithoutCourseInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   teacherId?: string | null
   submissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutAssignmentInput
 }
@@ -911,15 +824,12 @@ export type AssignmentCreateWithoutSubmissionsInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutAssignmentsInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutAssignmentsInput
 }
@@ -931,15 +841,12 @@ export type AssignmentUncheckedCreateWithoutSubmissionsInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   courseId: string
   teacherId?: string | null
 }
@@ -967,15 +874,12 @@ export type AssignmentUpdateWithoutSubmissionsInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutAssignmentsNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutAssignmentsNestedInput
 }
@@ -987,15 +891,12 @@ export type AssignmentUncheckedUpdateWithoutSubmissionsInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   teacherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1007,15 +908,12 @@ export type AssignmentCreateManyTeacherInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   courseId: string
 }
 
@@ -1026,15 +924,12 @@ export type AssignmentUpdateWithoutTeacherInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutAssignmentsNestedInput
   submissions?: Prisma.AssignmentSubmissionUpdateManyWithoutAssignmentNestedInput
 }
@@ -1046,15 +941,12 @@ export type AssignmentUncheckedUpdateWithoutTeacherInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   submissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
 }
@@ -1066,15 +958,12 @@ export type AssignmentUncheckedUpdateManyWithoutTeacherInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1085,15 +974,12 @@ export type AssignmentCreateManyCourseInput = {
   instructions?: string | null
   dueDate: Date | string
   maxScore?: number
-  weight?: number
   allowedAttempts?: number
   assignmentUrl?: string | null
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedAt?: Date | string | null
   teacherId?: string | null
 }
 
@@ -1104,15 +990,12 @@ export type AssignmentUpdateWithoutCourseInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teacher?: Prisma.TeacherUpdateOneWithoutAssignmentsNestedInput
   submissions?: Prisma.AssignmentSubmissionUpdateManyWithoutAssignmentNestedInput
 }
@@ -1124,15 +1007,12 @@ export type AssignmentUncheckedUpdateWithoutCourseInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teacherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput
 }
@@ -1144,15 +1024,12 @@ export type AssignmentUncheckedUpdateManyWithoutCourseInput = {
   instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   maxScore?: Prisma.IntFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   allowedAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   assignmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowLateSubmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teacherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1194,15 +1071,12 @@ export type AssignmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   instructions?: boolean
   dueDate?: boolean
   maxScore?: boolean
-  weight?: boolean
   allowedAttempts?: boolean
   assignmentUrl?: boolean
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedAt?: boolean
   courseId?: boolean
   teacherId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -1218,15 +1092,12 @@ export type AssignmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   instructions?: boolean
   dueDate?: boolean
   maxScore?: boolean
-  weight?: boolean
   allowedAttempts?: boolean
   assignmentUrl?: boolean
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedAt?: boolean
   courseId?: boolean
   teacherId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -1240,15 +1111,12 @@ export type AssignmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   instructions?: boolean
   dueDate?: boolean
   maxScore?: boolean
-  weight?: boolean
   allowedAttempts?: boolean
   assignmentUrl?: boolean
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedAt?: boolean
   courseId?: boolean
   teacherId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -1262,20 +1130,17 @@ export type AssignmentSelectScalar = {
   instructions?: boolean
   dueDate?: boolean
   maxScore?: boolean
-  weight?: boolean
   allowedAttempts?: boolean
   assignmentUrl?: boolean
   isPublished?: boolean
   allowLateSubmission?: boolean
-  scheduledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedAt?: boolean
   courseId?: boolean
   teacherId?: boolean
 }
 
-export type AssignmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "instructions" | "dueDate" | "maxScore" | "weight" | "allowedAttempts" | "assignmentUrl" | "isPublished" | "allowLateSubmission" | "scheduledAt" | "createdAt" | "updatedAt" | "deletedAt" | "courseId" | "teacherId", ExtArgs["result"]["assignment"]>
+export type AssignmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "instructions" | "dueDate" | "maxScore" | "allowedAttempts" | "assignmentUrl" | "isPublished" | "allowLateSubmission" | "createdAt" | "updatedAt" | "courseId" | "teacherId", ExtArgs["result"]["assignment"]>
 export type AssignmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   teacher?: boolean | Prisma.Assignment$teacherArgs<ExtArgs>
@@ -1305,15 +1170,12 @@ export type $AssignmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     instructions: string | null
     dueDate: Date
     maxScore: number
-    weight: number
     allowedAttempts: number
     assignmentUrl: string | null
     isPublished: boolean
     allowLateSubmission: boolean
-    scheduledAt: Date | null
     createdAt: Date
     updatedAt: Date
-    deletedAt: Date | null
     courseId: string
     teacherId: string | null
   }, ExtArgs["result"]["assignment"]>
@@ -1748,15 +1610,12 @@ export interface AssignmentFieldRefs {
   readonly instructions: Prisma.FieldRef<"Assignment", 'String'>
   readonly dueDate: Prisma.FieldRef<"Assignment", 'DateTime'>
   readonly maxScore: Prisma.FieldRef<"Assignment", 'Int'>
-  readonly weight: Prisma.FieldRef<"Assignment", 'Float'>
   readonly allowedAttempts: Prisma.FieldRef<"Assignment", 'Int'>
   readonly assignmentUrl: Prisma.FieldRef<"Assignment", 'String'>
   readonly isPublished: Prisma.FieldRef<"Assignment", 'Boolean'>
   readonly allowLateSubmission: Prisma.FieldRef<"Assignment", 'Boolean'>
-  readonly scheduledAt: Prisma.FieldRef<"Assignment", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Assignment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Assignment", 'DateTime'>
-  readonly deletedAt: Prisma.FieldRef<"Assignment", 'DateTime'>
   readonly courseId: Prisma.FieldRef<"Assignment", 'String'>
   readonly teacherId: Prisma.FieldRef<"Assignment", 'String'>
 }

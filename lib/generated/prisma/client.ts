@@ -28,12 +28,14 @@ export * from "./enums"
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
  * 
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
@@ -75,11 +77,6 @@ export type Student = Prisma.StudentModel
  */
 export type Teacher = Prisma.TeacherModel
 /**
- * Model Admin
- * 
- */
-export type Admin = Prisma.AdminModel
-/**
  * Model Course
  * 
  */
@@ -89,16 +86,6 @@ export type Course = Prisma.CourseModel
  * 
  */
 export type Lecture = Prisma.LectureModel
-/**
- * Model Exam
- * 
- */
-export type Exam = Prisma.ExamModel
-/**
- * Model ExamResult
- * 
- */
-export type ExamResult = Prisma.ExamResultModel
 /**
  * Model Enrollment
  * 
@@ -125,11 +112,6 @@ export type Submission = Prisma.SubmissionModel
  */
 export type Portfolio = Prisma.PortfolioModel
 /**
- * Model Attendance
- * 
- */
-export type Attendance = Prisma.AttendanceModel
-/**
  * Model AuditLog
  * 
  */
@@ -145,21 +127,6 @@ export type Notification = Prisma.NotificationModel
  */
 export type SystemConfig = Prisma.SystemConfigModel
 /**
- * Model SecurityEvent
- * 
- */
-export type SecurityEvent = Prisma.SecurityEventModel
-/**
- * Model UserPreferences
- * 
- */
-export type UserPreferences = Prisma.UserPreferencesModel
-/**
- * Model NINCache
- * 
- */
-export type NINCache = Prisma.NINCacheModel
-/**
  * Model Metric
  * 
  */
@@ -170,17 +137,17 @@ export type Metric = Prisma.MetricModel
  */
 export type RateLimit = Prisma.RateLimitModel
 /**
+ * Model SecurityEvent
+ * 
+ */
+export type SecurityEvent = Prisma.SecurityEventModel
+/**
  * Model UserActivity
  * 
  */
 export type UserActivity = Prisma.UserActivityModel
 /**
- * Model RequestLog
+ * Model UserPreferences
  * 
  */
-export type RequestLog = Prisma.RequestLogModel
-/**
- * Model DataProcessingLog
- * 
- */
-export type DataProcessingLog = Prisma.DataProcessingLogModel
+export type UserPreferences = Prisma.UserPreferencesModel

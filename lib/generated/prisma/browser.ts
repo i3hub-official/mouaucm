@@ -53,11 +53,6 @@ export type Student = Prisma.StudentModel
  */
 export type Teacher = Prisma.TeacherModel
 /**
- * Model Admin
- * 
- */
-export type Admin = Prisma.AdminModel
-/**
  * Model Course
  * 
  */
@@ -67,16 +62,6 @@ export type Course = Prisma.CourseModel
  * 
  */
 export type Lecture = Prisma.LectureModel
-/**
- * Model Exam
- * 
- */
-export type Exam = Prisma.ExamModel
-/**
- * Model ExamResult
- * 
- */
-export type ExamResult = Prisma.ExamResultModel
 /**
  * Model Enrollment
  * 
@@ -103,11 +88,6 @@ export type Submission = Prisma.SubmissionModel
  */
 export type Portfolio = Prisma.PortfolioModel
 /**
- * Model Attendance
- * 
- */
-export type Attendance = Prisma.AttendanceModel
-/**
  * Model AuditLog
  * 
  */
@@ -123,21 +103,6 @@ export type Notification = Prisma.NotificationModel
  */
 export type SystemConfig = Prisma.SystemConfigModel
 /**
- * Model SecurityEvent
- * 
- */
-export type SecurityEvent = Prisma.SecurityEventModel
-/**
- * Model UserPreferences
- * 
- */
-export type UserPreferences = Prisma.UserPreferencesModel
-/**
- * Model NINCache
- * 
- */
-export type NINCache = Prisma.NINCacheModel
-/**
  * Model Metric
  * 
  */
@@ -148,17 +113,17 @@ export type Metric = Prisma.MetricModel
  */
 export type RateLimit = Prisma.RateLimitModel
 /**
+ * Model SecurityEvent
+ * 
+ */
+export type SecurityEvent = Prisma.SecurityEventModel
+/**
  * Model UserActivity
  * 
  */
 export type UserActivity = Prisma.UserActivityModel
 /**
- * Model RequestLog
+ * Model UserPreferences
  * 
  */
-export type RequestLog = Prisma.RequestLogModel
-/**
- * Model DataProcessingLog
- * 
- */
-export type DataProcessingLog = Prisma.DataProcessingLogModel
+export type UserPreferences = Prisma.UserPreferencesModel

@@ -285,7 +285,7 @@ export type UserPreferencesCreateInput = {
   lectureReminders?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPreferencesInput
+  user: Prisma.UserCreateNestedOneWithoutUserPreferencesInput
 }
 
 export type UserPreferencesUncheckedCreateInput = {
@@ -309,7 +309,7 @@ export type UserPreferencesUpdateInput = {
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPreferencesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutUserPreferencesNestedInput
 }
 
 export type UserPreferencesUncheckedUpdateInput = {

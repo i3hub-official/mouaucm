@@ -58,28 +58,21 @@ export const ModelName = {
   PasswordResetToken: 'PasswordResetToken',
   Student: 'Student',
   Teacher: 'Teacher',
-  Admin: 'Admin',
   Course: 'Course',
   Lecture: 'Lecture',
-  Exam: 'Exam',
-  ExamResult: 'ExamResult',
   Enrollment: 'Enrollment',
   Assignment: 'Assignment',
   AssignmentSubmission: 'AssignmentSubmission',
   Submission: 'Submission',
   Portfolio: 'Portfolio',
-  Attendance: 'Attendance',
   AuditLog: 'AuditLog',
   Notification: 'Notification',
   SystemConfig: 'SystemConfig',
-  SecurityEvent: 'SecurityEvent',
-  UserPreferences: 'UserPreferences',
-  NINCache: 'NINCache',
   Metric: 'Metric',
   RateLimit: 'RateLimit',
+  SecurityEvent: 'SecurityEvent',
   UserActivity: 'UserActivity',
-  RequestLog: 'RequestLog',
-  DataProcessingLog: 'DataProcessingLog'
+  UserPreferences: 'UserPreferences'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -88,12 +81,12 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = {
+export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const
+} as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
@@ -103,7 +96,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   emailVerified: 'emailVerified',
-  passportUrl: 'passportUrl',
+  image: 'image',
   role: 'role',
   isActive: 'isActive',
   lastLoginAt: 'lastLoginAt',
@@ -116,10 +109,7 @@ export const UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   passwordHash: 'passwordHash',
   greeting: 'greeting',
-  greetingNextChange: 'greetingNextChange',
-  emailVerificationRequired: 'emailVerificationRequired',
-  emailVerificationAttempts: 'emailVerificationAttempts',
-  metadata: 'metadata'
+  greetingNextChange: 'greetingNextChange'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -167,7 +157,8 @@ export const VerificationTokenScalarFieldEnum = {
   identifier: 'identifier',
   token: 'token',
   expires: 'expires',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  tokenId: 'tokenId'
 } as const
 
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
@@ -192,8 +183,8 @@ export const StudentScalarFieldEnum = {
   matricNumber: 'matricNumber',
   jambRegNumber: 'jambRegNumber',
   nin: 'nin',
-  surname: 'surname',
   firstName: 'firstName',
+  lastName: 'lastName',
   otherName: 'otherName',
   gender: 'gender',
   phone: 'phone',
@@ -206,17 +197,15 @@ export const StudentScalarFieldEnum = {
   lga: 'lga',
   maritalStatus: 'maritalStatus',
   dateEnrolled: 'dateEnrolled',
+  isActive: 'isActive',
   admissionYear: 'admissionYear',
   dateOfBirth: 'dateOfBirth',
-  isActive: 'isActive',
-  lastActivityAt: 'lastActivityAt',
-  createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   emailSearchHash: 'emailSearchHash',
   phoneSearchHash: 'phoneSearchHash',
-  matricSearchHash: 'matricSearchHash',
   jambRegSearchHash: 'jambRegSearchHash',
   ninSearchHash: 'ninSearchHash',
+  lastActivityAt: 'lastActivityAt',
   userId: 'userId'
 } as const
 
@@ -225,59 +214,23 @@ export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeo
 
 export const TeacherScalarFieldEnum = {
   id: 'id',
-  teacherId: 'teacherId',
-  surname: 'surname',
+  employeeId: 'employeeId',
   firstName: 'firstName',
+  lastName: 'lastName',
   otherName: 'otherName',
   gender: 'gender',
   phone: 'phone',
   email: 'email',
-  institution: 'institution',
   department: 'department',
   qualification: 'qualification',
   specialization: 'specialization',
-  experience: 'experience',
-  title: 'title',
   dateJoined: 'dateJoined',
   isActive: 'isActive',
-  passportUrl: 'passportUrl',
   lastActivityAt: 'lastActivityAt',
-  updatedAt: 'updatedAt',
-  emailSearchHash: 'emailSearchHash',
-  phoneSearchHash: 'phoneSearchHash',
-  teacherIdSearchHash: 'teacherIdSearchHash',
   userId: 'userId'
 } as const
 
 export type TeacherScalarFieldEnum = (typeof TeacherScalarFieldEnum)[keyof typeof TeacherScalarFieldEnum]
-
-
-export const AdminScalarFieldEnum = {
-  id: 'id',
-  adminId: 'adminId',
-  surname: 'surname',
-  firstName: 'firstName',
-  otherName: 'otherName',
-  gender: 'gender',
-  phone: 'phone',
-  email: 'email',
-  department: 'department',
-  institution: 'institution',
-  qualification: 'qualification',
-  specialization: 'specialization',
-  experience: 'experience',
-  dateJoined: 'dateJoined',
-  isActive: 'isActive',
-  passportUrl: 'passportUrl',
-  lastActivityAt: 'lastActivityAt',
-  updatedAt: 'updatedAt',
-  emailSearchHash: 'emailSearchHash',
-  phoneSearchHash: 'phoneSearchHash',
-  teacherIdSearchHash: 'teacherIdSearchHash',
-  userId: 'userId'
-} as const
-
-export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
 export const CourseScalarFieldEnum = {
@@ -290,7 +243,6 @@ export const CourseScalarFieldEnum = {
   semester: 'semester',
   courseOutline: 'courseOutline',
   isActive: 'isActive',
-  color: 'color',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   instructorId: 'instructorId',
@@ -309,55 +261,12 @@ export const LectureScalarFieldEnum = {
   orderIndex: 'orderIndex',
   isPublished: 'isPublished',
   publishedAt: 'publishedAt',
-  scheduledAt: 'scheduledAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   courseId: 'courseId'
 } as const
 
 export type LectureScalarFieldEnum = (typeof LectureScalarFieldEnum)[keyof typeof LectureScalarFieldEnum]
-
-
-export const ExamScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  courseId: 'courseId',
-  date: 'date',
-  duration: 'duration',
-  totalMarks: 'totalMarks',
-  venue: 'venue',
-  type: 'type',
-  format: 'format',
-  isPublished: 'isPublished',
-  publishedAt: 'publishedAt',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
-
-
-export const ExamResultScalarFieldEnum = {
-  id: 'id',
-  examId: 'examId',
-  studentId: 'studentId',
-  courseId: 'courseId',
-  score: 'score',
-  percentage: 'percentage',
-  grade: 'grade',
-  remark: 'remark',
-  isPublished: 'isPublished',
-  publishedAt: 'publishedAt',
-  recordedBy: 'recordedBy',
-  recordedAt: 'recordedAt',
-  updatedAt: 'updatedAt',
-  scriptUrl: 'scriptUrl',
-  feedback: 'feedback'
-} as const
-
-export type ExamResultScalarFieldEnum = (typeof ExamResultScalarFieldEnum)[keyof typeof ExamResultScalarFieldEnum]
 
 
 export const EnrollmentScalarFieldEnum = {
@@ -371,7 +280,6 @@ export const EnrollmentScalarFieldEnum = {
   score: 'score',
   progress: 'progress',
   lastAccessedAt: 'lastAccessedAt',
-  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
@@ -385,15 +293,12 @@ export const AssignmentScalarFieldEnum = {
   instructions: 'instructions',
   dueDate: 'dueDate',
   maxScore: 'maxScore',
-  weight: 'weight',
   allowedAttempts: 'allowedAttempts',
   assignmentUrl: 'assignmentUrl',
   isPublished: 'isPublished',
   allowLateSubmission: 'allowLateSubmission',
-  scheduledAt: 'scheduledAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  deletedAt: 'deletedAt',
   courseId: 'courseId',
   teacherId: 'teacherId'
 } as const
@@ -411,7 +316,6 @@ export const AssignmentSubmissionScalarFieldEnum = {
   isGraded: 'isGraded',
   isLate: 'isLate',
   attemptNumber: 'attemptNumber',
-  gradedAt: 'gradedAt',
   studentId: 'studentId',
   assignmentId: 'assignmentId'
 } as const
@@ -448,25 +352,6 @@ export const PortfolioScalarFieldEnum = {
 } as const
 
 export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
-
-
-export const AttendanceScalarFieldEnum = {
-  id: 'id',
-  studentId: 'studentId',
-  courseId: 'courseId',
-  lectureId: 'lectureId',
-  status: 'status',
-  markedAt: 'markedAt',
-  markedBy: 'markedBy',
-  notes: 'notes',
-  verified: 'verified',
-  ipAddress: 'ipAddress',
-  userAgent: 'userAgent',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
@@ -515,61 +400,6 @@ export const SystemConfigScalarFieldEnum = {
 export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
 
 
-export const SecurityEventScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  eventType: 'eventType',
-  severity: 'severity',
-  description: 'description',
-  ipAddress: 'ipAddress',
-  userAgent: 'userAgent',
-  metadata: 'metadata',
-  resolved: 'resolved',
-  resolvedAt: 'resolvedAt',
-  resolvedBy: 'resolvedBy',
-  createdAt: 'createdAt'
-} as const
-
-export type SecurityEventScalarFieldEnum = (typeof SecurityEventScalarFieldEnum)[keyof typeof SecurityEventScalarFieldEnum]
-
-
-export const UserPreferencesScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  emailNotifications: 'emailNotifications',
-  pushNotifications: 'pushNotifications',
-  assignmentReminders: 'assignmentReminders',
-  gradeAlerts: 'gradeAlerts',
-  lectureReminders: 'lectureReminders',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserPreferencesScalarFieldEnum = (typeof UserPreferencesScalarFieldEnum)[keyof typeof UserPreferencesScalarFieldEnum]
-
-
-export const NINCacheScalarFieldEnum = {
-  id: 'id',
-  nin: 'nin',
-  surname: 'surname',
-  firstName: 'firstName',
-  otherName: 'otherName',
-  gender: 'gender',
-  dateOfBirth: 'dateOfBirth',
-  phoneNumber: 'phoneNumber',
-  state: 'state',
-  lga: 'lga',
-  residenceAddress: 'residenceAddress',
-  photo: 'photo',
-  firstVerified: 'firstVerified',
-  lastVerified: 'lastVerified',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type NINCacheScalarFieldEnum = (typeof NINCacheScalarFieldEnum)[keyof typeof NINCacheScalarFieldEnum]
-
-
 export const MetricScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -595,6 +425,24 @@ export const RateLimitScalarFieldEnum = {
 export type RateLimitScalarFieldEnum = (typeof RateLimitScalarFieldEnum)[keyof typeof RateLimitScalarFieldEnum]
 
 
+export const SecurityEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  eventType: 'eventType',
+  severity: 'severity',
+  description: 'description',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  metadata: 'metadata',
+  resolved: 'resolved',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  createdAt: 'createdAt'
+} as const
+
+export type SecurityEventScalarFieldEnum = (typeof SecurityEventScalarFieldEnum)[keyof typeof SecurityEventScalarFieldEnum]
+
+
 export const UserActivityScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -610,44 +458,19 @@ export const UserActivityScalarFieldEnum = {
 export type UserActivityScalarFieldEnum = (typeof UserActivityScalarFieldEnum)[keyof typeof UserActivityScalarFieldEnum]
 
 
-export const RequestLogScalarFieldEnum = {
+export const UserPreferencesScalarFieldEnum = {
   id: 'id',
-  requestId: 'requestId',
-  method: 'method',
-  path: 'path',
-  ipAddress: 'ipAddress',
   userId: 'userId',
-  userAgent: 'userAgent',
-  isAuthenticated: 'isAuthenticated',
-  threatScore: 'threatScore',
-  securityLevel: 'securityLevel',
-  ipIntelligence: 'ipIntelligence',
-  metadata: 'metadata',
-  createdAt: 'createdAt'
+  emailNotifications: 'emailNotifications',
+  pushNotifications: 'pushNotifications',
+  assignmentReminders: 'assignmentReminders',
+  gradeAlerts: 'gradeAlerts',
+  lectureReminders: 'lectureReminders',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
-
-
-export const DataProcessingLogScalarFieldEnum = {
-  id: 'id',
-  requestId: 'requestId',
-  userId: 'userId',
-  timestamp: 'timestamp',
-  method: 'method',
-  path: 'path',
-  ipAddress: 'ipAddress',
-  country: 'country',
-  jurisdiction: 'jurisdiction',
-  dataCategories: 'dataCategories',
-  legalBasis: 'legalBasis',
-  consentGiven: 'consentGiven',
-  retentionDays: 'retentionDays',
-  purpose: 'purpose',
-  createdAt: 'createdAt'
-} as const
-
-export type DataProcessingLogScalarFieldEnum = (typeof DataProcessingLogScalarFieldEnum)[keyof typeof DataProcessingLogScalarFieldEnum]
+export type UserPreferencesScalarFieldEnum = (typeof UserPreferencesScalarFieldEnum)[keyof typeof UserPreferencesScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -659,18 +482,11 @@ export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
 export const NullableJsonNullValueInput = {
-  DbNull: 'DbNull',
-  JsonNull: 'JsonNull'
+  DbNull: DbNull,
+  JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-export const JsonNullValueInput = {
-  JsonNull: 'JsonNull'
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -681,19 +497,19 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-export const JsonNullValueFilter = {
-  DbNull: 'DbNull',
-  JsonNull: 'JsonNull',
-  AnyNull: 'AnyNull'
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
 export const NullsOrder = {
   first: 'first',
   last: 'last'
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

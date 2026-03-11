@@ -47,7 +47,6 @@ export type EnrollmentMinAggregateOutputType = {
   score: number | null
   progress: number | null
   lastAccessedAt: Date | null
-  createdAt: Date | null
   updatedAt: Date | null
 }
 
@@ -62,7 +61,6 @@ export type EnrollmentMaxAggregateOutputType = {
   score: number | null
   progress: number | null
   lastAccessedAt: Date | null
-  createdAt: Date | null
   updatedAt: Date | null
 }
 
@@ -77,7 +75,6 @@ export type EnrollmentCountAggregateOutputType = {
   score: number
   progress: number
   lastAccessedAt: number
-  createdAt: number
   updatedAt: number
   _all: number
 }
@@ -104,7 +101,6 @@ export type EnrollmentMinAggregateInputType = {
   score?: true
   progress?: true
   lastAccessedAt?: true
-  createdAt?: true
   updatedAt?: true
 }
 
@@ -119,7 +115,6 @@ export type EnrollmentMaxAggregateInputType = {
   score?: true
   progress?: true
   lastAccessedAt?: true
-  createdAt?: true
   updatedAt?: true
 }
 
@@ -134,7 +129,6 @@ export type EnrollmentCountAggregateInputType = {
   score?: true
   progress?: true
   lastAccessedAt?: true
-  createdAt?: true
   updatedAt?: true
   _all?: true
 }
@@ -236,7 +230,6 @@ export type EnrollmentGroupByOutputType = {
   score: number | null
   progress: number
   lastAccessedAt: Date | null
-  createdAt: Date
   updatedAt: Date
   _count: EnrollmentCountAggregateOutputType | null
   _avg: EnrollmentAvgAggregateOutputType | null
@@ -274,7 +267,6 @@ export type EnrollmentWhereInput = {
   score?: Prisma.FloatNullableFilter<"Enrollment"> | number | null
   progress?: Prisma.FloatFilter<"Enrollment"> | number
   lastAccessedAt?: Prisma.DateTimeNullableFilter<"Enrollment"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -291,7 +283,6 @@ export type EnrollmentOrderByWithRelationInput = {
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   progress?: Prisma.SortOrder
   lastAccessedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   student?: Prisma.StudentOrderByWithRelationInput
   course?: Prisma.CourseOrderByWithRelationInput
@@ -312,7 +303,6 @@ export type EnrollmentWhereUniqueInput = Prisma.AtLeast<{
   score?: Prisma.FloatNullableFilter<"Enrollment"> | number | null
   progress?: Prisma.FloatFilter<"Enrollment"> | number
   lastAccessedAt?: Prisma.DateTimeNullableFilter<"Enrollment"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -329,7 +319,6 @@ export type EnrollmentOrderByWithAggregationInput = {
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   progress?: Prisma.SortOrder
   lastAccessedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.EnrollmentCountOrderByAggregateInput
   _avg?: Prisma.EnrollmentAvgOrderByAggregateInput
@@ -352,7 +341,6 @@ export type EnrollmentScalarWhereWithAggregatesInput = {
   score?: Prisma.FloatNullableWithAggregatesFilter<"Enrollment"> | number | null
   progress?: Prisma.FloatWithAggregatesFilter<"Enrollment"> | number
   lastAccessedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Enrollment"> | Date | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Enrollment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Enrollment"> | Date | string
 }
 
@@ -365,7 +353,6 @@ export type EnrollmentCreateInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
   course: Prisma.CourseCreateNestedOneWithoutEnrollmentsInput
@@ -382,7 +369,6 @@ export type EnrollmentUncheckedCreateInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
@@ -395,7 +381,6 @@ export type EnrollmentUpdateInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
@@ -412,7 +397,6 @@ export type EnrollmentUncheckedUpdateInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -427,7 +411,6 @@ export type EnrollmentCreateManyInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
@@ -440,7 +423,6 @@ export type EnrollmentUpdateManyMutationInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -455,7 +437,6 @@ export type EnrollmentUncheckedUpdateManyInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -485,7 +466,6 @@ export type EnrollmentCountOrderByAggregateInput = {
   score?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   lastAccessedAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -505,7 +485,6 @@ export type EnrollmentMaxOrderByAggregateInput = {
   score?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   lastAccessedAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -520,7 +499,6 @@ export type EnrollmentMinOrderByAggregateInput = {
   score?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   lastAccessedAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -613,6 +591,18 @@ export type EnrollmentUncheckedUpdateManyWithoutCourseNestedInput = {
   deleteMany?: Prisma.EnrollmentScalarWhereInput | Prisma.EnrollmentScalarWhereInput[]
 }
 
+export type NullableEnumGradeFieldUpdateOperationsInput = {
+  set?: $Enums.Grade | null
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -630,7 +620,6 @@ export type EnrollmentCreateWithoutStudentInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutEnrollmentsInput
 }
@@ -645,7 +634,6 @@ export type EnrollmentUncheckedCreateWithoutStudentInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
@@ -689,7 +677,6 @@ export type EnrollmentScalarWhereInput = {
   score?: Prisma.FloatNullableFilter<"Enrollment"> | number | null
   progress?: Prisma.FloatFilter<"Enrollment"> | number
   lastAccessedAt?: Prisma.DateTimeNullableFilter<"Enrollment"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
 }
 
@@ -702,7 +689,6 @@ export type EnrollmentCreateWithoutCourseInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
 }
@@ -717,7 +703,6 @@ export type EnrollmentUncheckedCreateWithoutCourseInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
@@ -757,7 +742,6 @@ export type EnrollmentCreateManyStudentInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
@@ -770,7 +754,6 @@ export type EnrollmentUpdateWithoutStudentInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
 }
@@ -785,7 +768,6 @@ export type EnrollmentUncheckedUpdateWithoutStudentInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -799,7 +781,6 @@ export type EnrollmentUncheckedUpdateManyWithoutStudentInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -813,7 +794,6 @@ export type EnrollmentCreateManyCourseInput = {
   score?: number | null
   progress?: number
   lastAccessedAt?: Date | string | null
-  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
@@ -826,7 +806,6 @@ export type EnrollmentUpdateWithoutCourseInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
 }
@@ -841,7 +820,6 @@ export type EnrollmentUncheckedUpdateWithoutCourseInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -855,7 +833,6 @@ export type EnrollmentUncheckedUpdateManyWithoutCourseInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   progress?: Prisma.FloatFieldUpdateOperationsInput | number
   lastAccessedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -872,7 +849,6 @@ export type EnrollmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   score?: boolean
   progress?: boolean
   lastAccessedAt?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -889,7 +865,6 @@ export type EnrollmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   score?: boolean
   progress?: boolean
   lastAccessedAt?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -906,7 +881,6 @@ export type EnrollmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   score?: boolean
   progress?: boolean
   lastAccessedAt?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -923,11 +897,10 @@ export type EnrollmentSelectScalar = {
   score?: boolean
   progress?: boolean
   lastAccessedAt?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EnrollmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "courseId" | "dateEnrolled" | "isCompleted" | "completionDate" | "grade" | "score" | "progress" | "lastAccessedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["enrollment"]>
+export type EnrollmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "courseId" | "dateEnrolled" | "isCompleted" | "completionDate" | "grade" | "score" | "progress" | "lastAccessedAt" | "updatedAt", ExtArgs["result"]["enrollment"]>
 export type EnrollmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -958,7 +931,6 @@ export type $EnrollmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     score: number | null
     progress: number
     lastAccessedAt: Date | null
-    createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["enrollment"]>
   composites: {}
@@ -1395,7 +1367,6 @@ export interface EnrollmentFieldRefs {
   readonly score: Prisma.FieldRef<"Enrollment", 'Float'>
   readonly progress: Prisma.FieldRef<"Enrollment", 'Float'>
   readonly lastAccessedAt: Prisma.FieldRef<"Enrollment", 'DateTime'>
-  readonly createdAt: Prisma.FieldRef<"Enrollment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Enrollment", 'DateTime'>
 }
     
