@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Changed Successfully - MOUAU ClassMate</title>
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      line-height: 1.6; 
+      color: #374151; 
+      max-width: 600px; 
+      margin: 0 auto; 
+      padding: 20px;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #f0f9ff 100%);
+    }
+    
+    .container {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(29, 157, 33, 0.15);
+      border: 1px solid #e5e7eb;
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 45px rgba(29, 157, 33, 0.2);
+    }
+    
+    .header { 
+      background: linear-gradient(135deg, #1D9D21 0%, #16a34a 100%);
+      color: white; 
+      padding: 50px 30px; 
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1D9D21, #FFF600, #1D9D21);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(180deg); }
+    }
+    
+    .logo { 
+      font-size: 32px; 
+      font-weight: 800; 
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .logo-subtitle {
+      font-size: 14px;
+      opacity: 0.95;
+      font-weight: 400;
+      margin-top: 5px;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .content { 
+      padding: 45px 35px; 
+    }
+    
+    .success-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid #bbf7d0;
+      margin-bottom: 25px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+      text-align: center;
+    }
+    
+    .success-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #1D9D21, #FFF600);
+      border-radius: 4px 0 0 4px;
+    }
+    
+    .success-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .user-name {
+      color: #1D9D21;
+      font-weight: 700;
+      font-size: 18px;
+      background: linear-gradient(135deg, #1D9D21, #16a34a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .security-badge {
+      background: linear-gradient(135deg, #1D9D21 0%, #16a34a 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 25px 0;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+    }
+    
+    .security-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #FFF600;
+      animation: slideIn 1s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    .security-badge::after {
+      content: '✅';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 20px;
+      animation: checkPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes checkPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .button { 
+      display: inline-block; 
+      background: linear-gradient(135deg, #1D9D21 0%, #16a34a 100%);
+      color: white; 
+      padding: 16px 40px; 
+      text-decoration: none; 
+      border-radius: 12px; 
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 6px 20px rgba(29, 157, 33, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+    }
+    
+    .button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
+    }
+    
+    .button:hover::before {
+      left: 100%;
+    }
+    
+    .button:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+      background: linear-gradient(135deg, #16a34a 0%, #1D9D21 100%);
+    }
+    
+    .button:active {
+      transform: translateY(-1px) scale(1.01);
+    }
+    
+    .confirmation-note {
+      background: #f0fdf4;
+      padding: 18px 20px;
+      border-radius: 12px;
+      border-left: 4px solid #1D9D21;
+      margin: 25px 0;
+      font-size: 14px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+    }
+    
+    .confirmation-note::before {
+      content: '🕒';
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+    
+    .timestamp-section {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      margin: 20px 0;
+      position: relative;
+    }
+    
+    .timestamp-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #1D9D21, #FFF600);
+      border-radius: 12px 12px 0 0;
+    }
+    
+    .timestamp {
+      background: #1f2937;
+      color: #FFF600;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border: 1px solid #374151;
+      margin: 15px 0;
+      position: relative;
+      word-break: break-all;
+      line-height: 1.5;
+      text-align: center;
+    }
+    
+    .timestamp::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #FFF600;
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .steps-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #f0fdf4 100%);
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      margin: 25px 0;
+      position: relative;
+    }
+    
+    .steps-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #1D9D21, #FFF600);
+      border-radius: 4px 0 0 4px;
+    }
+    
+    .step-container {
+      margin: 20px 0;
+      padding-left: 10px;
+    }
+    
+    .step-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #1D9D21;
+      color: white;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 12px;
+      box-shadow: 0 2px 8px rgba(29, 157, 33, 0.3);
+      position: relative;
+    }
+    
+    .step-number::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 6px;
+      height: 6px;
+      background: #FFF600;
+      border-radius: 50%;
+    }
+    
+    .step-title {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 15px;
+    }
+    
+    .step-desc {
+      color: #6b7280;
+      font-size: 13px;
+      margin-left: 40px;
+      margin-top: 4px;
+    }
+    
+    .footer { 
+      text-align: center; 
+      margin-top: 45px; 
+      padding-top: 35px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 13px; 
+      color: #6b7280;
+      position: relative;
+    }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #1D9D21, #FFF600);
+      border-radius: 3px;
+    }
+    
+    .highlight {
+      color: #1D9D21;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #FFF600;
+      transform: scaleX(0.8);
+      transition: transform 0.3s ease;
+    }
+    
+    .highlight:hover::after {
+      transform: scaleX(1);
+    }
+    
+    .cta-section {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .instruction-text {
+      font-size: 15px;
+      color: #4b5563;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      text-align: center;
+    }
+    
+    .security-note {
+      background: #fff7ed;
+      padding: 18px 20px;
+      border-radius: 12px;
+      border-left: 4px solid #f59e0b;
+      margin: 25px 0;
+      font-size: 14px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
+    }
+    
+    .security-note::before {
+      content: '⚠️';
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1D9D21;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .section-title::before {
+      content: '🎉';
+      font-size: 20px;
+    }
+    
+    .success-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1D9D21;
+      margin: 0 0 15px 0;
+      text-align: center;
+      background: linear-gradient(135deg, #1D9D21, #16a34a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .success-subtitle {
+      font-size: 16px;
+      color: #6b7280;
+      text-align: center;
+      margin: 0 0 25px 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">MOUAU ClassMate</div>
+      <div class="logo-subtitle">Your Academic Partner</div>
+    </div>
+    
+    <div class="content">
+      <div class="success-card">
+        {{!-- <div class="success-icon"></div> --}}
+        <h1 class="success-title">Password Changed Successfully!</h1>
+        <p class="success-subtitle">Your MOUAU ClassMate account password has been updated securely</p>
+      </div>
+      
+      <div class="security-badge">
+        Password Update Confirmed
+      </div>
+      
+      <div class="alert-card">
+        <p style="margin: 0; font-size: 17px; font-weight: 600;">Hello <span class="user-name">{{name}}</span>,</p>
+        <p style="margin: 12px 0 0 0; font-size: 15px; color: #6b7280; line-height: 1.6;">
+          Your <span class="highlight">MOUAU ClassMate</span> account password was successfully changed.
+        </p>
+      </div>
+      
+      <p class="instruction-text">
+        Your account security has been updated. You can now sign in with your new password to access all your academic resources.
+      </p>
+      
+      <div class="cta-section">
+        <a href="{{loginLink}}" class="button">
+          Sign In to ClassMate
+        </a>
+      </div>
+      
+      <div class="timestamp-section">
+        <p style="margin: 0 0 15px 0; font-weight: 600; color: #1f2937;">
+          Password Change Details
+        </p>
+        <p style="margin: 0 0 12px 0; font-size: 14px; color: #6b7280;">
+          Your password was successfully updated on:
+        </p>
+        <div class="timestamp">
+          {{timestamp}}
+        </div>
+      </div>
+      
+      <div class="confirmation-note">
+        <strong>Confirmation:</strong> This change was completed successfully. Your new password is now active across all MOUAU ClassMate services.
+      </div>
+      
+      <div class="steps-section">
+        <div class="section-title">
+          What Happens Next
+        </div>
+        
+        <div class="step-container">
+          <div class="step-header">
+            <span class="step-number">1</span>
+            <span class="step-title">Sign in with your new password</span>
+          </div>
+          <div class="step-desc">Use your updated credentials to access your account</div>
+        </div>
+        
+        <div class="step-container">
+          <div class="step-header">
+            <span class="step-number">2</span>
+            <span class="step-title">Access your academic dashboard</span>
+          </div>
+          <div class="step-desc">Continue with your studies and academic activities</div>
+        </div>
+        
+        <div class="step-container">
+          <div class="step-header">
+            <span class="step-number">3</span>
+            <span class="step-title">Enjoy enhanced security</span>
+          </div>
+          <div class="step-desc">Your account is now protected with your new password</div>
+        </div>
+      </div>
+      
+      <div class="security-note">
+        <strong>Security Alert:</strong> If you did not make this password change, please 
+        <a href="{{supportLink}}" style="color: #f59e0b; font-weight: 600; text-decoration: none;">contact support immediately</a>. 
+        Your account security may have been compromised.
+      </div>
+          
+      <p style="font-size: 14px; color: #6b7280; text-align: center; margin-top: 25px;">
+        For your security, we recommend using a <span class="highlight">unique password</span> that you don't use on other platforms.
+      </p>
+      
+      <div class="footer">
+        <p style="margin: 0 0 12px 0; font-weight: 600;">
+          MOUAU ClassMate Security Team
+        </p>
+        <p style="margin: 0 0 8px 0; font-size: 12px; opacity: 0.9;">
+          Student Management System
+        </p>
+        <p style="margin: 0; font-size: 11px; opacity: 0.7;">
+          This is an automated security confirmation. For assistance, contact support through the ClassMate portal.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

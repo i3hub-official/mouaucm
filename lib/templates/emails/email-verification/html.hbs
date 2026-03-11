@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - MOUAU ClassMate</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #374151; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #f0f9ff 100%);
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .header { 
+            background: linear-gradient(135deg, #1D9D21 0%, #15803d 100%);
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1D9D21, #FFF600, #1D9D21);
+        }
+        
+        .logo { 
+            font-size: 28px; 
+            font-weight: bold; 
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        
+        .content { 
+            padding: 40px 30px; 
+        }
+        
+        .welcome-section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #1D9D21;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .welcome-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: #FFF600;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .button { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #1D9D21 0%, #16a34a 100%);
+            color: white; 
+            padding: 14px 35px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(29, 157, 33, 0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: #FFF600;
+            transition: left 0.3s ease;
+        }
+        
+        .button:hover::before {
+            left: 0;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(29, 157, 33, 0.35);
+            background: linear-gradient(135deg, #16a34a 0%, #1D9D21 100%);
+        }
+        
+        .link-box {
+            background: #f8fafc; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-size: 14px;
+            border: 1px solid #e5e7eb;
+            word-break: break-all;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .link-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #FFF600;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .footer { 
+            text-align: center; 
+            margin-top: 40px; 
+            padding-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px; 
+            color: #6b7280;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #FFF600;
+            border-radius: 3px;
+        }
+        
+        .security-note {
+            background: #fffef0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #FFF600;
+            margin: 25px 0;
+            font-size: 14px;
+        }
+        
+        .user-name {
+            color: #1D9D21;
+            font-weight: 600;
+        }
+        
+        .highlight {
+            color: #1D9D21;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #FFF600;
+        }
+        
+        .verification-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #FFF600;
+            color: #1D9D21;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .copy-paste-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-top: 25px;
+            position: relative;
+        }
+        
+        .copy-paste-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: #FFF600;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .copy-instructions {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #bbf7d0;
+            margin: 15px 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #1D9D21;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .action-badge {
+            background: linear-gradient(135deg, #1D9D21 0%, #15803d 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #FFF600;
+        }
+        
+        .action-badge::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #FFF600;
+        }
+        
+        .full-link-box {
+            background: #1f2937;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 1px solid #374151;
+            margin: 15px 0;
+            position: relative;
+            word-break: break-all;
+        }
+        
+        .full-link-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #FFF600;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .step-container {
+            margin: 15px 0;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">MOUAU ClassMate</div>
+            <div class="logo-subtitle">Your Academic Partner</div>
+            <h1 style="margin: 20px 0 0 0; font-size: 24px; font-weight: 600;">Verify Your Email Address</h1>
+        </div>
+        
+        <div class="content">
+            <div class="welcome-section">
+                <p style="margin: 0; font-size: 16px;">Hello <span class="user-name">{{name}}</span>,</p>
+                <p style="margin: 10px 0 0 0; font-size: 14px; color: #6b7280;">Welcome to the <span class="highlight">MOUAU ClassMate</span> community! We're excited to have you onboard.</p>
+            </div>
+            
+            <div class="action-badge">
+                Email Verification Required
+            </div>
+            
+            <p>To complete your registration and start accessing your academic resources, please verify your email address by clicking the button below:</p>
+            
+            <div style="text-align: center; margin: 35px 0;">
+                <a href="{{verificationLink}}" class="button">
+                    <span class="verification-icon">✓</span>
+                    Verify Email Address
+                </a>
+            </div>
+                                   
+                     
+            <div class="copy-paste-section">
+                <p style="margin: 0 0 20px 0; font-weight: 600; color: #1D9D21; font-size: 18px;">
+                    <span class="verification-icon">📋</span>
+                    Copy & Paste Verification
+                </p>
+                
+                <div class="copy-instructions">
+                    <p style="margin: 0 0 15px 0; font-weight: 600; color: #15803d;">Follow these simple steps if the button above doesn't work:</p>
+                    
+                    <div class="step-container">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Copy the full verification link:
+                        </div>
+                        <div class="full-link-box">
+                            {{verificationLink}}
+                        </div>
+                    </div>
+                    
+                    <div class="step-container">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Open your web browser
+                        </div>
+                        <p style="margin: 5px 0 0 0; color: #6b7280; font-size: 14px;">
+                            (Chrome, Firefox, Safari, Edge, etc.)
+                        </p>
+                    </div>
+                    
+                    <div class="step-container">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Paste the link into your browser's address bar
+                        </div>
+                    </div>
+                    
+                    <div class="step-container">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Press Enter to complete your verification
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="margin: 15px 0 0 0; font-size: 14px; color: #6b7280; text-align: center;">
+                    <strong>That's it!</strong> The link contains everything needed to verify your email automatically.
+                </p>
+            </div>
+            
+            <div class="security-note">
+                <strong>Security Notice:</strong> This verification link will expire in <strong>24 hours</strong> for your protection.
+            </div>
+
+            <p style="font-size: 14px; color: #6b7280; margin-top: 25px;">If you didn't create an account with MOUAU ClassMate, please ignore this email. Your email address will not be used for any communications.</p>
+            
+            <div class="footer">
+                <p style="margin: 0 0 10px 0;">
+                    <strong>MOUAU ClassMate Team</strong><br>
+                    Student Management System
+                </p>
+                <p style="margin: 0; font-size: 12px; opacity: 0.8;">
+                    This is an automated message. Please do not reply to this email.<br>
+                    For assistance, contact our support team through the ClassMate portal.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
