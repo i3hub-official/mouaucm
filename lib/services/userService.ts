@@ -6,7 +6,7 @@ import {
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 // Define response types
 export interface UserProfile {
@@ -22,14 +22,14 @@ export interface UserProfile {
     id: string;
     matricNumber: string;
     firstName: string;
-    surname: string;
+    lastname: string;
     department: string;
   };
   teacher?: {
     id: string;
     teacherId: string;
     firstName: string;
-    surname: string;
+    lastname: string;
     department: string;
   };
 }
@@ -90,7 +90,7 @@ export class UserService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               department: true,
             },
           },
@@ -99,7 +99,7 @@ export class UserService {
               id: true,
               teacherId: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               department: true,
             },
           },
@@ -118,29 +118,29 @@ export class UserService {
 
       // Decrypt student data if exists
       if (user.student) {
-        const [firstName, surname] = await Promise.all([
+        const [firstName, lastname] = await Promise.all([
           unprotectData(user.student.firstName, "name"),
-          unprotectData(user.student.surname, "name"),
+          unprotectData(user.student.lastname, "name"),
         ]);
 
         decryptedUser.student = {
           ...user.student,
           firstName,
-          surname,
+          lastname,
         };
       }
 
       // Decrypt teacher data if exists
       if (user.teacher) {
-        const [firstName, surname] = await Promise.all([
+        const [firstName, lastname] = await Promise.all([
           unprotectData(user.teacher.firstName, "name"),
-          unprotectData(user.teacher.surname, "name"),
+          unprotectData(user.teacher.lastname, "name"),
         ]);
 
         decryptedUser.teacher = {
           ...user.teacher,
           firstName,
-          surname,
+          lastname,
         };
       }
 

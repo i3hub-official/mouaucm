@@ -6,7 +6,7 @@ import {
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 import {
   StudentProfile,
   ProfileUpdateData,
@@ -31,7 +31,7 @@ export class StudentProfileService {
           id: true,
           matricNumber: true,
           firstName: true,
-          surname: true,
+          lastname: true,
           otherName: true,
           email: true,
           phone: true,
@@ -71,7 +71,7 @@ export class StudentProfileService {
         unprotectData(student.email, "email"),
         unprotectData(student.phone, "phone"),
         unprotectData(student.firstName, "name"),
-        unprotectData(student.surname, "name"),
+        unprotectData(student.lastname, "name"),
         student.otherName
           ? unprotectData(student.otherName, "name")
           : Promise.resolve(null),
@@ -94,7 +94,7 @@ export class StudentProfileService {
         matricNumber: student.matricNumber,
         fullName,
         firstName: decryptedFirstName,
-        surname: decryptedSurname,
+        lastname: decryptedSurname,
         otherName: decryptedOtherName,
         email: decryptedEmail,
         phone: decryptedPhone,
@@ -123,11 +123,11 @@ export class StudentProfileService {
    * Format full name from components
    */
   private static formatFullName(
-    surname: string,
+    lastname: string,
     firstName: string,
     otherName: string | null
   ): string {
-    let fullName = `${surname} ${firstName}`;
+    let fullName = `${lastname} ${firstName}`;
     if (otherName) {
       fullName += ` ${otherName}`;
     }
@@ -161,9 +161,9 @@ export class StudentProfileService {
         ).encrypted;
       }
 
-      if (profileData.surname) {
-        updateData.surname = (
-          await protectData(profileData.surname, "name")
+      if (profileData.lastname) {
+        updateData.lastname = (
+          await protectData(profileData.lastname, "name")
         ).encrypted;
       }
 
@@ -203,7 +203,7 @@ export class StudentProfileService {
           id: true,
           matricNumber: true,
           firstName: true,
-          surname: true,
+          lastname: true,
           otherName: true,
           email: true,
           phone: true,
@@ -241,7 +241,7 @@ export class StudentProfileService {
         unprotectData(updatedStudent.email, "email"),
         unprotectData(updatedStudent.phone, "phone"),
         unprotectData(updatedStudent.firstName, "name"),
-        unprotectData(updatedStudent.surname, "name"),
+        unprotectData(updatedStudent.lastname, "name"),
         updatedStudent.otherName
           ? unprotectData(updatedStudent.otherName, "name")
           : Promise.resolve(null),
@@ -264,7 +264,7 @@ export class StudentProfileService {
         matricNumber: updatedStudent.matricNumber,
         fullName,
         firstName: decryptedFirstName,
-        surname: decryptedSurname,
+        lastname: decryptedSurname,
         otherName: decryptedOtherName,
         email: decryptedEmail,
         phone: decryptedPhone,
@@ -616,7 +616,7 @@ export class StudentProfileService {
         where: { userId },
         select: {
           firstName: true,
-          surname: true,
+          lastname: true,
           phone: true,
           passportUrl: true,
           state: true,
@@ -632,7 +632,7 @@ export class StudentProfileService {
 
       const requiredFields = [
         { key: "firstName", value: student.firstName },
-        { key: "surname", value: student.surname },
+        { key: "lastname", value: student.lastname },
         { key: "phone", value: student.phone },
         { key: "passportUrl", value: student.passportUrl },
         { key: "state", value: student.state },

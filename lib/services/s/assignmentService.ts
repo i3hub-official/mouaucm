@@ -6,7 +6,7 @@ import {
   AssignmentSubmission,
   AssignmentSubmissionData,
 } from "@/lib/types/s/index";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 interface AssignmentResponse {
   assignments: AssignmentWithStudentSubmission[];

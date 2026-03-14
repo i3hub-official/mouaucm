@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
                     college: true,
                     course: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                     otherName: true,
                   },
                 },
@@ -59,13 +59,13 @@ export const authOptions: NextAuthOptions = {
                     department: true,
                     title: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                   },
                 },
                 admin: {
                   select: {
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                   },
                 },
               },
@@ -99,7 +99,7 @@ export const authOptions: NextAuthOptions = {
                     college: true,
                     course: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                     otherName: true,
                   },
                 },
@@ -109,14 +109,14 @@ export const authOptions: NextAuthOptions = {
                     department: true,
                     title: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                   },
                 },
                 admin: {
                   select: {
                     adminId: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                   },
                 },
               },
@@ -178,7 +178,7 @@ export const authOptions: NextAuthOptions = {
             // Decrypt name fields for student (you might want to cache this or handle differently)
             // For now, we'll use a placeholder or matric number
             userName = user.student.matricNumber;
-            fullName = `${user.student.surname} ${user.student.firstName}`;
+            fullName = `${user.student.lastname} ${user.student.firstName}`;
           } else if (user.teacher) {
             userName = user.teacher.title
               ? `${user.teacher.title} ${userName}`
@@ -187,8 +187,8 @@ export const authOptions: NextAuthOptions = {
               ? `${user.teacher.title} ${fullName}`
               : fullName;
           } else if (user.admin) {
-            userName = user.admin.surname + " " + user.admin.firstName;
-            fullName = `${user.admin.surname} ${user.admin.firstName}`;
+            userName = user.admin.lastname + " " + user.admin.firstName;
+            fullName = `${user.admin.lastname} ${user.admin.firstName}`;
           }
 
           // Create audit log for successful login
@@ -406,7 +406,7 @@ declare module "next-auth" {
       college: string;
       course: string;
       firstName: string;
-      surname: string;
+      lastname: string;
       otherName: string;
     } | null;
     teacher?: {
@@ -414,12 +414,12 @@ declare module "next-auth" {
       department: string;
       title: string;
       firstName: string;
-      surname: string;
+      lastname: string;
     } | null;
     admin?: {
       adminId?: string;
       firstName: string;
-      surname: string;
+      lastname: string;
     } | null;
   }
 

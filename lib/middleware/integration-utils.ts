@@ -1,7 +1,7 @@
 // src/lib/middleware/integration-utils.ts
 import type { NextRequest, NextResponse } from "next/server";
 import type { MiddlewareContext } from "./types";
-import { AuditAction } from "@/lib/server/prisma"; // Adjust the import path if needed
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 /**
  * Integration Utilities — The Glue That Holds Your Defense Layers Together

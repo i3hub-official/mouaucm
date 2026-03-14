@@ -4,7 +4,7 @@ import { prisma } from "@/lib/server/prisma";
 import { StudentPasswordService } from "@/lib/services/s/passwordService";
 import { TeacherPasswordService } from "@/lib/services/t/passwordService";
 import { AdminPasswordService } from "@/lib/services/a/passwordService";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,10 +55,10 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Log the password reset
+    // Log the password reset - use the string literal directly
     await prisma.auditLog.create({
       data: {
-        action: "PASSWORD_RESET",
+        action: AuditAction.PASSWORD_RESET,
         resourceType: "USER",
         details: { encodedEmail },
         ipAddress: request.headers.get("x-forwarded-for"),

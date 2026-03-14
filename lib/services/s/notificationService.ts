@@ -1,6 +1,6 @@
 // lib/services/notificationService.ts
 import { prisma } from "@/lib/server/prisma";
-import { NotificationType } from "@prisma/client";
+import { NotificationType } from "@/lib/generated/prisma/enums";
 import {
   Notification,
   NotificationPreferences,

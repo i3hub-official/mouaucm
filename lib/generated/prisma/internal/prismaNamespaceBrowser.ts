@@ -58,12 +58,16 @@ export const ModelName = {
   PasswordResetToken: 'PasswordResetToken',
   Student: 'Student',
   Teacher: 'Teacher',
+  Admin: 'Admin',
   Course: 'Course',
   Lecture: 'Lecture',
   Enrollment: 'Enrollment',
   Assignment: 'Assignment',
   AssignmentSubmission: 'AssignmentSubmission',
   Submission: 'Submission',
+  Exam: 'Exam',
+  ExamResult: 'ExamResult',
+  Attendance: 'Attendance',
   Portfolio: 'Portfolio',
   AuditLog: 'AuditLog',
   Notification: 'Notification',
@@ -72,7 +76,8 @@ export const ModelName = {
   RateLimit: 'RateLimit',
   SecurityEvent: 'SecurityEvent',
   UserActivity: 'UserActivity',
-  UserPreferences: 'UserPreferences'
+  UserPreferences: 'UserPreferences',
+  RequestLog: 'RequestLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -107,6 +112,7 @@ export const UserScalarFieldEnum = {
   lockedUntil: 'lockedUntil',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   passwordHash: 'passwordHash',
   greeting: 'greeting',
   greetingNextChange: 'greetingNextChange'
@@ -200,7 +206,9 @@ export const StudentScalarFieldEnum = {
   isActive: 'isActive',
   admissionYear: 'admissionYear',
   dateOfBirth: 'dateOfBirth',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   emailSearchHash: 'emailSearchHash',
   phoneSearchHash: 'phoneSearchHash',
   jambRegSearchHash: 'jambRegSearchHash',
@@ -222,15 +230,54 @@ export const TeacherScalarFieldEnum = {
   phone: 'phone',
   email: 'email',
   department: 'department',
+  institution: 'institution',
   qualification: 'qualification',
   specialization: 'specialization',
+  experience: 'experience',
   dateJoined: 'dateJoined',
   isActive: 'isActive',
+  passportUrl: 'passportUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   lastActivityAt: 'lastActivityAt',
+  emailSearchHash: 'emailSearchHash',
+  phoneSearchHash: 'phoneSearchHash',
+  employeeIdSearchHash: 'employeeIdSearchHash',
   userId: 'userId'
 } as const
 
 export type TeacherScalarFieldEnum = (typeof TeacherScalarFieldEnum)[keyof typeof TeacherScalarFieldEnum]
+
+
+export const AdminScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  otherName: 'otherName',
+  gender: 'gender',
+  phone: 'phone',
+  email: 'email',
+  department: 'department',
+  institution: 'institution',
+  qualification: 'qualification',
+  specialization: 'specialization',
+  experience: 'experience',
+  dateJoined: 'dateJoined',
+  isActive: 'isActive',
+  passportUrl: 'passportUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  lastActivityAt: 'lastActivityAt',
+  emailSearchHash: 'emailSearchHash',
+  phoneSearchHash: 'phoneSearchHash',
+  employeeIdSearchHash: 'employeeIdSearchHash',
+  userId: 'userId'
+} as const
+
+export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
 export const CourseScalarFieldEnum = {
@@ -242,11 +289,14 @@ export const CourseScalarFieldEnum = {
   level: 'level',
   semester: 'semester',
   courseOutline: 'courseOutline',
+  color: 'color',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   instructorId: 'instructorId',
-  creatorId: 'creatorId'
+  creatorId: 'creatorId',
+  adminCreatorId: 'adminCreatorId'
 } as const
 
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
@@ -257,12 +307,14 @@ export const LectureScalarFieldEnum = {
   title: 'title',
   description: 'description',
   content: 'content',
+  videoUrl: 'videoUrl',
   duration: 'duration',
   orderIndex: 'orderIndex',
   isPublished: 'isPublished',
   publishedAt: 'publishedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   courseId: 'courseId'
 } as const
 
@@ -280,7 +332,9 @@ export const EnrollmentScalarFieldEnum = {
   score: 'score',
   progress: 'progress',
   lastAccessedAt: 'lastAccessedAt',
-  updatedAt: 'updatedAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type EnrollmentScalarFieldEnum = (typeof EnrollmentScalarFieldEnum)[keyof typeof EnrollmentScalarFieldEnum]
@@ -293,12 +347,16 @@ export const AssignmentScalarFieldEnum = {
   instructions: 'instructions',
   dueDate: 'dueDate',
   maxScore: 'maxScore',
+  weight: 'weight',
   allowedAttempts: 'allowedAttempts',
   assignmentUrl: 'assignmentUrl',
   isPublished: 'isPublished',
   allowLateSubmission: 'allowLateSubmission',
+  latePenalty: 'latePenalty',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  scheduledAt: 'scheduledAt',
   courseId: 'courseId',
   teacherId: 'teacherId'
 } as const
@@ -316,6 +374,10 @@ export const AssignmentSubmissionScalarFieldEnum = {
   isGraded: 'isGraded',
   isLate: 'isLate',
   attemptNumber: 'attemptNumber',
+  status: 'status',
+  gradedAt: 'gradedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   studentId: 'studentId',
   assignmentId: 'assignmentId'
 } as const
@@ -330,11 +392,74 @@ export const SubmissionScalarFieldEnum = {
   isGraded: 'isGraded',
   score: 'score',
   feedback: 'feedback',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   studentId: 'studentId',
   lectureId: 'lectureId'
 } as const
 
 export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+
+
+export const ExamScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  courseId: 'courseId',
+  date: 'date',
+  duration: 'duration',
+  totalMarks: 'totalMarks',
+  venue: 'venue',
+  type: 'type',
+  format: 'format',
+  instructions: 'instructions',
+  isPublished: 'isPublished',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
+
+
+export const ExamResultScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  studentId: 'studentId',
+  courseId: 'courseId',
+  score: 'score',
+  percentage: 'percentage',
+  grade: 'grade',
+  remark: 'remark',
+  isPublished: 'isPublished',
+  publishedAt: 'publishedAt',
+  recordedBy: 'recordedBy',
+  recordedAt: 'recordedAt',
+  updatedAt: 'updatedAt',
+  scriptUrl: 'scriptUrl',
+  feedback: 'feedback'
+} as const
+
+export type ExamResultScalarFieldEnum = (typeof ExamResultScalarFieldEnum)[keyof typeof ExamResultScalarFieldEnum]
+
+
+export const AttendanceScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  courseId: 'courseId',
+  lectureId: 'lectureId',
+  date: 'date',
+  status: 'status',
+  markedAt: 'markedAt',
+  markedBy: 'markedBy',
+  notes: 'notes',
+  verified: 'verified',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
 
 
 export const PortfolioScalarFieldEnum = {
@@ -346,7 +471,9 @@ export const PortfolioScalarFieldEnum = {
   technologies: 'technologies',
   isPublished: 'isPublished',
   submittedAt: 'submittedAt',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   courseId: 'courseId',
   studentId: 'studentId'
 } as const
@@ -393,6 +520,7 @@ export const SystemConfigScalarFieldEnum = {
   description: 'description',
   category: 'category',
   isPublic: 'isPublic',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   updatedBy: 'updatedBy'
 } as const
@@ -463,14 +591,53 @@ export const UserPreferencesScalarFieldEnum = {
   userId: 'userId',
   emailNotifications: 'emailNotifications',
   pushNotifications: 'pushNotifications',
+  smsNotifications: 'smsNotifications',
   assignmentReminders: 'assignmentReminders',
   gradeAlerts: 'gradeAlerts',
   lectureReminders: 'lectureReminders',
+  examReminders: 'examReminders',
+  theme: 'theme',
+  language: 'language',
+  timezone: 'timezone',
+  dateFormat: 'dateFormat',
+  timeFormat: 'timeFormat',
+  itemsPerPage: 'itemsPerPage',
+  dashboardLayout: 'dashboardLayout',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserPreferencesScalarFieldEnum = (typeof UserPreferencesScalarFieldEnum)[keyof typeof UserPreferencesScalarFieldEnum]
+
+
+export const RequestLogScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  method: 'method',
+  path: 'path',
+  queryParams: 'queryParams',
+  ipAddress: 'ipAddress',
+  userId: 'userId',
+  userAgent: 'userAgent',
+  isAuthenticated: 'isAuthenticated',
+  threatScore: 'threatScore',
+  securityLevel: 'securityLevel',
+  ipIntelligence: 'ipIntelligence',
+  metadata: 'metadata',
+  requestStartTime: 'requestStartTime',
+  requestEndTime: 'requestEndTime',
+  processingTimeMs: 'processingTimeMs',
+  responseStatus: 'responseStatus',
+  responseSize: 'responseSize',
+  dbQueryCount: 'dbQueryCount',
+  dbQueryTimeMs: 'dbQueryTimeMs',
+  externalApiCalls: 'externalApiCalls',
+  errorMessage: 'errorMessage',
+  errorStack: 'errorStack',
+  createdAt: 'createdAt'
+} as const
+
+export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
 
 
 export const SortOrder = {

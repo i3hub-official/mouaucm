@@ -2,7 +2,7 @@
 import { prisma } from "@/lib/server/prisma";
 import { Student, StudentProfile } from "@/lib/types/s/index";
 import { unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 
 export class StudentService {
   /**
@@ -12,7 +12,7 @@ export class StudentService {
     try {
       const decrypted = await Promise.all([
         unprotectData(student.firstName, "name"),
-        unprotectData(student.surname, "name"),
+        unprotectData(student.lastname, "name"),
         student.otherName ? unprotectData(student.otherName, "name") : null,
         unprotectData(student.email, "email"),
         unprotectData(student.phone, "phone"),
@@ -28,7 +28,7 @@ export class StudentService {
       return {
         ...student,
         firstName: decrypted[0],
-        surname: decrypted[1],
+        lastname: decrypted[1],
         otherName: decrypted[2],
         email: decrypted[3],
         phone: decrypted[4],
@@ -142,7 +142,7 @@ export class StudentService {
         id: true,
         matricNumber: true,
         firstName: true,
-        surname: true,
+        lastName: true,
         otherName: true,
         email: true,
         phone: true,
@@ -165,10 +165,10 @@ export class StudentService {
 
     if (!student) return null;
 
-    const [firstName, surname, otherName, email, phone, state, lga] =
+    const [firstName, lastname, otherName, email, phone, state, lga] =
       await Promise.all([
         unprotectData(student.firstName, "name"),
-        unprotectData(student.surname, "name"),
+        unprotectData(student.lastName, "name"),
         student.otherName ? unprotectData(student.otherName, "name") : null,
         unprotectData(student.email, "email"),
         unprotectData(student.phone, "phone"),
@@ -176,7 +176,7 @@ export class StudentService {
         unprotectData(student.lga || "", "location"),
       ]);
 
-    const fullName = [surname, firstName, otherName]
+    const fullName = [lastname, firstName, otherName]
       .filter(Boolean)
       .join(" ")
       .trim();
@@ -185,7 +185,7 @@ export class StudentService {
       id: student.id,
       matricNumber: student.matricNumber,
       firstName,
-      surname,
+      lastname,
       otherName,
       fullName,
       email,

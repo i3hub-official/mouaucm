@@ -4,7 +4,7 @@ import { prisma } from "@/lib/server/prisma";
 import { StudentService } from "@/lib/services/s/studentService";
 import { TeacherService } from "@/lib/services/t/teacherService";
 import { AdminService } from "@/lib/services/a/adminService";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 export async function GET(request: NextRequest) {
   try {

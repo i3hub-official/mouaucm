@@ -5,7 +5,6 @@ import {
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
 import { TeacherUser } from "@/lib/types/t/index";
 
 export class TeacherService {
@@ -43,7 +42,7 @@ export class TeacherService {
         email: await this.decryptField(teacher.user.email, "email"),
         phone: await this.decryptField(teacher.phone, "phone"),
         firstName: await this.decryptField(teacher.firstName, "name"),
-        surname: await this.decryptField(teacher.surname, "name"),
+        lastname: await this.decryptField(teacher.lastname, "name"),
         otherName: teacher.otherName
           ? await this.decryptField(teacher.otherName, "name")
           : null,
@@ -104,7 +103,7 @@ export class TeacherService {
         email: await this.decryptField(teacher.user.email, "email"),
         phone: await this.decryptField(teacher.phone, "phone"),
         firstName: await this.decryptField(teacher.firstName, "name"),
-        surname: await this.decryptField(teacher.surname, "name"),
+        lastname: await this.decryptField(teacher.lastname, "name"),
         otherName: teacher.otherName
           ? await this.decryptField(teacher.otherName, "name")
           : null,
@@ -171,7 +170,7 @@ export class TeacherService {
         email: await this.decryptField(teacher.user.email, "email"),
         phone: await this.decryptField(teacher.phone, "phone"),
         firstName: await this.decryptField(teacher.firstName, "name"),
-        surname: await this.decryptField(teacher.surname, "name"),
+        lastname: await this.decryptField(teacher.lastname, "name"),
         otherName: teacher.otherName
           ? await this.decryptField(teacher.otherName, "name")
           : null,
@@ -233,7 +232,7 @@ export class TeacherService {
         email: await this.decryptField(teacher.user.email, "email"),
         phone: await this.decryptField(teacher.phone, "phone"),
         firstName: await this.decryptField(teacher.firstName, "name"),
-        surname: await this.decryptField(teacher.surname, "name"),
+        lastname: await this.decryptField(teacher.lastname, "name"),
         otherName: teacher.otherName
           ? await this.decryptField(teacher.otherName, "name")
           : null,
@@ -266,7 +265,7 @@ export class TeacherService {
   static async createTeacher(teacherData: {
     teacherId: string;
     firstName: string;
-    surname: string;
+    lastname: string;
     otherName?: string;
     email: string;
     phone: string;
@@ -333,7 +332,7 @@ export class TeacherService {
           firstName: (
             await protectData(teacherData.firstName, "name")
           ).encrypted,
-          surname: (await protectData(teacherData.surname, "name")).encrypted,
+          lastname: (await protectData(teacherData.lastname, "name")).encrypted,
           otherName: teacherData.otherName
             ? (
                 await protectData(teacherData.otherName, "name")
@@ -377,7 +376,7 @@ export class TeacherService {
           userId: user.id,
           email: protectedEmail.encrypted,
           firstName: teacherData.firstName,
-          surname: teacherData.surname,
+          lastname: teacherData.lastname,
           otherName: teacherData.otherName,
           phone: teacherData.phone,
           department: teacherData.department,
@@ -404,7 +403,7 @@ export class TeacherService {
     teacherId: string,
     profileData: {
       firstName?: string;
-      surname?: string;
+      lastname?: string;
       otherName?: string;
       phone?: string;
       department?: string;
@@ -440,8 +439,8 @@ export class TeacherService {
       if (profileData.firstName !== undefined) {
         updateData.firstName = await protectData(profileData.firstName, "name");
       }
-      if (profileData.surname !== undefined) {
-        updateData.surname = await protectData(profileData.surname, "name");
+      if (profileData.lastname !== undefined) {
+        updateData.lastname = await protectData(profileData.lastname, "name");
       }
       if (profileData.otherName !== undefined) {
         updateData.otherName = await protectData(profileData.otherName, "name");
@@ -628,7 +627,7 @@ export class TeacherService {
         email: await this.decryptField(teacher.user.email, "email"),
         phone: await this.decryptField(teacher.phone, "phone"),
         firstName: await this.decryptField(teacher.firstName, "name"),
-        surname: await this.decryptField(teacher.surname, "name"),
+        lastname: await this.decryptField(teacher.lastname, "name"),
         otherName: teacher.otherName
           ? await this.decryptField(teacher.otherName, "name")
           : null,
@@ -708,7 +707,7 @@ export class TeacherService {
           email: await this.decryptField(teacher.user.email, "email"),
           phone: await this.decryptField(teacher.phone, "phone"),
           firstName: await this.decryptField(teacher.firstName, "name"),
-          surname: await this.decryptField(teacher.surname, "name"),
+          lastname: await this.decryptField(teacher.lastname, "name"),
           otherName: teacher.otherName
             ? await this.decryptField(teacher.otherName, "name")
             : null,
@@ -807,7 +806,7 @@ export class TeacherService {
           email: await this.decryptField(teacher.user.email, "email"),
           phone: await this.decryptField(teacher.phone, "phone"),
           firstName: await this.decryptField(teacher.firstName, "name"),
-          surname: await this.decryptField(teacher.surname, "name"),
+          lastname: await this.decryptField(teacher.lastname, "name"),
           otherName: teacher.otherName
             ? await this.decryptField(teacher.otherName, "name")
             : null,

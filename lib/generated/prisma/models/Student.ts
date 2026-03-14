@@ -56,7 +56,9 @@ export type StudentMinAggregateOutputType = {
   isActive: boolean | null
   admissionYear: number | null
   dateOfBirth: Date | null
+  createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
   emailSearchHash: string | null
   phoneSearchHash: string | null
   jambRegSearchHash: string | null
@@ -87,7 +89,9 @@ export type StudentMaxAggregateOutputType = {
   isActive: boolean | null
   admissionYear: number | null
   dateOfBirth: Date | null
+  createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
   emailSearchHash: string | null
   phoneSearchHash: string | null
   jambRegSearchHash: string | null
@@ -118,7 +122,9 @@ export type StudentCountAggregateOutputType = {
   isActive: number
   admissionYear: number
   dateOfBirth: number
+  createdAt: number
   updatedAt: number
+  deletedAt: number
   emailSearchHash: number
   phoneSearchHash: number
   jambRegSearchHash: number
@@ -159,7 +165,9 @@ export type StudentMinAggregateInputType = {
   isActive?: true
   admissionYear?: true
   dateOfBirth?: true
+  createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   emailSearchHash?: true
   phoneSearchHash?: true
   jambRegSearchHash?: true
@@ -190,7 +198,9 @@ export type StudentMaxAggregateInputType = {
   isActive?: true
   admissionYear?: true
   dateOfBirth?: true
+  createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   emailSearchHash?: true
   phoneSearchHash?: true
   jambRegSearchHash?: true
@@ -221,7 +231,9 @@ export type StudentCountAggregateInputType = {
   isActive?: true
   admissionYear?: true
   dateOfBirth?: true
+  createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   emailSearchHash?: true
   phoneSearchHash?: true
   jambRegSearchHash?: true
@@ -339,7 +351,9 @@ export type StudentGroupByOutputType = {
   isActive: boolean
   admissionYear: number | null
   dateOfBirth: Date | null
+  createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
   emailSearchHash: string | null
   phoneSearchHash: string | null
   jambRegSearchHash: string | null
@@ -393,7 +407,9 @@ export type StudentWhereInput = {
   isActive?: Prisma.BoolFilter<"Student"> | boolean
   admissionYear?: Prisma.IntNullableFilter<"Student"> | number | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Student"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
   emailSearchHash?: Prisma.StringNullableFilter<"Student"> | string | null
   phoneSearchHash?: Prisma.StringNullableFilter<"Student"> | string | null
   jambRegSearchHash?: Prisma.StringNullableFilter<"Student"> | string | null
@@ -405,6 +421,8 @@ export type StudentWhereInput = {
   portfolios?: Prisma.PortfolioListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
   assignmentSubmissions?: Prisma.AssignmentSubmissionListRelationFilter
+  examResults?: Prisma.ExamResultListRelationFilter
+  attendance?: Prisma.AttendanceListRelationFilter
 }
 
 export type StudentOrderByWithRelationInput = {
@@ -429,7 +447,9 @@ export type StudentOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   admissionYear?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   emailSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
   jambRegSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -441,6 +461,8 @@ export type StudentOrderByWithRelationInput = {
   portfolios?: Prisma.PortfolioOrderByRelationAggregateInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionOrderByRelationAggregateInput
+  examResults?: Prisma.ExamResultOrderByRelationAggregateInput
+  attendance?: Prisma.AttendanceOrderByRelationAggregateInput
 }
 
 export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -473,13 +495,17 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"Student"> | boolean
   admissionYear?: Prisma.IntNullableFilter<"Student"> | number | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Student"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
   lastActivityAt?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   enrollments?: Prisma.EnrollmentListRelationFilter
   portfolios?: Prisma.PortfolioListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
   assignmentSubmissions?: Prisma.AssignmentSubmissionListRelationFilter
+  examResults?: Prisma.ExamResultListRelationFilter
+  attendance?: Prisma.AttendanceListRelationFilter
 }, "id" | "matricNumber" | "jambRegNumber" | "nin" | "phone" | "email" | "emailSearchHash" | "phoneSearchHash" | "jambRegSearchHash" | "ninSearchHash" | "userId" | "matricNumber" | "jambRegNumber">
 
 export type StudentOrderByWithAggregationInput = {
@@ -504,7 +530,9 @@ export type StudentOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   admissionYear?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   emailSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
   jambRegSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -543,7 +571,9 @@ export type StudentScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"Student"> | boolean
   admissionYear?: Prisma.IntNullableWithAggregatesFilter<"Student"> | number | null
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"Student"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Student"> | Date | string | null
   emailSearchHash?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   phoneSearchHash?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   jambRegSearchHash?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
@@ -574,7 +604,9 @@ export type StudentCreateInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -585,6 +617,8 @@ export type StudentCreateInput = {
   portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateInput = {
@@ -609,7 +643,9 @@ export type StudentUncheckedCreateInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -620,6 +656,8 @@ export type StudentUncheckedCreateInput = {
   portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUpdateInput = {
@@ -644,7 +682,9 @@ export type StudentUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -655,6 +695,8 @@ export type StudentUpdateInput = {
   portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateInput = {
@@ -679,7 +721,9 @@ export type StudentUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -690,6 +734,8 @@ export type StudentUncheckedUpdateInput = {
   portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateManyInput = {
@@ -714,7 +760,9 @@ export type StudentCreateManyInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -745,7 +793,9 @@ export type StudentUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -775,7 +825,9 @@ export type StudentUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -811,7 +863,9 @@ export type StudentCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   admissionYear?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   emailSearchHash?: Prisma.SortOrder
   phoneSearchHash?: Prisma.SortOrder
   jambRegSearchHash?: Prisma.SortOrder
@@ -846,7 +900,9 @@ export type StudentMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   admissionYear?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   emailSearchHash?: Prisma.SortOrder
   phoneSearchHash?: Prisma.SortOrder
   jambRegSearchHash?: Prisma.SortOrder
@@ -877,7 +933,9 @@ export type StudentMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   admissionYear?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   emailSearchHash?: Prisma.SortOrder
   phoneSearchHash?: Prisma.SortOrder
   jambRegSearchHash?: Prisma.SortOrder
@@ -977,6 +1035,34 @@ export type StudentUpdateOneRequiredWithoutSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.StudentUpdateWithoutSubmissionsInput>, Prisma.StudentUncheckedUpdateWithoutSubmissionsInput>
 }
 
+export type StudentCreateNestedOneWithoutExamResultsInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutExamResultsInput, Prisma.StudentUncheckedCreateWithoutExamResultsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutExamResultsInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutExamResultsNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutExamResultsInput, Prisma.StudentUncheckedCreateWithoutExamResultsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutExamResultsInput
+  upsert?: Prisma.StudentUpsertWithoutExamResultsInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutExamResultsInput, Prisma.StudentUpdateWithoutExamResultsInput>, Prisma.StudentUncheckedUpdateWithoutExamResultsInput>
+}
+
+export type StudentCreateNestedOneWithoutAttendanceInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutAttendanceInput, Prisma.StudentUncheckedCreateWithoutAttendanceInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutAttendanceInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutAttendanceNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutAttendanceInput, Prisma.StudentUncheckedCreateWithoutAttendanceInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutAttendanceInput
+  upsert?: Prisma.StudentUpsertWithoutAttendanceInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutAttendanceInput, Prisma.StudentUpdateWithoutAttendanceInput>, Prisma.StudentUncheckedUpdateWithoutAttendanceInput>
+}
+
 export type StudentCreateNestedOneWithoutPortfoliosInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutPortfoliosInput, Prisma.StudentUncheckedCreateWithoutPortfoliosInput>
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutPortfoliosInput
@@ -1013,7 +1099,9 @@ export type StudentCreateWithoutUserInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1023,6 +1111,8 @@ export type StudentCreateWithoutUserInput = {
   portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutUserInput = {
@@ -1047,7 +1137,9 @@ export type StudentUncheckedCreateWithoutUserInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1057,6 +1149,8 @@ export type StudentUncheckedCreateWithoutUserInput = {
   portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutUserInput = {
@@ -1097,7 +1191,9 @@ export type StudentUpdateWithoutUserInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1107,6 +1203,8 @@ export type StudentUpdateWithoutUserInput = {
   portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutUserInput = {
@@ -1131,7 +1229,9 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1141,6 +1241,8 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutEnrollmentsInput = {
@@ -1165,7 +1267,9 @@ export type StudentCreateWithoutEnrollmentsInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1175,6 +1279,8 @@ export type StudentCreateWithoutEnrollmentsInput = {
   portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutEnrollmentsInput = {
@@ -1199,7 +1305,9 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1209,6 +1317,8 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutEnrollmentsInput = {
@@ -1249,7 +1359,9 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1259,6 +1371,8 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1283,7 +1397,9 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1293,6 +1409,8 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutAssignmentSubmissionsInput = {
@@ -1317,7 +1435,9 @@ export type StudentCreateWithoutAssignmentSubmissionsInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1327,6 +1447,8 @@ export type StudentCreateWithoutAssignmentSubmissionsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutAssignmentSubmissionsInput = {
@@ -1351,7 +1473,9 @@ export type StudentUncheckedCreateWithoutAssignmentSubmissionsInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1361,6 +1485,8 @@ export type StudentUncheckedCreateWithoutAssignmentSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutAssignmentSubmissionsInput = {
@@ -1401,7 +1527,9 @@ export type StudentUpdateWithoutAssignmentSubmissionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1411,6 +1539,8 @@ export type StudentUpdateWithoutAssignmentSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutAssignmentSubmissionsInput = {
@@ -1435,7 +1565,9 @@ export type StudentUncheckedUpdateWithoutAssignmentSubmissionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1445,6 +1577,8 @@ export type StudentUncheckedUpdateWithoutAssignmentSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutSubmissionsInput = {
@@ -1469,7 +1603,9 @@ export type StudentCreateWithoutSubmissionsInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1479,6 +1615,8 @@ export type StudentCreateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutSubmissionsInput = {
@@ -1503,7 +1641,9 @@ export type StudentUncheckedCreateWithoutSubmissionsInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1513,6 +1653,8 @@ export type StudentUncheckedCreateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutSubmissionsInput = {
@@ -1553,7 +1695,9 @@ export type StudentUpdateWithoutSubmissionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1563,6 +1707,8 @@ export type StudentUpdateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutSubmissionsInput = {
@@ -1587,7 +1733,9 @@ export type StudentUncheckedUpdateWithoutSubmissionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1597,6 +1745,344 @@ export type StudentUncheckedUpdateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentCreateWithoutExamResultsInput = {
+  id?: string
+  matricNumber: string
+  jambRegNumber: string
+  nin?: string | null
+  firstName: string
+  lastName: string
+  otherName?: string | null
+  gender?: $Enums.Gender | null
+  phone: string
+  passportUrl?: string | null
+  email: string
+  department: string
+  course: string
+  college: string
+  state: string
+  lga: string
+  maritalStatus?: $Enums.MaritalStatus | null
+  dateEnrolled?: Date | string
+  isActive?: boolean
+  admissionYear?: number | null
+  dateOfBirth?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  jambRegSearchHash?: string | null
+  ninSearchHash?: string | null
+  lastActivityAt?: Date | string | null
+  user: Prisma.UserCreateNestedOneWithoutStudentInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutExamResultsInput = {
+  id?: string
+  matricNumber: string
+  jambRegNumber: string
+  nin?: string | null
+  firstName: string
+  lastName: string
+  otherName?: string | null
+  gender?: $Enums.Gender | null
+  phone: string
+  passportUrl?: string | null
+  email: string
+  department: string
+  course: string
+  college: string
+  state: string
+  lga: string
+  maritalStatus?: $Enums.MaritalStatus | null
+  dateEnrolled?: Date | string
+  isActive?: boolean
+  admissionYear?: number | null
+  dateOfBirth?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  jambRegSearchHash?: string | null
+  ninSearchHash?: string | null
+  lastActivityAt?: Date | string | null
+  userId: string
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type StudentCreateOrConnectWithoutExamResultsInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutExamResultsInput, Prisma.StudentUncheckedCreateWithoutExamResultsInput>
+}
+
+export type StudentUpsertWithoutExamResultsInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutExamResultsInput, Prisma.StudentUncheckedUpdateWithoutExamResultsInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutExamResultsInput, Prisma.StudentUncheckedCreateWithoutExamResultsInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutExamResultsInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutExamResultsInput, Prisma.StudentUncheckedUpdateWithoutExamResultsInput>
+}
+
+export type StudentUpdateWithoutExamResultsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  matricNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  jambRegNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  otherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.StringFieldUpdateOperationsInput | string
+  college?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  lga?: Prisma.StringFieldUpdateOperationsInput | string
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dateEnrolled?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ninSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutExamResultsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  matricNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  jambRegNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  otherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.StringFieldUpdateOperationsInput | string
+  college?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  lga?: Prisma.StringFieldUpdateOperationsInput | string
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dateEnrolled?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ninSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentCreateWithoutAttendanceInput = {
+  id?: string
+  matricNumber: string
+  jambRegNumber: string
+  nin?: string | null
+  firstName: string
+  lastName: string
+  otherName?: string | null
+  gender?: $Enums.Gender | null
+  phone: string
+  passportUrl?: string | null
+  email: string
+  department: string
+  course: string
+  college: string
+  state: string
+  lga: string
+  maritalStatus?: $Enums.MaritalStatus | null
+  dateEnrolled?: Date | string
+  isActive?: boolean
+  admissionYear?: number | null
+  dateOfBirth?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  jambRegSearchHash?: string | null
+  ninSearchHash?: string | null
+  lastActivityAt?: Date | string | null
+  user: Prisma.UserCreateNestedOneWithoutStudentInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  portfolios?: Prisma.PortfolioCreateNestedManyWithoutStudentInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutAttendanceInput = {
+  id?: string
+  matricNumber: string
+  jambRegNumber: string
+  nin?: string | null
+  firstName: string
+  lastName: string
+  otherName?: string | null
+  gender?: $Enums.Gender | null
+  phone: string
+  passportUrl?: string | null
+  email: string
+  department: string
+  course: string
+  college: string
+  state: string
+  lga: string
+  maritalStatus?: $Enums.MaritalStatus | null
+  dateEnrolled?: Date | string
+  isActive?: boolean
+  admissionYear?: number | null
+  dateOfBirth?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  jambRegSearchHash?: string | null
+  ninSearchHash?: string | null
+  lastActivityAt?: Date | string | null
+  userId: string
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  portfolios?: Prisma.PortfolioUncheckedCreateNestedManyWithoutStudentInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type StudentCreateOrConnectWithoutAttendanceInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutAttendanceInput, Prisma.StudentUncheckedCreateWithoutAttendanceInput>
+}
+
+export type StudentUpsertWithoutAttendanceInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutAttendanceInput, Prisma.StudentUncheckedUpdateWithoutAttendanceInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutAttendanceInput, Prisma.StudentUncheckedCreateWithoutAttendanceInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutAttendanceInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutAttendanceInput, Prisma.StudentUncheckedUpdateWithoutAttendanceInput>
+}
+
+export type StudentUpdateWithoutAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  matricNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  jambRegNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  otherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.StringFieldUpdateOperationsInput | string
+  college?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  lga?: Prisma.StringFieldUpdateOperationsInput | string
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dateEnrolled?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ninSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  portfolios?: Prisma.PortfolioUpdateManyWithoutStudentNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  matricNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  jambRegNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  otherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.StringFieldUpdateOperationsInput | string
+  college?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  lga?: Prisma.StringFieldUpdateOperationsInput | string
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dateEnrolled?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ninSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  portfolios?: Prisma.PortfolioUncheckedUpdateManyWithoutStudentNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutPortfoliosInput = {
@@ -1621,7 +2107,9 @@ export type StudentCreateWithoutPortfoliosInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1631,6 +2119,8 @@ export type StudentCreateWithoutPortfoliosInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutPortfoliosInput = {
@@ -1655,7 +2145,9 @@ export type StudentUncheckedCreateWithoutPortfoliosInput = {
   isActive?: boolean
   admissionYear?: number | null
   dateOfBirth?: Date | string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   emailSearchHash?: string | null
   phoneSearchHash?: string | null
   jambRegSearchHash?: string | null
@@ -1665,6 +2157,8 @@ export type StudentUncheckedCreateWithoutPortfoliosInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  examResults?: Prisma.ExamResultUncheckedCreateNestedManyWithoutStudentInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutPortfoliosInput = {
@@ -1705,7 +2199,9 @@ export type StudentUpdateWithoutPortfoliosInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1715,6 +2211,8 @@ export type StudentUpdateWithoutPortfoliosInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutPortfoliosInput = {
@@ -1739,7 +2237,9 @@ export type StudentUncheckedUpdateWithoutPortfoliosInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   admissionYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jambRegSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1749,6 +2249,8 @@ export type StudentUncheckedUpdateWithoutPortfoliosInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   assignmentSubmissions?: Prisma.AssignmentSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  examResults?: Prisma.ExamResultUncheckedUpdateManyWithoutStudentNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 
@@ -1761,6 +2263,8 @@ export type StudentCountOutputType = {
   portfolios: number
   submissions: number
   assignmentSubmissions: number
+  examResults: number
+  attendance: number
 }
 
 export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1768,6 +2272,8 @@ export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   portfolios?: boolean | StudentCountOutputTypeCountPortfoliosArgs
   submissions?: boolean | StudentCountOutputTypeCountSubmissionsArgs
   assignmentSubmissions?: boolean | StudentCountOutputTypeCountAssignmentSubmissionsArgs
+  examResults?: boolean | StudentCountOutputTypeCountExamResultsArgs
+  attendance?: boolean | StudentCountOutputTypeCountAttendanceArgs
 }
 
 /**
@@ -1808,6 +2314,20 @@ export type StudentCountOutputTypeCountAssignmentSubmissionsArgs<ExtArgs extends
   where?: Prisma.AssignmentSubmissionWhereInput
 }
 
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountExamResultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExamResultWhereInput
+}
+
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceWhereInput
+}
+
 
 export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1831,7 +2351,9 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   isActive?: boolean
   admissionYear?: boolean
   dateOfBirth?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   emailSearchHash?: boolean
   phoneSearchHash?: boolean
   jambRegSearchHash?: boolean
@@ -1843,6 +2365,8 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   portfolios?: boolean | Prisma.Student$portfoliosArgs<ExtArgs>
   submissions?: boolean | Prisma.Student$submissionsArgs<ExtArgs>
   assignmentSubmissions?: boolean | Prisma.Student$assignmentSubmissionsArgs<ExtArgs>
+  examResults?: boolean | Prisma.Student$examResultsArgs<ExtArgs>
+  attendance?: boolean | Prisma.Student$attendanceArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
@@ -1868,7 +2392,9 @@ export type StudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   isActive?: boolean
   admissionYear?: boolean
   dateOfBirth?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   emailSearchHash?: boolean
   phoneSearchHash?: boolean
   jambRegSearchHash?: boolean
@@ -1900,7 +2426,9 @@ export type StudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   isActive?: boolean
   admissionYear?: boolean
   dateOfBirth?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   emailSearchHash?: boolean
   phoneSearchHash?: boolean
   jambRegSearchHash?: boolean
@@ -1932,7 +2460,9 @@ export type StudentSelectScalar = {
   isActive?: boolean
   admissionYear?: boolean
   dateOfBirth?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   emailSearchHash?: boolean
   phoneSearchHash?: boolean
   jambRegSearchHash?: boolean
@@ -1941,13 +2471,15 @@ export type StudentSelectScalar = {
   userId?: boolean
 }
 
-export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matricNumber" | "jambRegNumber" | "nin" | "firstName" | "lastName" | "otherName" | "gender" | "phone" | "passportUrl" | "email" | "department" | "course" | "college" | "state" | "lga" | "maritalStatus" | "dateEnrolled" | "isActive" | "admissionYear" | "dateOfBirth" | "updatedAt" | "emailSearchHash" | "phoneSearchHash" | "jambRegSearchHash" | "ninSearchHash" | "lastActivityAt" | "userId", ExtArgs["result"]["student"]>
+export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matricNumber" | "jambRegNumber" | "nin" | "firstName" | "lastName" | "otherName" | "gender" | "phone" | "passportUrl" | "email" | "department" | "course" | "college" | "state" | "lga" | "maritalStatus" | "dateEnrolled" | "isActive" | "admissionYear" | "dateOfBirth" | "createdAt" | "updatedAt" | "deletedAt" | "emailSearchHash" | "phoneSearchHash" | "jambRegSearchHash" | "ninSearchHash" | "lastActivityAt" | "userId", ExtArgs["result"]["student"]>
 export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   enrollments?: boolean | Prisma.Student$enrollmentsArgs<ExtArgs>
   portfolios?: boolean | Prisma.Student$portfoliosArgs<ExtArgs>
   submissions?: boolean | Prisma.Student$submissionsArgs<ExtArgs>
   assignmentSubmissions?: boolean | Prisma.Student$assignmentSubmissionsArgs<ExtArgs>
+  examResults?: boolean | Prisma.Student$examResultsArgs<ExtArgs>
+  attendance?: boolean | Prisma.Student$attendanceArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1965,6 +2497,8 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     portfolios: Prisma.$PortfolioPayload<ExtArgs>[]
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
     assignmentSubmissions: Prisma.$AssignmentSubmissionPayload<ExtArgs>[]
+    examResults: Prisma.$ExamResultPayload<ExtArgs>[]
+    attendance: Prisma.$AttendancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1988,7 +2522,9 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     isActive: boolean
     admissionYear: number | null
     dateOfBirth: Date | null
+    createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     emailSearchHash: string | null
     phoneSearchHash: string | null
     jambRegSearchHash: string | null
@@ -2394,6 +2930,8 @@ export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.
   portfolios<T extends Prisma.Student$portfoliosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$portfoliosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   submissions<T extends Prisma.Student$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignmentSubmissions<T extends Prisma.Student$assignmentSubmissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$assignmentSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssignmentSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  examResults<T extends Prisma.Student$examResultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$examResultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendance<T extends Prisma.Student$attendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$attendanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2444,7 +2982,9 @@ export interface StudentFieldRefs {
   readonly isActive: Prisma.FieldRef<"Student", 'Boolean'>
   readonly admissionYear: Prisma.FieldRef<"Student", 'Int'>
   readonly dateOfBirth: Prisma.FieldRef<"Student", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Student", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Student", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Student", 'DateTime'>
   readonly emailSearchHash: Prisma.FieldRef<"Student", 'String'>
   readonly phoneSearchHash: Prisma.FieldRef<"Student", 'String'>
   readonly jambRegSearchHash: Prisma.FieldRef<"Student", 'String'>
@@ -2940,6 +3480,54 @@ export type Student$assignmentSubmissionsArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.AssignmentSubmissionScalarFieldEnum | Prisma.AssignmentSubmissionScalarFieldEnum[]
+}
+
+/**
+ * Student.examResults
+ */
+export type Student$examResultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExamResult
+   */
+  select?: Prisma.ExamResultSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExamResult
+   */
+  omit?: Prisma.ExamResultOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExamResultInclude<ExtArgs> | null
+  where?: Prisma.ExamResultWhereInput
+  orderBy?: Prisma.ExamResultOrderByWithRelationInput | Prisma.ExamResultOrderByWithRelationInput[]
+  cursor?: Prisma.ExamResultWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExamResultScalarFieldEnum | Prisma.ExamResultScalarFieldEnum[]
+}
+
+/**
+ * Student.attendance
+ */
+export type Student$attendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attendance
+   */
+  select?: Prisma.AttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attendance
+   */
+  omit?: Prisma.AttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceInclude<ExtArgs> | null
+  where?: Prisma.AttendanceWhereInput
+  orderBy?: Prisma.AttendanceOrderByWithRelationInput | Prisma.AttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
 }
 
 /**

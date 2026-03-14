@@ -127,7 +127,7 @@ CREATE TABLE "students" (
     "matricNumber" TEXT NOT NULL,
     "jambRegNumber" TEXT NOT NULL,
     "nin" TEXT,
-    "surname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "otherName" TEXT,
     "gender" "Gender",
@@ -161,7 +161,7 @@ CREATE TABLE "students" (
 CREATE TABLE "teachers" (
     "id" TEXT NOT NULL,
     "teacherId" TEXT NOT NULL,
-    "surname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "otherName" TEXT,
     "gender" "Gender",
@@ -190,7 +190,7 @@ CREATE TABLE "teachers" (
 CREATE TABLE "admins" (
     "id" TEXT NOT NULL,
     "adminId" TEXT NOT NULL,
-    "surname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "otherName" TEXT,
     "gender" "Gender",
@@ -486,7 +486,7 @@ CREATE TABLE "user_preferences" (
 CREATE TABLE "nin_cache" (
     "id" TEXT NOT NULL,
     "nin" TEXT NOT NULL,
-    "surname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "otherName" TEXT,
     "gender" TEXT NOT NULL,

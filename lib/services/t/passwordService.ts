@@ -5,7 +5,6 @@ import {
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
 import crypto from "crypto";
 
 export class TeacherPasswordService {
@@ -342,7 +341,7 @@ export class TeacherPasswordService {
           isActive: teacher.user.isActive,
           profile: {
             firstName: await this.decryptField(teacher.firstName),
-            surname: await this.decryptField(teacher.surname),
+            lastname: await this.decryptField(teacher.lastname),
             otherName: await this.decryptField(teacher.otherName),
             email: await this.decryptField(teacher.user.email),
             phone: await this.decryptField(teacher.phone),

@@ -500,7 +500,7 @@ export default function StudentLayout({
               // Map StudentProfile to StudentProfile
               matricNumber: authState.user.id || "",
               firstName: authState.user.firstName || "",
-              surname: authState.user.surname || "",
+              lastname: authState.user.lastname || "",
               phone: "", // Provide default or fetch from elsewhere
               department: authState.user.department || "",
               college: authState.user.college || "",

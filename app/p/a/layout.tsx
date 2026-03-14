@@ -21,7 +21,7 @@ interface TeacherUser {
   lastLoginAt?: Date;
   profile?: {
     firstName: string;
-    surname: string;
+    lastname: string;
     department: string;
     teacherId: string;
     college: string;

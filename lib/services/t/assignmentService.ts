@@ -6,8 +6,30 @@ import {
   AssignmentSubmission,
   GradingData,
   BulkGradingData,
+  StudentBasicInfo,
 } from "@/lib/types/t/index";
-import { AuditAction } from "@prisma/client";
+
+// Helper type for Prisma submission with student
+type PrismaSubmissionWithStudent = {
+  id: string;
+  submissionUrl: string | null;
+  content: string | null;
+  submittedAt: Date;
+  score: number | null;
+  feedback: string | null;
+  isGraded: boolean;
+  isLate: boolean;
+  attemptNumber: number;
+  studentId: string;
+  assignmentId: string;
+  student: {
+    id: string;
+    matricNumber: string;
+    firstName: string;
+    lastname: string;
+    email: string;
+  };
+};
 
 export class TeacherAssignmentService {
   /**
@@ -55,7 +77,11 @@ export class TeacherAssignmentService {
                     id: true,
                     matricNumber: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
+                    email: true,
+                    phone: true,
+                    department: true,
+                    college: true,
                   },
                 },
               },
@@ -68,8 +94,27 @@ export class TeacherAssignmentService {
         }),
       ]);
 
+      // Transform the assignments to match the expected type
+      const transformedAssignments = assignments.map((assignment) => ({
+        ...assignment,
+        submissions: assignment.submissions?.map((submission) => ({
+          id: submission.id,
+          submissionUrl: submission.submissionUrl,
+          content: submission.content,
+          submittedAt: submission.submittedAt,
+          score: submission.score,
+          feedback: submission.feedback,
+          isGraded: submission.isGraded,
+          isLate: submission.isLate,
+          attemptNumber: submission.attemptNumber,
+          studentId: submission.studentId,
+          assignmentId: submission.assignmentId,
+          student: submission.student,
+        })),
+      }));
+
       return {
-        assignments: assignments as Assignment[],
+        assignments: transformedAssignments as Assignment[],
         pagination: {
           page,
           limit,
@@ -190,13 +235,36 @@ export class TeacherAssignmentService {
                   id: true,
                   matricNumber: true,
                   firstName: true,
-                  surname: true,
+                  lastname: true,
+                  email: true,
+                  phone: true,
+                  department: true,
+                  college: true,
                 },
               },
             },
           },
         },
       });
+
+      // Transform the submissions to match the expected type
+      const transformedAssignment = {
+        ...assignment,
+        submissions: assignment.submissions?.map((submission) => ({
+          id: submission.id,
+          submissionUrl: submission.submissionUrl,
+          content: submission.content,
+          submittedAt: submission.submittedAt,
+          score: submission.score,
+          feedback: submission.feedback,
+          isGraded: submission.isGraded,
+          isLate: submission.isLate,
+          attemptNumber: submission.attemptNumber,
+          studentId: submission.studentId,
+          assignmentId: submission.assignmentId,
+          student: submission.student,
+        })),
+      };
 
       // Log assignment update
       await prisma.auditLog.create({
@@ -214,7 +282,7 @@ export class TeacherAssignmentService {
 
       return {
         success: true,
-        assignment: assignment as Assignment,
+        assignment: transformedAssignment as Assignment,
         message: "Assignment updated successfully",
       };
     } catch (error) {
@@ -313,8 +381,11 @@ export class TeacherAssignmentService {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                surname: true,
+                lastname: true,
                 email: true,
+                phone: true,
+                department: true,
+                college: true,
               },
             },
           },
@@ -323,8 +394,24 @@ export class TeacherAssignmentService {
         prisma.assignmentSubmission.count({ where: { assignmentId } }),
       ]);
 
+      // Transform submissions to match AssignmentSubmission type
+      const transformedSubmissions = submissions.map((submission) => ({
+        id: submission.id,
+        submissionUrl: submission.submissionUrl,
+        content: submission.content,
+        submittedAt: submission.submittedAt,
+        score: submission.score,
+        feedback: submission.feedback,
+        isGraded: submission.isGraded,
+        isLate: submission.isLate,
+        attemptNumber: submission.attemptNumber,
+        studentId: submission.studentId,
+        assignmentId: submission.assignmentId,
+        student: submission.student,
+      }));
+
       return {
-        submissions: submissions as AssignmentSubmission[],
+        submissions: transformedSubmissions as AssignmentSubmission[],
         pagination: {
           page,
           limit,
@@ -383,7 +470,18 @@ export class TeacherAssignmentService {
           isGraded: true,
         },
         include: {
-          student: true,
+          student: {
+            select: {
+              id: true,
+              matricNumber: true,
+              firstName: true,
+              lastname: true,
+              email: true,
+              phone: true,
+              department: true,
+              college: true,
+            },
+          },
           assignment: {
             include: {
               course: true,
@@ -408,19 +506,25 @@ export class TeacherAssignmentService {
         },
       });
 
-      // Send notification to student (in a real implementation)
-      // await StudentNotificationService.createNotification(
-      //   submission.studentId,
-      //   "Assignment Graded",
-      //   `Your assignment "${submission.assignment.title}" has been graded.`,
-      //   NotificationType.INFO,
-      //   `/assignments/${submission.assignmentId}`,
-      //   2
-      // );
+      // Transform to match expected type
+      const transformedSubmission = {
+        id: updatedSubmission.id,
+        submissionUrl: updatedSubmission.submissionUrl,
+        content: updatedSubmission.content,
+        submittedAt: updatedSubmission.submittedAt,
+        score: updatedSubmission.score,
+        feedback: updatedSubmission.feedback,
+        isGraded: updatedSubmission.isGraded,
+        isLate: updatedSubmission.isLate,
+        attemptNumber: updatedSubmission.attemptNumber,
+        studentId: updatedSubmission.studentId,
+        assignmentId: updatedSubmission.assignmentId,
+        student: updatedSubmission.student,
+      };
 
       return {
         success: true,
-        submission: updatedSubmission,
+        submission: transformedSubmission,
         message: "Submission graded successfully",
       };
     } catch (error) {

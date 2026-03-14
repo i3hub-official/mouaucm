@@ -43,7 +43,7 @@ interface CourseWithDetails {
   instructor?: {
     id: string;
     firstName?: string | null;
-    surname?: string | null;
+    lastname?: string | null;
     otherName?: string | null;
     passportUrl?: string | null;
   } | null;
@@ -102,7 +102,7 @@ export default async function StudentCoursesPage({
                 select: {
                   id: true,
                   firstName: true,
-                  surname: true,
+                  lastname: true,
                   otherName: true,
                   passportUrl: true,
                 },
@@ -466,7 +466,7 @@ function CourseCard({ course }: { course: CourseWithDetails }) {
             )}
             <div>
               <p className="text-sm font-medium">
-                {course.instructor.firstName} {course.instructor.surname}
+                {course.instructor.firstName} {course.instructor.lastname}
               </p>
               <p className="text-xs text-muted-foreground">Instructor</p>
             </div>

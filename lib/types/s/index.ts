@@ -1,19 +1,12 @@
-// lib/types/s/index.ts
 // ===========================================================
 // STUDENT TYPES - 2025 MOUAU CLASSMATE (Fully Type-Safe)
 // Aligned with Prisma schema + dataProtection.ts encryption tiers
 // ===========================================================
-import {
-  Gender,
-  MaritalStatus,
-  Grade,
-  NotificationType,
-  AttendanceStatus,
-  ExamType,
-  ExamFormat,
-  ExamRemark,
-  Role,
-} from "@prisma/client";
+import {Gender,Role,Grade,ExamType,ExamFormat,MaritalStatus, NotificationType,ExamRemark,AttendanceStatus } from "@/lib/generated/prisma/enums";
+
+
+// Define enums locally since they may not be exported from @prisma/client
+
 
 // ===========================================================
 // Core Student (DB-level)
@@ -27,7 +20,8 @@ export interface Student {
   nin: string | null;
   // Personal (encrypted)
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname for compatibility
   otherName: string | null;
   gender: Gender | null;
   dateOfBirth: Date | null;
@@ -56,6 +50,7 @@ export interface Student {
   phoneSearchHash?: string;
   jambRegSearchHash?: string;
   ninSearchHash?: string;
+  matricSearchHash?: string;
   // Relations (optional in selects)
   user?: User;
   enrollments?: Enrollment[];
@@ -66,9 +61,10 @@ export interface Student {
 export interface StudentProfile {
   id: string;
   matricNumber: string;
-  fullName: string; // surname + firstName + otherName
+  fullName: string; // lastname + firstName + otherName
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName: string | null;
   email: string;
   phone: string;
@@ -92,7 +88,8 @@ export interface StudentProfile {
 export interface StudentRegistrationData {
   // Personal Information (Required)
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: string; // String for form input, converted to Date in service
@@ -105,7 +102,7 @@ export interface StudentRegistrationData {
   matricNumber?: string;
   department: string;
   college: string;
-  course: string; // Added missing field
+  course: string;
   admissionYear?: number;
 
   // Location Information
@@ -123,7 +120,8 @@ export interface StudentRegistrationData {
 // Alternative registration data without confirmPassword for internal use
 export interface StudentRegistrationInput {
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string;
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: Date; // Use Date for internal processing
@@ -283,7 +281,7 @@ export interface AssignmentWithStudentSubmission extends Assignment {
 export interface AssignmentWithAllSubmissions extends Assignment {
   course: Course;
   submissions: (AssignmentSubmission & {
-    student: Pick<Student, "id" | "matricNumber" | "surname" | "firstName">;
+    student: Pick<Student, "id" | "matricNumber" | "lastname" | "firstName">;
   })[];
 }
 
@@ -307,7 +305,7 @@ export interface AssignmentSubmission {
   assignment?: Assignment;
   student?: Pick<
     Student,
-    "id" | "matricNumber" | "surname" | "firstName" | "otherName"
+    "id" | "matricNumber" | "lastname" | "firstName" | "otherName"
   >;
 }
 
@@ -319,7 +317,7 @@ export interface AssignmentSubmissionData {
 }
 
 // ===========================================================
-// Exam & Exam Result (New!)
+// Exam & Exam Result
 // ===========================================================
 export interface Exam {
   id: string;
@@ -405,8 +403,9 @@ export interface Attendance {
 export interface Teacher {
   id: string;
   teacherId: string;
-  surname: string;
+  lastname: string;
   firstName: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   email: string;
   phone: string;
@@ -421,8 +420,9 @@ export interface Teacher {
 export interface Admin {
   id: string;
   teacherId: string;
-  surname: string;
+  lastname: string;
   firstName: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   email: string;
   phone: string;
@@ -533,7 +533,8 @@ export interface PaginatedResponse<T> {
 // ===========================================================
 export interface StudentProfileUpdateData {
   firstName?: string;
-  surname?: string;
+  lastname?: string;
+  lastName?: string;
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: Date;
@@ -591,7 +592,8 @@ export interface AcademicTranscript {
     id: string;
     matricNumber: string;
     firstName: string;
-    surname: string;
+    lastname: string;
+    lastName?: string;
     otherName: string | null;
     email: string;
     phone: string;
@@ -627,19 +629,6 @@ export interface GradeProgression {
 // ===========================================================
 // Notification Types
 // ===========================================================
-export interface Notification {
-  id: string;
-  userId: string;
-  title: string;
-  message: string;
-  type: NotificationType;
-  isRead: boolean;
-  actionUrl?: string | null;
-  createdAt: Date;
-  readAt?: Date | null;
-  priority: number;
-}
-
 export interface NotificationPreferences {
   emailNotifications: boolean;
   pushNotifications: boolean;
@@ -679,7 +668,8 @@ export interface CreateNotificationData {
 // ===========================================================
 export interface ProfileUpdateData {
   firstName?: string;
-  surname?: string;
+  lastname?: string;
+  lastName?: string;
   otherName?: string;
   phone?: string;
   passportUrl?: string;
@@ -750,18 +740,3 @@ export interface UpcomingItemsResponse {
   total: number;
   message?: string;
 }
-
-// ===========================================================
-// Re-exports
-// ===========================================================
-export {
-  Gender,
-  MaritalStatus,
-  Grade,
-  NotificationType,
-  AttendanceStatus,
-  ExamType,
-  ExamFormat,
-  ExamRemark,
-  Role,
-} from "@prisma/client";

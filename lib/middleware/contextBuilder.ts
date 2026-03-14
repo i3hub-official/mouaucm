@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { ClientIPDetector } from "@/lib/clientIp";
 import { isPublicPath, isAuthPath, isPrivatePath } from "@/lib/utils/pathUtils";
 import type { MiddlewareContext } from "./types";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/generated/prisma/enums";
 
 /**
  * ContextBuilder — The Foundation of Zero-Trust

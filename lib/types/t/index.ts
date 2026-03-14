@@ -1,10 +1,10 @@
-// Files: lib/types/t/index.ts
 // ===========================================================
 // TEACHER TYPES - Based on Prisma Schema
 // ===========================================================
 
-import { Gender, Grade } from "@prisma/client";
-import { BaseUser } from "@/lib/types/shared/index";
+import { BaseUser } from "@/lib/types/shared";
+import { Gender, Grade } from "@/lib/generated/prisma/enums";
+
 // ===========================================================
 // Core Teacher Types
 // ===========================================================
@@ -15,7 +15,8 @@ export interface TeacherUser extends BaseUser {
   department: string;
   institution: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   phone: string;
   qualification?: string;
@@ -30,7 +31,8 @@ export interface Teacher {
   id: string;
   teacherId: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   gender?: Gender | null;
   phone: string;
@@ -53,7 +55,8 @@ export interface TeacherProfile {
   id: string;
   teacherId: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   email: string;
   phone: string;
@@ -68,7 +71,8 @@ export interface TeacherProfile {
 // Teacher registration data
 export interface TeacherRegistrationData {
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string;
   gender?: Gender;
   email: string;
@@ -129,7 +133,8 @@ export interface StudentBasicInfo {
   id: string;
   matricNumber: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   email: string;
   phone: string;
@@ -515,9 +520,3 @@ export interface PaginatedResponse<T> {
     totalPages: number;
   };
 }
-
-// ===========================================================
-// Export all enums from Prisma
-// ===========================================================
-
-export { Gender, Grade } from "@prisma/client";

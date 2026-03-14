@@ -7,7 +7,7 @@ import {
   GradeDistribution,
   CourseGradingStats,
 } from "@/lib/types/t/index";
-import { Grade } from "@prisma/client";
+import { Grade } from "@/lib/generated/prisma/enums";
 
 export class TeacherGradeService {
   /**
@@ -37,7 +37,7 @@ export class TeacherGradeService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },
@@ -182,7 +182,7 @@ export class TeacherGradeService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },
@@ -296,7 +296,7 @@ export class TeacherGradeService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               otherName: true,
               email: true,
             },

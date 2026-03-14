@@ -1,25 +1,19 @@
-// Files: lib/types/a/index.ts
 // ===========================================================
 // ADMIN TYPES - Based on Prisma Schema
 // ===========================================================
 
-import {
-  Role,
-  Gender,
-  AuditAction,
-  ResourceType,
-  SessionSecurityLevel,
-  NotificationType,
-} from "@prisma/client";
-import { BaseUser } from "@/lib/types/shared/index";
+import { BaseUser } from "@/lib/types/shared";
+import { Student, Teacher } from "@/lib/types/s";
+import {AuditAction,ResourceType,SessionSecurityLevel,Gender,Role, NotificationType } from "@/lib/generated/prisma/enums";
 // ===========================================================
 // User Management Types
 // ===========================================================
 
 export interface AdminUser extends BaseUser {
-  role: "ADMIN"; // Use enum instead of string literal
+  role: "ADMIN";
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   gender: Gender;
   teacherId: string;
@@ -59,8 +53,8 @@ export interface User {
 }
 
 export interface UserWithProfile extends User {
-  student?: StudentProfile | null;
-  teacher?: TeacherProfile | null;
+  student?: Student | null;
+  teacher?: Teacher | null;
 }
 
 export interface UserFormData {
@@ -106,7 +100,8 @@ export interface StudentProfile {
   id: string;
   matricNumber: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   email: string;
   phone: string;
@@ -122,7 +117,8 @@ export interface TeacherProfile {
   id: string;
   teacherId: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   otherName?: string | null;
   email: string;
   phone: string;
@@ -610,16 +606,3 @@ export interface DateRange {
   startDate: Date;
   endDate: Date;
 }
-
-// ===========================================================
-// Export all enums from Prisma
-// ===========================================================
-
-export {
-  Role,
-  Gender,
-  AuditAction,
-  ResourceType,
-  SessionSecurityLevel,
-  NotificationType,
-} from "@prisma/client";

@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../lib/generated/prisma"
@@ -12,7 +9,6 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
 
 // ===========================================================
 // ENUMS for Type Safety
@@ -52,6 +48,10 @@ enum NotificationType {
   WARNING
   ERROR
   SECURITY
+  REMINDER
+  GRADE
+  ASSIGNMENT
+  EXAM
 }
 
 enum AuditAction {
@@ -66,6 +66,10 @@ enum AuditAction {
   PORTFOLIO_CREATED
   COURSE_CREATED
   ASSIGNMENT_CREATED
+  ASSIGNMENT_UPDATED
+  ASSIGNMENT_DELETED
+  ASSIGNMENT_PUBLISHED
+  ASSIGNMENT_UNPUBLISHED
   GRADE_ASSIGNED
   PASSWORD_RESET_REQUESTED
   PASSWORD_RESET
@@ -95,13 +99,22 @@ enum AuditAction {
   PORTFOLIO_UPDATED
   USER_PREFERENCES
   NOTIFICATION_SETTINGS_RESET
-  // Add any other missing actions you need
+  ADMIN_REGISTERED
+  TEACHER_REGISTERED
+  COURSE_ENROLLED
+  COURSE_COMPLETED
+  LECTURE_CREATED
+  ATTENDANCE_MARKED
+  EXAM_CREATED
+  EXAM_SUBMITTED
+  EXAM_RESULT_PUBLISHED
 }
 
 enum ResourceType {
   USER
   STUDENT
   TEACHER
+  ADMIN
   COURSE
   LECTURE
   ASSIGNMENT
@@ -109,12 +122,59 @@ enum ResourceType {
   PORTFOLIO
   SESSION
   NOTIFICATION
+  ATTENDANCE
+  EXAM
+  EXAM_RESULT
+  SYSTEM_CONFIG
+  SECURITY_EVENT
+  AUDIT_LOG
 }
 
 enum SessionSecurityLevel {
   LOW
   MEDIUM
   HIGH
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum ExamType {
+  PHYSICAL
+  ONLINE
+  HYBRID
+}
+
+enum ExamFormat {
+  THEORY
+  PRACTICAL
+  OBJECTIVE
+  ORAL
+  TAKE_HOME
+  PROJECT_BASED
+}
+
+enum ExamRemark {
+  EXCELLENT
+  VERY_GOOD
+  GOOD
+  FAIR
+  PASS
+  FAIL
+  ABSENT
+  MALPRACTICE
+}
+
+enum SubmissionStatus {
+  DRAFT
+  SUBMITTED
+  LATE
+  GRADED
+  RETURNED
 }
 
 // ===========================================================
@@ -137,6 +197,7 @@ model User {
   lockedUntil         DateTime?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime? // Soft delete
   passwordHash        String?
   greeting            String?   @default("Welcome back!")
   greetingNextChange  DateTime?
@@ -148,6 +209,7 @@ model User {
   // Role-specific profiles
   student Student?
   teacher Teacher?
+  admin   Admin?
 
   // Related data
   auditLogs       AuditLog[]
@@ -156,13 +218,20 @@ model User {
   metrics         Metric[]
   userActivities  UserActivity[]
   securityEvents  SecurityEvent[]
-  UserPreferences UserPreferences?
+  userPreferences UserPreferences?
+
+  // Added missing relations
+  examResultsRecorded ExamResult[]        @relation("ExamRecorder") // Exams recorded by this user
+  attendanceMarked    Attendance[]        @relation("AttendanceMarker") // Attendance marked by this user
+  requestLogs         RequestLog[]
+  dataProcessingLogs  DataProcessingLog[]
 
   @@index([email])
   @@index([role])
   @@index([createdAt])
   @@index([isActive])
   @@index([accountLocked])
+  @@index([deletedAt])
   @@map("users")
 }
 
@@ -249,7 +318,7 @@ model PasswordResetToken {
 }
 
 // ===========================================================
-// 2. STUDENT & TEACHER PROFILES
+// 2. STUDENT, TEACHER & ADMIN PROFILES
 // ===========================================================
 
 model Student {
@@ -259,7 +328,7 @@ model Student {
   jambRegNumber String  @unique(map: "students_jamb_reg_number_key")
   nin           String? @unique(map: "students_nin_key")
 
-  // Personal information
+  // Personal information - Using firstName, lastName, otherName pattern
   firstName   String
   lastName    String
   otherName   String?
@@ -279,7 +348,9 @@ model Student {
   isActive      Boolean        @default(true)
   admissionYear Int?
   dateOfBirth   DateTime?
+  createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  deletedAt     DateTime? // Soft delete
 
   // Search hashes for encrypted field queries
   emailSearchHash   String? @unique(map: "students_email_search_hash_key")
@@ -297,6 +368,8 @@ model Student {
   portfolios            Portfolio[]
   submissions           Submission[]
   assignmentSubmissions AssignmentSubmission[]
+  examResults           ExamResult[]
+  attendance            Attendance[]
 
   @@unique([userId], map: "students_user_id_key")
   @@unique([matricNumber], map: "students_matric_number_alt_key")
@@ -309,26 +382,42 @@ model Student {
   @@index([college])
   @@index([dateEnrolled])
   @@index([lastActivityAt])
+  @@index([deletedAt])
   @@map("students")
 }
 
 model Teacher {
-  id             String   @id @default(uuid())
-  employeeId     String   @unique(map: "teachers_employee_id_key")
-  firstName      String
-  lastName       String
-  otherName      String?
-  gender         Gender?
-  phone          String   @unique(map: "teachers_phone_key")
-  email          String   @unique(map: "teachers_email_key")
+  id         String @id @default(uuid())
+  employeeId String @unique(map: "teachers_employee_id_key")
+
+  // Personal information - Using firstName, lastName, otherName pattern
+  firstName String
+  lastName  String
+  otherName String?
+  gender    Gender?
+  phone     String  @unique(map: "teachers_phone_key")
+  email     String  @unique(map: "teachers_email_key")
+
+  // Professional information
   department     String
+  institution    String?
   qualification  String?
   specialization String?
-  dateJoined     DateTime @default(now())
-  isActive       Boolean  @default(true) 
+  experience     String?
+  dateJoined     DateTime  @default(now())
+  isActive       Boolean   @default(true)
+  passportUrl    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime? // Soft delete
 
   // Security fields
   lastActivityAt DateTime?
+
+  // Search hashes for encrypted field queries
+  emailSearchHash      String? @unique(map: "teachers_email_search_hash_key")
+  phoneSearchHash      String? @unique(map: "teachers_phone_search_hash_key")
+  employeeIdSearchHash String? @unique(map: "teachers_employee_id_search_hash_key")
 
   // Relationships
   userId            String
@@ -344,7 +433,57 @@ model Teacher {
   @@index([phone])
   @@index([department])
   @@index([lastActivityAt])
+  @@index([deletedAt])
   @@map("teachers")
+}
+
+model Admin {
+  id         String @id @default(uuid())
+  employeeId String @unique(map: "admins_employee_id_key")
+
+  // Personal information - Using firstName, lastName, otherName pattern
+  firstName String
+  lastName  String
+  otherName String?
+  gender    Gender?
+  phone     String  @unique(map: "admins_phone_key")
+  email     String  @unique(map: "admins_email_key")
+
+  // Professional information
+  department     String
+  institution    String?
+  qualification  String?
+  specialization String?
+  experience     String?
+  dateJoined     DateTime  @default(now())
+  isActive       Boolean   @default(true)
+  passportUrl    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime? // Soft delete
+
+  // Security fields
+  lastActivityAt DateTime?
+
+  // Search hashes for encrypted field queries
+  emailSearchHash      String? @unique(map: "admins_email_search_hash_key")
+  phoneSearchHash      String? @unique(map: "admins_phone_search_hash_key")
+  employeeIdSearchHash String? @unique(map: "admins_employee_id_search_hash_key")
+
+  // Relationships
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdCourses Course[] @relation("AdminCourseCreator")
+
+  @@unique([userId], map: "admins_user_id_key")
+  @@unique([employeeId], map: "admins_employee_id_alt_key")
+  @@index([employeeId])
+  @@index([email])
+  @@index([phone])
+  @@index([department])
+  @@index([lastActivityAt])
+  @@index([deletedAt])
+  @@map("admins")
 }
 
 // ===========================================================
@@ -352,17 +491,19 @@ model Teacher {
 // ===========================================================
 
 model Course {
-  id            String   @id @default(uuid())
-  code          String   @unique(map: "courses_code_key")
+  id            String    @id @default(uuid())
+  code          String    @unique(map: "courses_code_key")
   title         String
   description   String?
-  credits       Int      @default(3)
-  level         Int      @default(100)
-  semester      Int      @default(1)
+  credits       Int       @default(3)
+  level         Int       @default(100)
+  semester      Int       @default(1)
   courseOutline String?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  color         String? // For UI display
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime? // Soft delete
 
   // Instructor relationships
   instructorId String?
@@ -371,17 +512,23 @@ model Course {
   creatorId String?
   creator   Teacher? @relation("CourseCreator", fields: [creatorId], references: [id])
 
+  adminCreatorId String?
+  adminCreator   Admin?  @relation("AdminCourseCreator", fields: [adminCreatorId], references: [id])
+
   // Course content
   lectures    Lecture[]
   enrollments Enrollment[]
   portfolios  Portfolio[]
   assignments Assignment[]
+  exams       Exam[]
+  attendance  Attendance[]
 
   @@index([code])
   @@index([level])
   @@index([semester])
   @@index([instructorId])
   @@index([createdAt])
+  @@index([deletedAt])
   @@map("courses")
 }
 
@@ -390,21 +537,25 @@ model Lecture {
   title       String
   description String?
   content     Json?
-  duration    Int?
+  videoUrl    String?
+  duration    Int? // In minutes
   orderIndex  Int       @default(0)
   isPublished Boolean   @default(false)
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime? // Soft delete
 
   // Relations
   courseId    String
   course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   submissions Submission[]
+  attendance  Attendance[]
 
   @@index([courseId])
   @@index([orderIndex])
   @@index([isPublished])
+  @@index([deletedAt])
   @@map("lectures")
 }
 
@@ -423,7 +574,9 @@ model Enrollment {
   score          Float?
   progress       Float     @default(0)
   lastAccessedAt DateTime?
+  createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime? // Soft delete
 
   // Relations
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
@@ -434,6 +587,7 @@ model Enrollment {
   @@index([courseId])
   @@index([isCompleted])
   @@index([dateEnrolled])
+  @@index([deletedAt])
   @@map("enrollments")
 }
 
@@ -442,18 +596,22 @@ model Enrollment {
 // ===========================================================
 
 model Assignment {
-  id                  String   @id @default(uuid())
+  id                  String    @id @default(uuid())
   title               String
   description         String?
   instructions        String?
   dueDate             DateTime
-  maxScore            Int      @default(100)
-  allowedAttempts     Int      @default(1)
+  maxScore            Int       @default(100)
+  weight              Float     @default(1.0) // Weight in final grade calculation
+  allowedAttempts     Int       @default(1)
   assignmentUrl       String?
-  isPublished         Boolean  @default(false)
-  allowLateSubmission Boolean  @default(false)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  isPublished         Boolean   @default(false)
+  allowLateSubmission Boolean   @default(false)
+  latePenalty         Float? // Percentage penalty for late submission (e.g., 10 for 10%)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime? // Soft delete
+  scheduledAt         DateTime? // For scheduled publishing
 
   // Relations
   courseId    String
@@ -465,19 +623,24 @@ model Assignment {
   @@index([courseId])
   @@index([dueDate])
   @@index([isPublished])
+  @@index([deletedAt])
   @@map("assignments")
 }
 
 model AssignmentSubmission {
-  id            String   @id @default(uuid())
+  id            String           @id @default(uuid())
   submissionUrl String?
   content       String?
-  submittedAt   DateTime @default(now())
+  submittedAt   DateTime         @default(now())
   score         Float?
   feedback      String?
-  isGraded      Boolean  @default(false)
-  isLate        Boolean  @default(false)
-  attemptNumber Int      @default(1)
+  isGraded      Boolean          @default(false)
+  isLate        Boolean          @default(false)
+  attemptNumber Int              @default(1)
+  status        SubmissionStatus @default(SUBMITTED)
+  gradedAt      DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 
   // Relations
   studentId    String
@@ -500,6 +663,8 @@ model Submission {
   isGraded    Boolean  @default(false)
   score       Float?
   feedback    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   // Relations
   studentId String
@@ -514,19 +679,116 @@ model Submission {
 }
 
 // ===========================================================
-// 6. PORTFOLIO & PROJECTS
+// 6. EXAMS & RESULTS
+// ===========================================================
+
+model Exam {
+  id           String     @id @default(uuid())
+  title        String
+  description  String?
+  courseId     String
+  date         DateTime
+  duration     Int // In minutes
+  totalMarks   Int
+  venue        String
+  type         ExamType
+  format       ExamFormat
+  instructions String?
+  isPublished  Boolean    @default(false)
+  publishedAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  deletedAt    DateTime? // Soft delete
+
+  // Relations
+  course  Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  results ExamResult[]
+
+  @@index([courseId])
+  @@index([date])
+  @@index([isPublished])
+  @@index([deletedAt])
+  @@map("exams")
+}
+
+model ExamResult {
+  id          String     @id @default(uuid())
+  examId      String
+  studentId   String
+  courseId    String
+  score       Float?
+  percentage  Float?
+  grade       Grade?
+  remark      ExamRemark
+  isPublished Boolean    @default(false)
+  publishedAt DateTime?
+  recordedBy  String? // User ID who recorded the result
+  recordedAt  DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  scriptUrl   String? // URL to scanned script if applicable
+  feedback    String?
+
+  // Relations
+  exam     Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  student  Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  recorder User?   @relation("ExamRecorder", fields: [recordedBy], references: [id])
+
+  @@unique([examId, studentId])
+  @@index([examId])
+  @@index([studentId])
+  @@index([courseId])
+  @@index([isPublished])
+  @@map("exam_results")
+}
+
+// ===========================================================
+// 7. ATTENDANCE
+// ===========================================================
+
+model Attendance {
+  id        String           @id @default(uuid())
+  studentId String
+  courseId  String
+  lectureId String
+  date      DateTime         @default(now())
+  status    AttendanceStatus
+  markedAt  DateTime         @default(now())
+  markedBy  String? // User ID who marked attendance
+  notes     String?
+  verified  Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  // Relations
+  student      Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course       Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lecture      Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  markedByUser User?   @relation("AttendanceMarker", fields: [markedBy], references: [id])
+
+  @@unique([studentId, lectureId])
+  @@index([studentId])
+  @@index([courseId])
+  @@index([lectureId])
+  @@index([date])
+  @@map("attendance")
+}
+
+// ===========================================================
+// 8. PORTFOLIO & PROJECTS
 // ===========================================================
 
 model Portfolio {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   title        String
   description  String?
   projectUrl   String?
   imageUrl     String?
   technologies String[]
-  isPublished  Boolean  @default(false)
-  submittedAt  DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  isPublished  Boolean   @default(false)
+  submittedAt  DateTime  @default(now())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime? // Soft delete
 
   // Relations
   courseId  String
@@ -538,11 +800,12 @@ model Portfolio {
   @@index([courseId])
   @@index([submittedAt])
   @@index([isPublished])
+  @@index([deletedAt])
   @@map("portfolios")
 }
 
 // ===========================================================
-// 7. AUDIT LOGGING & NOTIFICATIONS
+// 9. AUDIT LOGGING & NOTIFICATIONS
 // ===========================================================
 
 model AuditLog {
@@ -588,7 +851,7 @@ model Notification {
 }
 
 // ===========================================================
-// 8. SYSTEM CONFIGURATION & METRICS
+// 10. SYSTEM CONFIGURATION & METRICS
 // ===========================================================
 
 model SystemConfig {
@@ -598,6 +861,7 @@ model SystemConfig {
   description String?
   category    String   @default("general")
   isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   updatedBy   String?
 
@@ -622,7 +886,7 @@ model Metric {
 }
 
 // ===========================================================
-// 9. RATE LIMITING & SECURITY
+// 11. RATE LIMITING & SECURITY
 // ===========================================================
 
 model RateLimit {
@@ -665,7 +929,7 @@ model SecurityEvent {
 }
 
 // ===========================================================
-// 10. ACTIVITY TRACKING
+// 12. ACTIVITY TRACKING
 // ===========================================================
 
 model UserActivity {
@@ -688,8 +952,9 @@ model UserActivity {
 }
 
 // ===========================================================
-// 11. USER PREFERENCES & SETTINGS
+// 13. USER PREFERENCES & SETTINGS
 // ===========================================================
+
 model UserPreferences {
   id     String @id @default(cuid())
   userId String @unique
@@ -698,12 +963,146 @@ model UserPreferences {
   // Notification settings
   emailNotifications  Boolean @default(true)
   pushNotifications   Boolean @default(true)
+  smsNotifications    Boolean @default(false)
   assignmentReminders Boolean @default(true)
   gradeAlerts         Boolean @default(true)
   lectureReminders    Boolean @default(true)
+  examReminders       Boolean @default(true)
+
+  // Display preferences
+  theme           String? @default("light")
+  language        String? @default("en")
+  timezone        String? @default("UTC")
+  dateFormat      String? @default("MM/DD/YYYY")
+  timeFormat      String? @default("12h")
+  itemsPerPage    Int?    @default(20)
+  dashboardLayout Json? // Store user's dashboard layout preferences
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("user_preferences")
+}
+
+// ===========================================================
+// 14. REQUEST LOGGING - For monitoring, security, and analytics
+// ===========================================================
+
+model RequestLog {
+  id              String  @id @default(uuid())
+  requestId       String  @unique(map: "request_logs_request_id_key") // Trace ID for the request
+  method          String // HTTP method (GET, POST, etc.)
+  path            String // Request path
+  queryParams     Json? // Query parameters (optional)
+  ipAddress       String? // Client IP address
+  userId          String? // User ID if authenticated
+  userAgent       String? // User agent string
+  isAuthenticated Boolean @default(false) // Whether the request was authenticated
+  threatScore     Int     @default(0) // 0-100 threat score
+  securityLevel   String  @default("low") // low, medium, high
+
+  // IP Intelligence (stored as JSON for flexibility)
+  ipIntelligence Json? // { source, confidence, isProxy, isVPN, isTor, isDatacenter, country, region, city }
+
+  // Request metadata
+  metadata Json? // Additional request metadata (role, processingTimeMs, etc.)
+
+  // Timing
+  requestStartTime DateTime? // When the request started
+  requestEndTime   DateTime? // When the request ended
+  processingTimeMs Int? // Total processing time in milliseconds
+
+  // Response info
+  responseStatus Int? // HTTP response status code
+  responseSize   Int? // Response size in bytes
+
+  // Performance metrics
+  dbQueryCount     Int? // Number of database queries
+  dbQueryTimeMs    Int? // Total database query time
+  externalApiCalls Int? // Number of external API calls
+
+  // Error tracking
+  errorMessage String? // Error message if request failed
+  errorStack   String? // Error stack trace if request failed
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([requestId])
+  @@index([method])
+  @@index([path])
+  @@index([ipAddress])
+  @@index([userId])
+  @@index([isAuthenticated])
+  @@index([threatScore])
+  @@index([securityLevel])
+  @@index([responseStatus])
+  @@index([createdAt])
+  @@map("request_logs")
+}
+
+// ===========================================================
+// 15. DATA PROCESSING LOGS - For GDPR/CCPA/LGPD compliance
+// ===========================================================
+
+model DataProcessingLog {
+  id        String @id @default(uuid())
+  requestId String @unique(map: "data_processing_logs_request_id_key") // Trace ID for the request
+
+  // Request context
+  userId    String? // User ID if authenticated
+  method    String // HTTP method (GET, POST, etc.)
+  path      String // Request path
+  ipAddress String? // Client IP address
+  timestamp DateTime @default(now()) // When the processing occurred
+
+  // Geolocation & jurisdiction
+  country      String @default("unknown") // Country code (e.g., "US", "NG", "GB")
+  jurisdiction Json // Jurisdiction info: { gdpr: boolean, ccpa: boolean, lgpd: boolean }
+
+  // Data processing details
+  dataCategories String[] // Array of data categories processed (e.g., ["personal", "academic", "financial"])
+  legalBasis     String? // Legal basis for processing (consent, contract, legal obligation, etc.)
+  consentGiven   Boolean  @default(false) // Whether consent was given
+  purpose        String? // Purpose of data processing
+  retentionDays  Int? // Number of days data will be retained
+
+  // Data subject rights
+  rightsExercised String? // Right exercised (access, rectification, erasure, etc.)
+  rightsRequestId String? // ID of the rights request if applicable
+
+  // Data sharing
+  thirdPartyDisclosure Boolean  @default(false) // Whether data was shared with third parties
+  thirdPartyNames      String[] // Names of third parties if shared
+
+  // Data minimization
+  dataMinimized Boolean @default(true) // Whether only necessary data was processed
+  anonymized    Boolean @default(false) // Whether data was anonymized
+
+  // Encryption
+  encryptionLevel String? // Encryption level used (none, transport, field-level, etc.)
+
+  // Audit trail
+  processedBy      String? // User ID or system that processed the data
+  processorVersion String? // Version of the processing logic
+
+  // Metadata
+  metadata Json? // Additional metadata
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([requestId])
+  @@index([userId])
+  @@index([timestamp])
+  @@index([country])
+  @@index([legalBasis])
+  @@index([purpose])
+  @@map("data_processing_logs")
 }

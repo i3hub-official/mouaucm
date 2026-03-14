@@ -6,7 +6,7 @@ import {
   EnrolledStudent,
   StudentPerformance,
 } from "@/lib/types/t/index";
-import { AuditAction } from "@prisma/client";
+
 
 export class TeacherClassService {
   /**
@@ -34,7 +34,7 @@ export class TeacherClassService {
                     id: true,
                     matricNumber: true,
                     firstName: true,
-                    surname: true,
+                    lastname: true,
                   },
                 },
               },
@@ -134,7 +134,7 @@ export class TeacherClassService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               otherName: true,
               email: true,
               phone: true,
@@ -229,7 +229,7 @@ export class TeacherClassService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               otherName: true,
               email: true,
               phone: true,
@@ -377,7 +377,7 @@ export class TeacherClassService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },
@@ -446,7 +446,7 @@ export class TeacherClassService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },

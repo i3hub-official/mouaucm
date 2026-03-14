@@ -40,12 +40,14 @@ export type LectureMinAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  videoUrl: string | null
   duration: number | null
   orderIndex: number | null
   isPublished: boolean | null
   publishedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
   courseId: string | null
 }
 
@@ -53,12 +55,14 @@ export type LectureMaxAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  videoUrl: string | null
   duration: number | null
   orderIndex: number | null
   isPublished: boolean | null
   publishedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
   courseId: string | null
 }
 
@@ -67,12 +71,14 @@ export type LectureCountAggregateOutputType = {
   title: number
   description: number
   content: number
+  videoUrl: number
   duration: number
   orderIndex: number
   isPublished: number
   publishedAt: number
   createdAt: number
   updatedAt: number
+  deletedAt: number
   courseId: number
   _all: number
 }
@@ -92,12 +98,14 @@ export type LectureMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  videoUrl?: true
   duration?: true
   orderIndex?: true
   isPublished?: true
   publishedAt?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   courseId?: true
 }
 
@@ -105,12 +113,14 @@ export type LectureMaxAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  videoUrl?: true
   duration?: true
   orderIndex?: true
   isPublished?: true
   publishedAt?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   courseId?: true
 }
 
@@ -119,12 +129,14 @@ export type LectureCountAggregateInputType = {
   title?: true
   description?: true
   content?: true
+  videoUrl?: true
   duration?: true
   orderIndex?: true
   isPublished?: true
   publishedAt?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   courseId?: true
   _all?: true
 }
@@ -220,12 +232,14 @@ export type LectureGroupByOutputType = {
   title: string
   description: string | null
   content: runtime.JsonValue | null
+  videoUrl: string | null
   duration: number | null
   orderIndex: number
   isPublished: boolean
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
   courseId: string
   _count: LectureCountAggregateOutputType | null
   _avg: LectureAvgAggregateOutputType | null
@@ -257,15 +271,18 @@ export type LectureWhereInput = {
   title?: Prisma.StringFilter<"Lecture"> | string
   description?: Prisma.StringNullableFilter<"Lecture"> | string | null
   content?: Prisma.JsonNullableFilter<"Lecture">
+  videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   duration?: Prisma.IntNullableFilter<"Lecture"> | number | null
   orderIndex?: Prisma.IntFilter<"Lecture"> | number
   isPublished?: Prisma.BoolFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringFilter<"Lecture"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
+  attendance?: Prisma.AttendanceListRelationFilter
 }
 
 export type LectureOrderByWithRelationInput = {
@@ -273,15 +290,18 @@ export type LectureOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
+  videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrderInput | Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
+  attendance?: Prisma.AttendanceOrderByRelationAggregateInput
 }
 
 export type LectureWhereUniqueInput = Prisma.AtLeast<{
@@ -292,15 +312,18 @@ export type LectureWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Lecture"> | string
   description?: Prisma.StringNullableFilter<"Lecture"> | string | null
   content?: Prisma.JsonNullableFilter<"Lecture">
+  videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   duration?: Prisma.IntNullableFilter<"Lecture"> | number | null
   orderIndex?: Prisma.IntFilter<"Lecture"> | number
   isPublished?: Prisma.BoolFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringFilter<"Lecture"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
+  attendance?: Prisma.AttendanceListRelationFilter
 }, "id">
 
 export type LectureOrderByWithAggregationInput = {
@@ -308,12 +331,14 @@ export type LectureOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
+  videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrderInput | Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   _count?: Prisma.LectureCountOrderByAggregateInput
   _avg?: Prisma.LectureAvgOrderByAggregateInput
@@ -330,12 +355,14 @@ export type LectureScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Lecture"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Lecture"> | string | null
   content?: Prisma.JsonNullableWithAggregatesFilter<"Lecture">
+  videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Lecture"> | string | null
   duration?: Prisma.IntNullableWithAggregatesFilter<"Lecture"> | number | null
   orderIndex?: Prisma.IntWithAggregatesFilter<"Lecture"> | number
   isPublished?: Prisma.BoolWithAggregatesFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Lecture"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringWithAggregatesFilter<"Lecture"> | string
 }
 
@@ -344,14 +371,17 @@ export type LectureCreateInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateInput = {
@@ -359,14 +389,17 @@ export type LectureUncheckedCreateInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUpdateInput = {
@@ -374,14 +407,17 @@ export type LectureUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateInput = {
@@ -389,14 +425,17 @@ export type LectureUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureCreateManyInput = {
@@ -404,12 +443,14 @@ export type LectureCreateManyInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
 }
 
@@ -418,12 +459,14 @@ export type LectureUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type LectureUncheckedUpdateManyInput = {
@@ -431,12 +474,14 @@ export type LectureUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -455,12 +500,14 @@ export type LectureCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  videoUrl?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
 }
 
@@ -473,12 +520,14 @@ export type LectureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  videoUrl?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
 }
 
@@ -486,12 +535,14 @@ export type LectureMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  videoUrl?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
 }
 
@@ -561,18 +612,35 @@ export type LectureUpdateOneRequiredWithoutSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LectureUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.LectureUpdateWithoutSubmissionsInput>, Prisma.LectureUncheckedUpdateWithoutSubmissionsInput>
 }
 
+export type LectureCreateNestedOneWithoutAttendanceInput = {
+  create?: Prisma.XOR<Prisma.LectureCreateWithoutAttendanceInput, Prisma.LectureUncheckedCreateWithoutAttendanceInput>
+  connectOrCreate?: Prisma.LectureCreateOrConnectWithoutAttendanceInput
+  connect?: Prisma.LectureWhereUniqueInput
+}
+
+export type LectureUpdateOneRequiredWithoutAttendanceNestedInput = {
+  create?: Prisma.XOR<Prisma.LectureCreateWithoutAttendanceInput, Prisma.LectureUncheckedCreateWithoutAttendanceInput>
+  connectOrCreate?: Prisma.LectureCreateOrConnectWithoutAttendanceInput
+  upsert?: Prisma.LectureUpsertWithoutAttendanceInput
+  connect?: Prisma.LectureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LectureUpdateToOneWithWhereWithoutAttendanceInput, Prisma.LectureUpdateWithoutAttendanceInput>, Prisma.LectureUncheckedUpdateWithoutAttendanceInput>
+}
+
 export type LectureCreateWithoutCourseInput = {
   id?: string
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateWithoutCourseInput = {
@@ -580,13 +648,16 @@ export type LectureUncheckedCreateWithoutCourseInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureCreateOrConnectWithoutCourseInput = {
@@ -623,12 +694,14 @@ export type LectureScalarWhereInput = {
   title?: Prisma.StringFilter<"Lecture"> | string
   description?: Prisma.StringNullableFilter<"Lecture"> | string | null
   content?: Prisma.JsonNullableFilter<"Lecture">
+  videoUrl?: Prisma.StringNullableFilter<"Lecture"> | string | null
   duration?: Prisma.IntNullableFilter<"Lecture"> | number | null
   orderIndex?: Prisma.IntFilter<"Lecture"> | number
   isPublished?: Prisma.BoolFilter<"Lecture"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringFilter<"Lecture"> | string
 }
 
@@ -637,13 +710,16 @@ export type LectureCreateWithoutSubmissionsInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
+  attendance?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
 
 export type LectureUncheckedCreateWithoutSubmissionsInput = {
@@ -651,13 +727,16 @@ export type LectureUncheckedCreateWithoutSubmissionsInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
+  attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
 
 export type LectureCreateOrConnectWithoutSubmissionsInput = {
@@ -681,13 +760,16 @@ export type LectureUpdateWithoutSubmissionsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateWithoutSubmissionsInput = {
@@ -695,13 +777,100 @@ export type LectureUncheckedUpdateWithoutSubmissionsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
+}
+
+export type LectureCreateWithoutAttendanceInput = {
+  id?: string
+  title: string
+  description?: string | null
+  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
+  duration?: number | null
+  orderIndex?: number
+  isPublished?: boolean
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  course: Prisma.CourseCreateNestedOneWithoutLecturesInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
+}
+
+export type LectureUncheckedCreateWithoutAttendanceInput = {
+  id?: string
+  title: string
+  description?: string | null
+  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
+  duration?: number | null
+  orderIndex?: number
+  isPublished?: boolean
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  courseId: string
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
+}
+
+export type LectureCreateOrConnectWithoutAttendanceInput = {
+  where: Prisma.LectureWhereUniqueInput
+  create: Prisma.XOR<Prisma.LectureCreateWithoutAttendanceInput, Prisma.LectureUncheckedCreateWithoutAttendanceInput>
+}
+
+export type LectureUpsertWithoutAttendanceInput = {
+  update: Prisma.XOR<Prisma.LectureUpdateWithoutAttendanceInput, Prisma.LectureUncheckedUpdateWithoutAttendanceInput>
+  create: Prisma.XOR<Prisma.LectureCreateWithoutAttendanceInput, Prisma.LectureUncheckedCreateWithoutAttendanceInput>
+  where?: Prisma.LectureWhereInput
+}
+
+export type LectureUpdateToOneWithWhereWithoutAttendanceInput = {
+  where?: Prisma.LectureWhereInput
+  data: Prisma.XOR<Prisma.LectureUpdateWithoutAttendanceInput, Prisma.LectureUncheckedUpdateWithoutAttendanceInput>
+}
+
+export type LectureUpdateWithoutAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
+}
+
+export type LectureUncheckedUpdateWithoutAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureCreateManyCourseInput = {
@@ -709,12 +878,14 @@ export type LectureCreateManyCourseInput = {
   title: string
   description?: string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: string | null
   duration?: number | null
   orderIndex?: number
   isPublished?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type LectureUpdateWithoutCourseInput = {
@@ -722,13 +893,16 @@ export type LectureUpdateWithoutCourseInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
+  attendance?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateWithoutCourseInput = {
@@ -736,13 +910,16 @@ export type LectureUncheckedUpdateWithoutCourseInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
+  attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
 }
 
 export type LectureUncheckedUpdateManyWithoutCourseInput = {
@@ -750,12 +927,14 @@ export type LectureUncheckedUpdateManyWithoutCourseInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -765,10 +944,12 @@ export type LectureUncheckedUpdateManyWithoutCourseInput = {
 
 export type LectureCountOutputType = {
   submissions: number
+  attendance: number
 }
 
 export type LectureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   submissions?: boolean | LectureCountOutputTypeCountSubmissionsArgs
+  attendance?: boolean | LectureCountOutputTypeCountAttendanceArgs
 }
 
 /**
@@ -788,21 +969,31 @@ export type LectureCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.T
   where?: Prisma.SubmissionWhereInput
 }
 
+/**
+ * LectureCountOutputType without action
+ */
+export type LectureCountOutputTypeCountAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceWhereInput
+}
+
 
 export type LectureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   description?: boolean
   content?: boolean
+  videoUrl?: boolean
   duration?: boolean
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Lecture$submissionsArgs<ExtArgs>
+  attendance?: boolean | Prisma.Lecture$attendanceArgs<ExtArgs>
   _count?: boolean | Prisma.LectureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
 
@@ -811,12 +1002,14 @@ export type LectureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   title?: boolean
   description?: boolean
   content?: boolean
+  videoUrl?: boolean
   duration?: boolean
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
@@ -826,12 +1019,14 @@ export type LectureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   title?: boolean
   description?: boolean
   content?: boolean
+  videoUrl?: boolean
   duration?: boolean
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
@@ -841,19 +1036,22 @@ export type LectureSelectScalar = {
   title?: boolean
   description?: boolean
   content?: boolean
+  videoUrl?: boolean
   duration?: boolean
   orderIndex?: boolean
   isPublished?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
 }
 
-export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "content" | "duration" | "orderIndex" | "isPublished" | "publishedAt" | "createdAt" | "updatedAt" | "courseId", ExtArgs["result"]["lecture"]>
+export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "content" | "videoUrl" | "duration" | "orderIndex" | "isPublished" | "publishedAt" | "createdAt" | "updatedAt" | "deletedAt" | "courseId", ExtArgs["result"]["lecture"]>
 export type LectureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Lecture$submissionsArgs<ExtArgs>
+  attendance?: boolean | Prisma.Lecture$attendanceArgs<ExtArgs>
   _count?: boolean | Prisma.LectureCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LectureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -868,18 +1066,21 @@ export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     course: Prisma.$CoursePayload<ExtArgs>
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
+    attendance: Prisma.$AttendancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
     description: string | null
     content: runtime.JsonValue | null
+    videoUrl: string | null
     duration: number | null
     orderIndex: number
     isPublished: boolean
     publishedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     courseId: string
   }, ExtArgs["result"]["lecture"]>
   composites: {}
@@ -1277,6 +1478,7 @@ export interface Prisma__LectureClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   submissions<T extends Prisma.Lecture$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lecture$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendance<T extends Prisma.Lecture$attendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lecture$attendanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1310,12 +1512,14 @@ export interface LectureFieldRefs {
   readonly title: Prisma.FieldRef<"Lecture", 'String'>
   readonly description: Prisma.FieldRef<"Lecture", 'String'>
   readonly content: Prisma.FieldRef<"Lecture", 'Json'>
+  readonly videoUrl: Prisma.FieldRef<"Lecture", 'String'>
   readonly duration: Prisma.FieldRef<"Lecture", 'Int'>
   readonly orderIndex: Prisma.FieldRef<"Lecture", 'Int'>
   readonly isPublished: Prisma.FieldRef<"Lecture", 'Boolean'>
   readonly publishedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly courseId: Prisma.FieldRef<"Lecture", 'String'>
 }
     
@@ -1734,6 +1938,30 @@ export type Lecture$submissionsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SubmissionScalarFieldEnum | Prisma.SubmissionScalarFieldEnum[]
+}
+
+/**
+ * Lecture.attendance
+ */
+export type Lecture$attendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attendance
+   */
+  select?: Prisma.AttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attendance
+   */
+  omit?: Prisma.AttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceInclude<ExtArgs> | null
+  where?: Prisma.AttendanceWhereInput
+  orderBy?: Prisma.AttendanceOrderByWithRelationInput | Prisma.AttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
 }
 
 /**

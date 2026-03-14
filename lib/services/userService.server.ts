@@ -1,7 +1,7 @@
 // lib/services/userService.server.ts
 import { prisma } from "@/lib/server/prisma";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 export class UserServiceServer {
   /**
@@ -21,7 +21,7 @@ export class UserServiceServer {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               department: true,
             },
           },
@@ -30,7 +30,7 @@ export class UserServiceServer {
               id: true,
               teacherId: true,
               firstName: true,
-              surname: true,
+              lastname: true,
               department: true,
             },
           },
@@ -49,7 +49,7 @@ export class UserServiceServer {
         decryptedUser.student = {
           ...user.student,
           firstName: await unprotectData(user.student.firstName, "name"),
-          surname: await unprotectData(user.student.surname, "name"),
+          lastname: await unprotectData(user.student.lastname, "name"),
         };
       }
 
@@ -57,7 +57,7 @@ export class UserServiceServer {
         decryptedUser.teacher = {
           ...user.teacher,
           firstName: await unprotectData(user.teacher.firstName, "name"),
-          surname: await unprotectData(user.teacher.surname, "name"),
+          lastname: await unprotectData(user.teacher.lastname, "name"),
         };
       }
 
@@ -378,7 +378,7 @@ export class UserServiceServer {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                surname: true,
+                lastname: true,
                 department: true,
               },
             },
@@ -387,7 +387,7 @@ export class UserServiceServer {
                 id: true,
                 teacherId: true,
                 firstName: true,
-                surname: true,
+                lastname: true,
                 department: true,
               },
             },
@@ -413,7 +413,7 @@ export class UserServiceServer {
             decryptedUser.student = {
               ...user.student,
               firstName: await unprotectData(user.student.firstName, "name"),
-              surname: await unprotectData(user.student.surname, "name"),
+              lastname: await unprotectData(user.student.lastname, "name"),
             };
           }
 
@@ -421,7 +421,7 @@ export class UserServiceServer {
             decryptedUser.teacher = {
               ...user.teacher,
               firstName: await unprotectData(user.teacher.firstName, "name"),
-              surname: await unprotectData(user.teacher.surname, "name"),
+              lastname: await unprotectData(user.teacher.lastname, "name"),
             };
           }
 

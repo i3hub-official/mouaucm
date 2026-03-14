@@ -6,7 +6,7 @@ import { protectData } from "@/lib/security/dataProtection";
 interface NINVerificationResult {
   exists: boolean;
   data?: {
-    surname?: string;
+    lastname?: string;
     firstName?: string;
     otherName?: string;
     gender?: string;
@@ -143,7 +143,7 @@ export class NINVerificationService {
         return {
           exists: true,
           data: {
-            surname: cachedRecord.surname,
+            lastname: cachedRecord.lastname,
             firstName: cachedRecord.firstName,
             otherName: cachedRecord.otherName || "",
             gender: cachedRecord.gender,
@@ -193,7 +193,7 @@ export class NINVerificationService {
           nin: true,
           userId: true,
           firstName: true,
-          surname: true,
+          lastname: true,
           otherName: true,
           gender: true,
           dateOfBirth: true,
@@ -249,7 +249,7 @@ export class NINVerificationService {
         await prisma.nINCache.update({
           where: { nin },
           data: {
-            surname: ninData.surname,
+            lastname: ninData.lastname,
             firstName: ninData.firstname,
             otherName: ninData.middlename,
             gender: ninData.gender,
@@ -267,7 +267,7 @@ export class NINVerificationService {
         await prisma.nINCache.create({
           data: {
             nin,
-            surname: ninData.surname,
+            lastname: ninData.lastname,
             firstName: ninData.firstname,
             otherName: ninData.middlename,
             gender: ninData.gender,

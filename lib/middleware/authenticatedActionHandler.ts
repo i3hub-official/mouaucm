@@ -1,7 +1,7 @@
 // src/lib/middleware/authenticatedActionHandler.ts
 import { NextRequest } from "next/server";
 import type { MiddlewareContext } from "./types";
-import { Role } from "@prisma/client";
+import { Role } from "@/lib/generated/prisma/enums";
 
 export interface AuthenticatedActionContext extends MiddlewareContext {
   isAuthAction: boolean;

@@ -3,7 +3,6 @@
 import { prisma } from "@/lib/server/prisma";
 import { StudentBasicInfo, EnrolledStudent } from "@/lib/types/t/index";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
 
 export class TeacherStudentManagementService {
   /**
@@ -42,7 +41,7 @@ export class TeacherStudentManagementService {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                surname: true,
+                lastname: true,
                 otherName: true,
                 email: true,
                 phone: true,
@@ -65,7 +64,7 @@ export class TeacherStudentManagementService {
             enrollmentId: enrollment.id,
             matricNumber: student.matricNumber,
             firstName: await unprotectData(student.firstName, "name"),
-            surname: await unprotectData(student.surname, "name"),
+            lastname: await unprotectData(student.lastname, "name"),
             otherName: student.otherName
               ? await unprotectData(student.otherName, "name")
               : null,
@@ -143,7 +142,7 @@ export class TeacherStudentManagementService {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                surname: true,
+                lastname: true,
                 otherName: true,
                 email: true,
                 phone: true,
@@ -173,7 +172,7 @@ export class TeacherStudentManagementService {
             enrollmentId: enrollment.id,
             matricNumber: student.matricNumber,
             firstName: await unprotectData(student.firstName, "name"),
-            surname: await unprotectData(student.surname, "name"),
+            lastname: await unprotectData(student.lastname, "name"),
             otherName: student.otherName
               ? await unprotectData(student.otherName, "name")
               : null,
@@ -217,7 +216,7 @@ export class TeacherStudentManagementService {
           id: true,
           matricNumber: true,
           firstName: true,
-          surname: true,
+          lastname: true,
           otherName: true,
           email: true,
           phone: true,
@@ -241,7 +240,7 @@ export class TeacherStudentManagementService {
         email: await unprotectData(student.email, "email"),
         phone: await unprotectData(student.phone, "phone"),
         firstName: await unprotectData(student.firstName, "name"),
-        surname: await unprotectData(student.surname, "name"),
+        lastname: await unprotectData(student.lastname, "name"),
         otherName: student.otherName
           ? await unprotectData(student.otherName, "name")
           : null,

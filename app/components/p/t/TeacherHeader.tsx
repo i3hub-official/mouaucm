@@ -59,7 +59,7 @@ export function TeacherHeader({
 
             <div className="hidden sm:block text-left">
               <p className="text-sm font-medium text-foreground">
-                {user.profile?.firstName} {user.profile?.surname}
+                {user.profile?.firstName} {user.profile?.lastname}
               </p>
               <p className="text-xs text-muted-foreground capitalize">
                 {user.role.toLowerCase()}

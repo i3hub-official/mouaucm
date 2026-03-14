@@ -7,7 +7,6 @@ import {
   AttendanceFormData,
   StudentAttendanceSummary,
 } from "@/lib/types/t/index";
-import { AuditAction } from "@prisma/client";
 
 export class TeacherAttendanceService {
   /**
@@ -54,7 +53,7 @@ export class TeacherAttendanceService {
                   id: true,
                   matricNumber: true,
                   firstName: true,
-                  surname: true,
+                  lastname: true,
                 },
               },
             },
@@ -153,7 +152,7 @@ export class TeacherAttendanceService {
                   id: true,
                   matricNumber: true,
                   firstName: true,
-                  surname: true,
+                  lastname: true,
                 },
               },
             },
@@ -250,7 +249,7 @@ export class TeacherAttendanceService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },
@@ -339,7 +338,7 @@ export class TeacherAttendanceService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },
@@ -418,7 +417,7 @@ export class TeacherAttendanceService {
               id: true,
               matricNumber: true,
               firstName: true,
-              surname: true,
+              lastname: true,
             },
           },
         },
@@ -446,7 +445,7 @@ export class TeacherAttendanceService {
           id: studentId,
           matricNumber: "",
           firstName: "",
-          surname: "",
+          lastname: "",
         },
         courseId,
         totalSessions,

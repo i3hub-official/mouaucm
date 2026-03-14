@@ -4,7 +4,7 @@ import { prisma } from "@/lib/server/prisma";
 import { StudentEmailService } from "@/lib/services/s/emailService";
 import { TeacherEmailService } from "@/lib/services/t/emailService";
 import { AdminEmailService } from "@/lib/services/a/emailService";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 
 export async function POST(request: NextRequest) {
   try {

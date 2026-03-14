@@ -2,7 +2,7 @@
 import { prisma } from "@/lib/server/prisma";
 import { StudentProfile } from "@/lib/types/s/index";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 
 export interface ProfileUpdateResponse {
   success: boolean;
@@ -41,7 +41,7 @@ export class ServerProfileService {
           id: true,
           matricNumber: true,
           firstName: true,
-          surname: true,
+          lastname: true,
           otherName: true,
           email: true,
           phone: true,
@@ -68,10 +68,10 @@ export class ServerProfileService {
       if (!student) return null;
 
       // Decrypt all sensitive data in parallel
-      const [firstName, surname, otherName, email, phone, state, lga] =
+      const [firstName, lastname, otherName, email, phone, state, lga] =
         await Promise.all([
           unprotectData(student.firstName, "name"),
-          unprotectData(student.surname, "name"),
+          unprotectData(student.lastname, "name"),
           student.otherName
             ? unprotectData(student.otherName, "name")
             : Promise.resolve(null),
@@ -85,7 +85,7 @@ export class ServerProfileService {
             : Promise.resolve(""),
         ]);
 
-      const fullName = [surname, firstName, otherName]
+      const fullName = [lastname, firstName, otherName]
         .filter(Boolean)
         .join(" ")
         .trim();
@@ -94,7 +94,7 @@ export class ServerProfileService {
         id: student.id,
         matricNumber: student.matricNumber,
         firstName,
-        surname,
+        lastname,
         otherName,
         fullName,
         email,
@@ -149,7 +149,7 @@ export class ServerProfileService {
     studentId: string,
     data: Partial<{
       firstName: string;
-      surname: string;
+      lastname: string;
       otherName?: string;
       phone: string;
       passportUrl?: string;
@@ -176,10 +176,10 @@ export class ServerProfileService {
         updatedFields.push("firstName");
       }
 
-      if (data.surname !== undefined) {
-        const { encrypted } = await protectData(data.surname.trim(), "name");
-        updateData.surname = encrypted;
-        updatedFields.push("surname");
+      if (data.lastname !== undefined) {
+        const { encrypted } = await protectData(data.lastname.trim(), "name");
+        updateData.lastname = encrypted;
+        updatedFields.push("lastname");
       }
 
       if (data.otherName !== undefined) {
@@ -429,7 +429,7 @@ export class ServerProfileService {
             id: true,
             matricNumber: true,
             firstName: true,
-            surname: true,
+            lastname: true,
             otherName: true,
             email: true,
             phone: true,

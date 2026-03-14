@@ -1,7 +1,7 @@
 // lib/services/s/emailService.ts
 import { prisma } from "@/lib/server/prisma";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 import { generateVerificationToken } from "@/lib/utils";
 import { sendEmail } from "@/lib/config/nodemailer";
 
@@ -110,7 +110,7 @@ export class StudentEmailService {
     const [
       email,
       firstName,
-      surname,
+      lastname,
       otherName,
       phone,
       matricNumber,
@@ -120,7 +120,7 @@ export class StudentEmailService {
     ] = await Promise.all([
       unprotectData(student.email, "email"),
       unprotectData(student.firstName, "name"),
-      unprotectData(student.surname, "name"),
+      unprotectData(student.lastname, "name"),
       student.otherName
         ? unprotectData(student.otherName, "name")
         : Promise.resolve(""),
@@ -138,9 +138,9 @@ export class StudentEmailService {
     return {
       email,
       firstName,
-      surname,
+      lastname,
       otherName,
-      fullName: `${surname} ${firstName}${otherName ? ` ${otherName}` : ""}`,
+      fullName: `${lastname} ${firstName}${otherName ? ` ${otherName}` : ""}`,
       phone,
       matricNumber,
       jambRegNumber,
@@ -179,7 +179,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "welcome-student", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         otherName: decryptedData.otherName,
         studentId: student.id,
         matricNumber: decryptedData.matricNumber,
@@ -248,7 +248,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "email-verification", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         verificationLink,
         token,
         expiryHours: 24,
@@ -409,7 +409,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "password-reset", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         resetLink,
         token,
         expiryHours: 1, // Typically password reset links expire in 1 hour
@@ -469,7 +469,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "password-reset-confirmation", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         resetTime: new Date().toLocaleString(),
         ipAddress: "unknown", // You can capture this from the request
         baseUrl: this.getBaseUrl(),
@@ -538,7 +538,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "assignment-reminder", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         assignmentTitle: assignment.title,
         courseCode: assignment.course.code,
         courseName: assignment.course.title,
@@ -619,7 +619,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "grade-notification", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         assignmentTitle: assignment.title,
         courseCode: assignment.course.code,
         courseName: assignment.course.title,
@@ -723,7 +723,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "email-verification", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         verificationLink,
         token: verificationToken,
         expiryHours: 24,
@@ -790,7 +790,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "course-enrollment", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         courseCode: course.code,
         courseName: course.title,
         enrollmentDate: new Date().toLocaleDateString(),
@@ -853,7 +853,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "account-suspension", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         reason,
         suspensionDate: new Date().toLocaleDateString(),
         suspensionEndDate: suspensionEndDate
@@ -914,7 +914,7 @@ export class StudentEmailService {
       await sendEmail(decryptedData.email, "account-reactivation", {
         name: decryptedData.fullName,
         firstName: decryptedData.firstName,
-        surname: decryptedData.surname,
+        lastname: decryptedData.lastname,
         reactivationDate: new Date().toLocaleDateString(),
         baseUrl: this.getBaseUrl(),
       });

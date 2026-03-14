@@ -1,7 +1,7 @@
 // lib/services/a/emailService.ts
 import { prisma } from "@/lib/server/prisma";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction } from "@prisma/client";
+import { AuditAction } from "@/lib/generated/prisma/enums";
 
 export class AdminEmailService {
   /**

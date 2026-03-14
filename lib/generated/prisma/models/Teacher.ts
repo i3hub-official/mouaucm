@@ -34,11 +34,20 @@ export type TeacherMinAggregateOutputType = {
   phone: string | null
   email: string | null
   department: string | null
+  institution: string | null
   qualification: string | null
   specialization: string | null
+  experience: string | null
   dateJoined: Date | null
   isActive: boolean | null
+  passportUrl: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
   lastActivityAt: Date | null
+  emailSearchHash: string | null
+  phoneSearchHash: string | null
+  employeeIdSearchHash: string | null
   userId: string | null
 }
 
@@ -52,11 +61,20 @@ export type TeacherMaxAggregateOutputType = {
   phone: string | null
   email: string | null
   department: string | null
+  institution: string | null
   qualification: string | null
   specialization: string | null
+  experience: string | null
   dateJoined: Date | null
   isActive: boolean | null
+  passportUrl: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
   lastActivityAt: Date | null
+  emailSearchHash: string | null
+  phoneSearchHash: string | null
+  employeeIdSearchHash: string | null
   userId: string | null
 }
 
@@ -70,11 +88,20 @@ export type TeacherCountAggregateOutputType = {
   phone: number
   email: number
   department: number
+  institution: number
   qualification: number
   specialization: number
+  experience: number
   dateJoined: number
   isActive: number
+  passportUrl: number
+  createdAt: number
+  updatedAt: number
+  deletedAt: number
   lastActivityAt: number
+  emailSearchHash: number
+  phoneSearchHash: number
+  employeeIdSearchHash: number
   userId: number
   _all: number
 }
@@ -90,11 +117,20 @@ export type TeacherMinAggregateInputType = {
   phone?: true
   email?: true
   department?: true
+  institution?: true
   qualification?: true
   specialization?: true
+  experience?: true
   dateJoined?: true
   isActive?: true
+  passportUrl?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   lastActivityAt?: true
+  emailSearchHash?: true
+  phoneSearchHash?: true
+  employeeIdSearchHash?: true
   userId?: true
 }
 
@@ -108,11 +144,20 @@ export type TeacherMaxAggregateInputType = {
   phone?: true
   email?: true
   department?: true
+  institution?: true
   qualification?: true
   specialization?: true
+  experience?: true
   dateJoined?: true
   isActive?: true
+  passportUrl?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   lastActivityAt?: true
+  emailSearchHash?: true
+  phoneSearchHash?: true
+  employeeIdSearchHash?: true
   userId?: true
 }
 
@@ -126,11 +171,20 @@ export type TeacherCountAggregateInputType = {
   phone?: true
   email?: true
   department?: true
+  institution?: true
   qualification?: true
   specialization?: true
+  experience?: true
   dateJoined?: true
   isActive?: true
+  passportUrl?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   lastActivityAt?: true
+  emailSearchHash?: true
+  phoneSearchHash?: true
+  employeeIdSearchHash?: true
   userId?: true
   _all?: true
 }
@@ -217,11 +271,20 @@ export type TeacherGroupByOutputType = {
   phone: string
   email: string
   department: string
+  institution: string | null
   qualification: string | null
   specialization: string | null
+  experience: string | null
   dateJoined: Date
   isActive: boolean
+  passportUrl: string | null
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
   lastActivityAt: Date | null
+  emailSearchHash: string | null
+  phoneSearchHash: string | null
+  employeeIdSearchHash: string | null
   userId: string
   _count: TeacherCountAggregateOutputType | null
   _min: TeacherMinAggregateOutputType | null
@@ -256,11 +319,20 @@ export type TeacherWhereInput = {
   phone?: Prisma.StringFilter<"Teacher"> | string
   email?: Prisma.StringFilter<"Teacher"> | string
   department?: Prisma.StringFilter<"Teacher"> | string
+  institution?: Prisma.StringNullableFilter<"Teacher"> | string | null
   qualification?: Prisma.StringNullableFilter<"Teacher"> | string | null
   specialization?: Prisma.StringNullableFilter<"Teacher"> | string | null
+  experience?: Prisma.StringNullableFilter<"Teacher"> | string | null
   dateJoined?: Prisma.DateTimeFilter<"Teacher"> | Date | string
   isActive?: Prisma.BoolFilter<"Teacher"> | boolean
+  passportUrl?: Prisma.StringNullableFilter<"Teacher"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Teacher"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Teacher"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Teacher"> | Date | string | null
   lastActivityAt?: Prisma.DateTimeNullableFilter<"Teacher"> | Date | string | null
+  emailSearchHash?: Prisma.StringNullableFilter<"Teacher"> | string | null
+  phoneSearchHash?: Prisma.StringNullableFilter<"Teacher"> | string | null
+  employeeIdSearchHash?: Prisma.StringNullableFilter<"Teacher"> | string | null
   userId?: Prisma.StringFilter<"Teacher"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   instructedCourses?: Prisma.CourseListRelationFilter
@@ -278,11 +350,20 @@ export type TeacherOrderByWithRelationInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
+  institution?: Prisma.SortOrderInput | Prisma.SortOrder
   qualification?: Prisma.SortOrderInput | Prisma.SortOrder
   specialization?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience?: Prisma.SortOrderInput | Prisma.SortOrder
   dateJoined?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  phoneSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  employeeIdSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   instructedCourses?: Prisma.CourseOrderByRelationAggregateInput
@@ -295,6 +376,9 @@ export type TeacherWhereUniqueInput = Prisma.AtLeast<{
   employeeId?: string
   phone?: string
   email?: string
+  emailSearchHash?: string
+  phoneSearchHash?: string
+  employeeIdSearchHash?: string
   userId?: string
   AND?: Prisma.TeacherWhereInput | Prisma.TeacherWhereInput[]
   OR?: Prisma.TeacherWhereInput[]
@@ -304,16 +388,22 @@ export type TeacherWhereUniqueInput = Prisma.AtLeast<{
   otherName?: Prisma.StringNullableFilter<"Teacher"> | string | null
   gender?: Prisma.EnumGenderNullableFilter<"Teacher"> | $Enums.Gender | null
   department?: Prisma.StringFilter<"Teacher"> | string
+  institution?: Prisma.StringNullableFilter<"Teacher"> | string | null
   qualification?: Prisma.StringNullableFilter<"Teacher"> | string | null
   specialization?: Prisma.StringNullableFilter<"Teacher"> | string | null
+  experience?: Prisma.StringNullableFilter<"Teacher"> | string | null
   dateJoined?: Prisma.DateTimeFilter<"Teacher"> | Date | string
   isActive?: Prisma.BoolFilter<"Teacher"> | boolean
+  passportUrl?: Prisma.StringNullableFilter<"Teacher"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Teacher"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Teacher"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Teacher"> | Date | string | null
   lastActivityAt?: Prisma.DateTimeNullableFilter<"Teacher"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   instructedCourses?: Prisma.CourseListRelationFilter
   createdCourses?: Prisma.CourseListRelationFilter
   assignments?: Prisma.AssignmentListRelationFilter
-}, "id" | "employeeId" | "phone" | "email" | "userId" | "employeeId">
+}, "id" | "employeeId" | "phone" | "email" | "emailSearchHash" | "phoneSearchHash" | "employeeIdSearchHash" | "userId" | "employeeId">
 
 export type TeacherOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -325,11 +415,20 @@ export type TeacherOrderByWithAggregationInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
+  institution?: Prisma.SortOrderInput | Prisma.SortOrder
   qualification?: Prisma.SortOrderInput | Prisma.SortOrder
   specialization?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience?: Prisma.SortOrderInput | Prisma.SortOrder
   dateJoined?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  phoneSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  employeeIdSearchHash?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.TeacherCountOrderByAggregateInput
   _max?: Prisma.TeacherMaxOrderByAggregateInput
@@ -349,11 +448,20 @@ export type TeacherScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
   email?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
   department?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
+  institution?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
   qualification?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
   specialization?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
+  experience?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
   dateJoined?: Prisma.DateTimeWithAggregatesFilter<"Teacher"> | Date | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Teacher"> | boolean
+  passportUrl?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Teacher"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Teacher"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Teacher"> | Date | string | null
   lastActivityAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Teacher"> | Date | string | null
+  emailSearchHash?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
+  phoneSearchHash?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
+  employeeIdSearchHash?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
 }
 
@@ -367,11 +475,20 @@ export type TeacherCreateInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   user: Prisma.UserCreateNestedOneWithoutTeacherInput
   instructedCourses?: Prisma.CourseCreateNestedManyWithoutInstructorInput
   createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatorInput
@@ -388,11 +505,20 @@ export type TeacherUncheckedCreateInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   userId: string
   instructedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutInstructorInput
   createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatorInput
@@ -409,11 +535,20 @@ export type TeacherUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherNestedInput
   instructedCourses?: Prisma.CourseUpdateManyWithoutInstructorNestedInput
   createdCourses?: Prisma.CourseUpdateManyWithoutCreatorNestedInput
@@ -430,11 +565,20 @@ export type TeacherUncheckedUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   instructedCourses?: Prisma.CourseUncheckedUpdateManyWithoutInstructorNestedInput
   createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatorNestedInput
@@ -451,11 +595,20 @@ export type TeacherCreateManyInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   userId: string
 }
 
@@ -469,11 +622,20 @@ export type TeacherUpdateManyMutationInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TeacherUncheckedUpdateManyInput = {
@@ -486,11 +648,20 @@ export type TeacherUncheckedUpdateManyInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -509,11 +680,20 @@ export type TeacherCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
+  institution?: Prisma.SortOrder
   qualification?: Prisma.SortOrder
   specialization?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
   dateJoined?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  emailSearchHash?: Prisma.SortOrder
+  phoneSearchHash?: Prisma.SortOrder
+  employeeIdSearchHash?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -527,11 +707,20 @@ export type TeacherMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
+  institution?: Prisma.SortOrder
   qualification?: Prisma.SortOrder
   specialization?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
   dateJoined?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  emailSearchHash?: Prisma.SortOrder
+  phoneSearchHash?: Prisma.SortOrder
+  employeeIdSearchHash?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -545,11 +734,20 @@ export type TeacherMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
+  institution?: Prisma.SortOrder
   qualification?: Prisma.SortOrder
   specialization?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
   dateJoined?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  emailSearchHash?: Prisma.SortOrder
+  phoneSearchHash?: Prisma.SortOrder
+  employeeIdSearchHash?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -643,11 +841,20 @@ export type TeacherCreateWithoutUserInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   instructedCourses?: Prisma.CourseCreateNestedManyWithoutInstructorInput
   createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatorInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutTeacherInput
@@ -663,11 +870,20 @@ export type TeacherUncheckedCreateWithoutUserInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   instructedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutInstructorInput
   createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatorInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutTeacherInput
@@ -699,11 +915,20 @@ export type TeacherUpdateWithoutUserInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructedCourses?: Prisma.CourseUpdateManyWithoutInstructorNestedInput
   createdCourses?: Prisma.CourseUpdateManyWithoutCreatorNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutTeacherNestedInput
@@ -719,11 +944,20 @@ export type TeacherUncheckedUpdateWithoutUserInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   instructedCourses?: Prisma.CourseUncheckedUpdateManyWithoutInstructorNestedInput
   createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatorNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
@@ -739,11 +973,20 @@ export type TeacherCreateWithoutInstructedCoursesInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   user: Prisma.UserCreateNestedOneWithoutTeacherInput
   createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatorInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutTeacherInput
@@ -759,11 +1002,20 @@ export type TeacherUncheckedCreateWithoutInstructedCoursesInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   userId: string
   createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatorInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutTeacherInput
@@ -784,11 +1036,20 @@ export type TeacherCreateWithoutCreatedCoursesInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   user: Prisma.UserCreateNestedOneWithoutTeacherInput
   instructedCourses?: Prisma.CourseCreateNestedManyWithoutInstructorInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutTeacherInput
@@ -804,11 +1065,20 @@ export type TeacherUncheckedCreateWithoutCreatedCoursesInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   userId: string
   instructedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutInstructorInput
   assignments?: Prisma.AssignmentUncheckedCreateNestedManyWithoutTeacherInput
@@ -840,11 +1110,20 @@ export type TeacherUpdateWithoutInstructedCoursesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherNestedInput
   createdCourses?: Prisma.CourseUpdateManyWithoutCreatorNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutTeacherNestedInput
@@ -860,11 +1139,20 @@ export type TeacherUncheckedUpdateWithoutInstructedCoursesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatorNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
@@ -891,11 +1179,20 @@ export type TeacherUpdateWithoutCreatedCoursesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherNestedInput
   instructedCourses?: Prisma.CourseUpdateManyWithoutInstructorNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutTeacherNestedInput
@@ -911,11 +1208,20 @@ export type TeacherUncheckedUpdateWithoutCreatedCoursesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   instructedCourses?: Prisma.CourseUncheckedUpdateManyWithoutInstructorNestedInput
   assignments?: Prisma.AssignmentUncheckedUpdateManyWithoutTeacherNestedInput
@@ -931,11 +1237,20 @@ export type TeacherCreateWithoutAssignmentsInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   user: Prisma.UserCreateNestedOneWithoutTeacherInput
   instructedCourses?: Prisma.CourseCreateNestedManyWithoutInstructorInput
   createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatorInput
@@ -951,11 +1266,20 @@ export type TeacherUncheckedCreateWithoutAssignmentsInput = {
   phone: string
   email: string
   department: string
+  institution?: string | null
   qualification?: string | null
   specialization?: string | null
+  experience?: string | null
   dateJoined?: Date | string
   isActive?: boolean
+  passportUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   lastActivityAt?: Date | string | null
+  emailSearchHash?: string | null
+  phoneSearchHash?: string | null
+  employeeIdSearchHash?: string | null
   userId: string
   instructedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutInstructorInput
   createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatorInput
@@ -987,11 +1311,20 @@ export type TeacherUpdateWithoutAssignmentsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherNestedInput
   instructedCourses?: Prisma.CourseUpdateManyWithoutInstructorNestedInput
   createdCourses?: Prisma.CourseUpdateManyWithoutCreatorNestedInput
@@ -1007,11 +1340,20 @@ export type TeacherUncheckedUpdateWithoutAssignmentsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialization?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateJoined?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActivityAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeIdSearchHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   instructedCourses?: Prisma.CourseUncheckedUpdateManyWithoutInstructorNestedInput
   createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatorNestedInput
@@ -1076,11 +1418,20 @@ export type TeacherSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   phone?: boolean
   email?: boolean
   department?: boolean
+  institution?: boolean
   qualification?: boolean
   specialization?: boolean
+  experience?: boolean
   dateJoined?: boolean
   isActive?: boolean
+  passportUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   lastActivityAt?: boolean
+  emailSearchHash?: boolean
+  phoneSearchHash?: boolean
+  employeeIdSearchHash?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   instructedCourses?: boolean | Prisma.Teacher$instructedCoursesArgs<ExtArgs>
@@ -1099,11 +1450,20 @@ export type TeacherSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   phone?: boolean
   email?: boolean
   department?: boolean
+  institution?: boolean
   qualification?: boolean
   specialization?: boolean
+  experience?: boolean
   dateJoined?: boolean
   isActive?: boolean
+  passportUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   lastActivityAt?: boolean
+  emailSearchHash?: boolean
+  phoneSearchHash?: boolean
+  employeeIdSearchHash?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teacher"]>
@@ -1118,11 +1478,20 @@ export type TeacherSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   phone?: boolean
   email?: boolean
   department?: boolean
+  institution?: boolean
   qualification?: boolean
   specialization?: boolean
+  experience?: boolean
   dateJoined?: boolean
   isActive?: boolean
+  passportUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   lastActivityAt?: boolean
+  emailSearchHash?: boolean
+  phoneSearchHash?: boolean
+  employeeIdSearchHash?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teacher"]>
@@ -1137,15 +1506,24 @@ export type TeacherSelectScalar = {
   phone?: boolean
   email?: boolean
   department?: boolean
+  institution?: boolean
   qualification?: boolean
   specialization?: boolean
+  experience?: boolean
   dateJoined?: boolean
   isActive?: boolean
+  passportUrl?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   lastActivityAt?: boolean
+  emailSearchHash?: boolean
+  phoneSearchHash?: boolean
+  employeeIdSearchHash?: boolean
   userId?: boolean
 }
 
-export type TeacherOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "firstName" | "lastName" | "otherName" | "gender" | "phone" | "email" | "department" | "qualification" | "specialization" | "dateJoined" | "isActive" | "lastActivityAt" | "userId", ExtArgs["result"]["teacher"]>
+export type TeacherOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "firstName" | "lastName" | "otherName" | "gender" | "phone" | "email" | "department" | "institution" | "qualification" | "specialization" | "experience" | "dateJoined" | "isActive" | "passportUrl" | "createdAt" | "updatedAt" | "deletedAt" | "lastActivityAt" | "emailSearchHash" | "phoneSearchHash" | "employeeIdSearchHash" | "userId", ExtArgs["result"]["teacher"]>
 export type TeacherInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   instructedCourses?: boolean | Prisma.Teacher$instructedCoursesArgs<ExtArgs>
@@ -1178,11 +1556,20 @@ export type $TeacherPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     phone: string
     email: string
     department: string
+    institution: string | null
     qualification: string | null
     specialization: string | null
+    experience: string | null
     dateJoined: Date
     isActive: boolean
+    passportUrl: string | null
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
     lastActivityAt: Date | null
+    emailSearchHash: string | null
+    phoneSearchHash: string | null
+    employeeIdSearchHash: string | null
     userId: string
   }, ExtArgs["result"]["teacher"]>
   composites: {}
@@ -1620,11 +2007,20 @@ export interface TeacherFieldRefs {
   readonly phone: Prisma.FieldRef<"Teacher", 'String'>
   readonly email: Prisma.FieldRef<"Teacher", 'String'>
   readonly department: Prisma.FieldRef<"Teacher", 'String'>
+  readonly institution: Prisma.FieldRef<"Teacher", 'String'>
   readonly qualification: Prisma.FieldRef<"Teacher", 'String'>
   readonly specialization: Prisma.FieldRef<"Teacher", 'String'>
+  readonly experience: Prisma.FieldRef<"Teacher", 'String'>
   readonly dateJoined: Prisma.FieldRef<"Teacher", 'DateTime'>
   readonly isActive: Prisma.FieldRef<"Teacher", 'Boolean'>
+  readonly passportUrl: Prisma.FieldRef<"Teacher", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Teacher", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Teacher", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Teacher", 'DateTime'>
   readonly lastActivityAt: Prisma.FieldRef<"Teacher", 'DateTime'>
+  readonly emailSearchHash: Prisma.FieldRef<"Teacher", 'String'>
+  readonly phoneSearchHash: Prisma.FieldRef<"Teacher", 'String'>
+  readonly employeeIdSearchHash: Prisma.FieldRef<"Teacher", 'String'>
   readonly userId: Prisma.FieldRef<"Teacher", 'String'>
 }
     

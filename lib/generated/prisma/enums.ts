@@ -54,7 +54,11 @@ export const NotificationType = {
   SUCCESS: 'SUCCESS',
   WARNING: 'WARNING',
   ERROR: 'ERROR',
-  SECURITY: 'SECURITY'
+  SECURITY: 'SECURITY',
+  REMINDER: 'REMINDER',
+  GRADE: 'GRADE',
+  ASSIGNMENT: 'ASSIGNMENT',
+  EXAM: 'EXAM'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -72,6 +76,10 @@ export const AuditAction = {
   PORTFOLIO_CREATED: 'PORTFOLIO_CREATED',
   COURSE_CREATED: 'COURSE_CREATED',
   ASSIGNMENT_CREATED: 'ASSIGNMENT_CREATED',
+  ASSIGNMENT_UPDATED: 'ASSIGNMENT_UPDATED',
+  ASSIGNMENT_DELETED: 'ASSIGNMENT_DELETED',
+  ASSIGNMENT_PUBLISHED: 'ASSIGNMENT_PUBLISHED',
+  ASSIGNMENT_UNPUBLISHED: 'ASSIGNMENT_UNPUBLISHED',
   GRADE_ASSIGNED: 'GRADE_ASSIGNED',
   PASSWORD_RESET_REQUESTED: 'PASSWORD_RESET_REQUESTED',
   PASSWORD_RESET: 'PASSWORD_RESET',
@@ -100,7 +108,16 @@ export const AuditAction = {
   ACCOUNT_DELETION: 'ACCOUNT_DELETION',
   PORTFOLIO_UPDATED: 'PORTFOLIO_UPDATED',
   USER_PREFERENCES: 'USER_PREFERENCES',
-  NOTIFICATION_SETTINGS_RESET: 'NOTIFICATION_SETTINGS_RESET'
+  NOTIFICATION_SETTINGS_RESET: 'NOTIFICATION_SETTINGS_RESET',
+  ADMIN_REGISTERED: 'ADMIN_REGISTERED',
+  TEACHER_REGISTERED: 'TEACHER_REGISTERED',
+  COURSE_ENROLLED: 'COURSE_ENROLLED',
+  COURSE_COMPLETED: 'COURSE_COMPLETED',
+  LECTURE_CREATED: 'LECTURE_CREATED',
+  ATTENDANCE_MARKED: 'ATTENDANCE_MARKED',
+  EXAM_CREATED: 'EXAM_CREATED',
+  EXAM_SUBMITTED: 'EXAM_SUBMITTED',
+  EXAM_RESULT_PUBLISHED: 'EXAM_RESULT_PUBLISHED'
 } as const
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]
@@ -110,13 +127,20 @@ export const ResourceType = {
   USER: 'USER',
   STUDENT: 'STUDENT',
   TEACHER: 'TEACHER',
+  ADMIN: 'ADMIN',
   COURSE: 'COURSE',
   LECTURE: 'LECTURE',
   ASSIGNMENT: 'ASSIGNMENT',
   ENROLLMENT: 'ENROLLMENT',
   PORTFOLIO: 'PORTFOLIO',
   SESSION: 'SESSION',
-  NOTIFICATION: 'NOTIFICATION'
+  NOTIFICATION: 'NOTIFICATION',
+  ATTENDANCE: 'ATTENDANCE',
+  EXAM: 'EXAM',
+  EXAM_RESULT: 'EXAM_RESULT',
+  SYSTEM_CONFIG: 'SYSTEM_CONFIG',
+  SECURITY_EVENT: 'SECURITY_EVENT',
+  AUDIT_LOG: 'AUDIT_LOG'
 } as const
 
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]
@@ -129,3 +153,59 @@ export const SessionSecurityLevel = {
 } as const
 
 export type SessionSecurityLevel = (typeof SessionSecurityLevel)[keyof typeof SessionSecurityLevel]
+
+
+export const AttendanceStatus = {
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE',
+  EXCUSED: 'EXCUSED'
+} as const
+
+export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]
+
+
+export const ExamType = {
+  PHYSICAL: 'PHYSICAL',
+  ONLINE: 'ONLINE',
+  HYBRID: 'HYBRID'
+} as const
+
+export type ExamType = (typeof ExamType)[keyof typeof ExamType]
+
+
+export const ExamFormat = {
+  THEORY: 'THEORY',
+  PRACTICAL: 'PRACTICAL',
+  OBJECTIVE: 'OBJECTIVE',
+  ORAL: 'ORAL',
+  TAKE_HOME: 'TAKE_HOME',
+  PROJECT_BASED: 'PROJECT_BASED'
+} as const
+
+export type ExamFormat = (typeof ExamFormat)[keyof typeof ExamFormat]
+
+
+export const ExamRemark = {
+  EXCELLENT: 'EXCELLENT',
+  VERY_GOOD: 'VERY_GOOD',
+  GOOD: 'GOOD',
+  FAIR: 'FAIR',
+  PASS: 'PASS',
+  FAIL: 'FAIL',
+  ABSENT: 'ABSENT',
+  MALPRACTICE: 'MALPRACTICE'
+} as const
+
+export type ExamRemark = (typeof ExamRemark)[keyof typeof ExamRemark]
+
+
+export const SubmissionStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  LATE: 'LATE',
+  GRADED: 'GRADED',
+  RETURNED: 'RETURNED'
+} as const
+
+export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]

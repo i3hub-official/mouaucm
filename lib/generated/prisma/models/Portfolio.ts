@@ -32,7 +32,9 @@ export type PortfolioMinAggregateOutputType = {
   imageUrl: string | null
   isPublished: boolean | null
   submittedAt: Date | null
+  createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
   courseId: string | null
   studentId: string | null
 }
@@ -45,7 +47,9 @@ export type PortfolioMaxAggregateOutputType = {
   imageUrl: string | null
   isPublished: boolean | null
   submittedAt: Date | null
+  createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
   courseId: string | null
   studentId: string | null
 }
@@ -59,7 +63,9 @@ export type PortfolioCountAggregateOutputType = {
   technologies: number
   isPublished: number
   submittedAt: number
+  createdAt: number
   updatedAt: number
+  deletedAt: number
   courseId: number
   studentId: number
   _all: number
@@ -74,7 +80,9 @@ export type PortfolioMinAggregateInputType = {
   imageUrl?: true
   isPublished?: true
   submittedAt?: true
+  createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   courseId?: true
   studentId?: true
 }
@@ -87,7 +95,9 @@ export type PortfolioMaxAggregateInputType = {
   imageUrl?: true
   isPublished?: true
   submittedAt?: true
+  createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   courseId?: true
   studentId?: true
 }
@@ -101,7 +111,9 @@ export type PortfolioCountAggregateInputType = {
   technologies?: true
   isPublished?: true
   submittedAt?: true
+  createdAt?: true
   updatedAt?: true
+  deletedAt?: true
   courseId?: true
   studentId?: true
   _all?: true
@@ -188,7 +200,9 @@ export type PortfolioGroupByOutputType = {
   technologies: string[]
   isPublished: boolean
   submittedAt: Date
+  createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
   courseId: string
   studentId: string
   _count: PortfolioCountAggregateOutputType | null
@@ -223,7 +237,9 @@ export type PortfolioWhereInput = {
   technologies?: Prisma.StringNullableListFilter<"Portfolio">
   isPublished?: Prisma.BoolFilter<"Portfolio"> | boolean
   submittedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Portfolio"> | Date | string | null
   courseId?: Prisma.StringFilter<"Portfolio"> | string
   studentId?: Prisma.StringFilter<"Portfolio"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -239,7 +255,9 @@ export type PortfolioOrderByWithRelationInput = {
   technologies?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
@@ -258,7 +276,9 @@ export type PortfolioWhereUniqueInput = Prisma.AtLeast<{
   technologies?: Prisma.StringNullableListFilter<"Portfolio">
   isPublished?: Prisma.BoolFilter<"Portfolio"> | boolean
   submittedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Portfolio"> | Date | string | null
   courseId?: Prisma.StringFilter<"Portfolio"> | string
   studentId?: Prisma.StringFilter<"Portfolio"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -274,7 +294,9 @@ export type PortfolioOrderByWithAggregationInput = {
   technologies?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   _count?: Prisma.PortfolioCountOrderByAggregateInput
@@ -294,7 +316,9 @@ export type PortfolioScalarWhereWithAggregatesInput = {
   technologies?: Prisma.StringNullableListFilter<"Portfolio">
   isPublished?: Prisma.BoolWithAggregatesFilter<"Portfolio"> | boolean
   submittedAt?: Prisma.DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Portfolio"> | Date | string | null
   courseId?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   studentId?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
 }
@@ -308,7 +332,9 @@ export type PortfolioCreateInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutPortfoliosInput
   student: Prisma.StudentCreateNestedOneWithoutPortfoliosInput
 }
@@ -322,7 +348,9 @@ export type PortfolioUncheckedCreateInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
   studentId: string
 }
@@ -336,7 +364,9 @@ export type PortfolioUpdateInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutPortfoliosNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutPortfoliosNestedInput
 }
@@ -350,7 +380,9 @@ export type PortfolioUncheckedUpdateInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -364,7 +396,9 @@ export type PortfolioCreateManyInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
   studentId: string
 }
@@ -378,7 +412,9 @@ export type PortfolioUpdateManyMutationInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PortfolioUncheckedUpdateManyInput = {
@@ -390,7 +426,9 @@ export type PortfolioUncheckedUpdateManyInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -422,7 +460,9 @@ export type PortfolioCountOrderByAggregateInput = {
   technologies?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
 }
@@ -435,7 +475,9 @@ export type PortfolioMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
 }
@@ -448,7 +490,9 @@ export type PortfolioMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
 }
@@ -555,7 +599,9 @@ export type PortfolioCreateWithoutStudentInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutPortfoliosInput
 }
 
@@ -568,7 +614,9 @@ export type PortfolioUncheckedCreateWithoutStudentInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
 }
 
@@ -610,7 +658,9 @@ export type PortfolioScalarWhereInput = {
   technologies?: Prisma.StringNullableListFilter<"Portfolio">
   isPublished?: Prisma.BoolFilter<"Portfolio"> | boolean
   submittedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Portfolio"> | Date | string | null
   courseId?: Prisma.StringFilter<"Portfolio"> | string
   studentId?: Prisma.StringFilter<"Portfolio"> | string
 }
@@ -624,7 +674,9 @@ export type PortfolioCreateWithoutCourseInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   student: Prisma.StudentCreateNestedOneWithoutPortfoliosInput
 }
 
@@ -637,7 +689,9 @@ export type PortfolioUncheckedCreateWithoutCourseInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   studentId: string
 }
 
@@ -676,7 +730,9 @@ export type PortfolioCreateManyStudentInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   courseId: string
 }
 
@@ -689,7 +745,9 @@ export type PortfolioUpdateWithoutStudentInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutPortfoliosNestedInput
 }
 
@@ -702,7 +760,9 @@ export type PortfolioUncheckedUpdateWithoutStudentInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -715,7 +775,9 @@ export type PortfolioUncheckedUpdateManyWithoutStudentInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -728,7 +790,9 @@ export type PortfolioCreateManyCourseInput = {
   technologies?: Prisma.PortfolioCreatetechnologiesInput | string[]
   isPublished?: boolean
   submittedAt?: Date | string
+  createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
   studentId: string
 }
 
@@ -741,7 +805,9 @@ export type PortfolioUpdateWithoutCourseInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   student?: Prisma.StudentUpdateOneRequiredWithoutPortfoliosNestedInput
 }
 
@@ -754,7 +820,9 @@ export type PortfolioUncheckedUpdateWithoutCourseInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -767,7 +835,9 @@ export type PortfolioUncheckedUpdateManyWithoutCourseInput = {
   technologies?: Prisma.PortfolioUpdatetechnologiesInput | string[]
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -782,7 +852,9 @@ export type PortfolioSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   technologies?: boolean
   isPublished?: boolean
   submittedAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   studentId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -798,7 +870,9 @@ export type PortfolioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   technologies?: boolean
   isPublished?: boolean
   submittedAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   studentId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -814,7 +888,9 @@ export type PortfolioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   technologies?: boolean
   isPublished?: boolean
   submittedAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   studentId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -830,12 +906,14 @@ export type PortfolioSelectScalar = {
   technologies?: boolean
   isPublished?: boolean
   submittedAt?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
   courseId?: boolean
   studentId?: boolean
 }
 
-export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "projectUrl" | "imageUrl" | "technologies" | "isPublished" | "submittedAt" | "updatedAt" | "courseId" | "studentId", ExtArgs["result"]["portfolio"]>
+export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "projectUrl" | "imageUrl" | "technologies" | "isPublished" | "submittedAt" | "createdAt" | "updatedAt" | "deletedAt" | "courseId" | "studentId", ExtArgs["result"]["portfolio"]>
 export type PortfolioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -864,7 +942,9 @@ export type $PortfolioPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     technologies: string[]
     isPublished: boolean
     submittedAt: Date
+    createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     courseId: string
     studentId: string
   }, ExtArgs["result"]["portfolio"]>
@@ -1300,7 +1380,9 @@ export interface PortfolioFieldRefs {
   readonly technologies: Prisma.FieldRef<"Portfolio", 'String[]'>
   readonly isPublished: Prisma.FieldRef<"Portfolio", 'Boolean'>
   readonly submittedAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
   readonly courseId: Prisma.FieldRef<"Portfolio", 'String'>
   readonly studentId: Prisma.FieldRef<"Portfolio", 'String'>
 }

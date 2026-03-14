@@ -1,10 +1,7 @@
-// Files: lib/types/shared/index.ts
 // ===========================================================
 // SHARED TYPES - Common types used across all roles
 // ===========================================================
-
-import { Role } from "@prisma/client";
-
+import { Role } from "@/lib/generated/prisma/enums";
 // ===========================================================
 // Authentication Types
 // ===========================================================
@@ -28,7 +25,7 @@ export interface BaseUser {
   id: string;
   email: string;
   name: string;
-  role: "STUDENT" | "TEACHER" | "ADMIN";
+  role: Role;
   isActive: boolean;
   emailVerified: Date | null;
   lastLoginAt: Date | null;
@@ -42,7 +39,8 @@ export interface StudentUser extends BaseUser {
   college: string;
   course: string;
   firstName: string;
-  surname: string;
+  lastname: string;
+  lastName?: string; // Alias for lastname
   phone: string;
   admissionYear?: number;
 }
@@ -463,9 +461,3 @@ export interface NetworkError {
   statusText?: string;
   data?: any;
 }
-
-// ===========================================================
-// Export common Prisma enums
-// ===========================================================
-
-export { Role } from "@prisma/client";

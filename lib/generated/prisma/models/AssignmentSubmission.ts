@@ -46,6 +46,10 @@ export type AssignmentSubmissionMinAggregateOutputType = {
   isGraded: boolean | null
   isLate: boolean | null
   attemptNumber: number | null
+  status: $Enums.SubmissionStatus | null
+  gradedAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
   studentId: string | null
   assignmentId: string | null
 }
@@ -60,6 +64,10 @@ export type AssignmentSubmissionMaxAggregateOutputType = {
   isGraded: boolean | null
   isLate: boolean | null
   attemptNumber: number | null
+  status: $Enums.SubmissionStatus | null
+  gradedAt: Date | null
+  createdAt: Date | null
+  updatedAt: Date | null
   studentId: string | null
   assignmentId: string | null
 }
@@ -74,6 +82,10 @@ export type AssignmentSubmissionCountAggregateOutputType = {
   isGraded: number
   isLate: number
   attemptNumber: number
+  status: number
+  gradedAt: number
+  createdAt: number
+  updatedAt: number
   studentId: number
   assignmentId: number
   _all: number
@@ -100,6 +112,10 @@ export type AssignmentSubmissionMinAggregateInputType = {
   isGraded?: true
   isLate?: true
   attemptNumber?: true
+  status?: true
+  gradedAt?: true
+  createdAt?: true
+  updatedAt?: true
   studentId?: true
   assignmentId?: true
 }
@@ -114,6 +130,10 @@ export type AssignmentSubmissionMaxAggregateInputType = {
   isGraded?: true
   isLate?: true
   attemptNumber?: true
+  status?: true
+  gradedAt?: true
+  createdAt?: true
+  updatedAt?: true
   studentId?: true
   assignmentId?: true
 }
@@ -128,6 +148,10 @@ export type AssignmentSubmissionCountAggregateInputType = {
   isGraded?: true
   isLate?: true
   attemptNumber?: true
+  status?: true
+  gradedAt?: true
+  createdAt?: true
+  updatedAt?: true
   studentId?: true
   assignmentId?: true
   _all?: true
@@ -229,6 +253,10 @@ export type AssignmentSubmissionGroupByOutputType = {
   isGraded: boolean
   isLate: boolean
   attemptNumber: number
+  status: $Enums.SubmissionStatus
+  gradedAt: Date | null
+  createdAt: Date
+  updatedAt: Date
   studentId: string
   assignmentId: string
   _count: AssignmentSubmissionCountAggregateOutputType | null
@@ -266,6 +294,10 @@ export type AssignmentSubmissionWhereInput = {
   isGraded?: Prisma.BoolFilter<"AssignmentSubmission"> | boolean
   isLate?: Prisma.BoolFilter<"AssignmentSubmission"> | boolean
   attemptNumber?: Prisma.IntFilter<"AssignmentSubmission"> | number
+  status?: Prisma.EnumSubmissionStatusFilter<"AssignmentSubmission"> | $Enums.SubmissionStatus
+  gradedAt?: Prisma.DateTimeNullableFilter<"AssignmentSubmission"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"AssignmentSubmission"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AssignmentSubmission"> | Date | string
   studentId?: Prisma.StringFilter<"AssignmentSubmission"> | string
   assignmentId?: Prisma.StringFilter<"AssignmentSubmission"> | string
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
@@ -282,6 +314,10 @@ export type AssignmentSubmissionOrderByWithRelationInput = {
   isGraded?: Prisma.SortOrder
   isLate?: Prisma.SortOrder
   attemptNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   assignmentId?: Prisma.SortOrder
   student?: Prisma.StudentOrderByWithRelationInput
@@ -302,6 +338,10 @@ export type AssignmentSubmissionWhereUniqueInput = Prisma.AtLeast<{
   isGraded?: Prisma.BoolFilter<"AssignmentSubmission"> | boolean
   isLate?: Prisma.BoolFilter<"AssignmentSubmission"> | boolean
   attemptNumber?: Prisma.IntFilter<"AssignmentSubmission"> | number
+  status?: Prisma.EnumSubmissionStatusFilter<"AssignmentSubmission"> | $Enums.SubmissionStatus
+  gradedAt?: Prisma.DateTimeNullableFilter<"AssignmentSubmission"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"AssignmentSubmission"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AssignmentSubmission"> | Date | string
   studentId?: Prisma.StringFilter<"AssignmentSubmission"> | string
   assignmentId?: Prisma.StringFilter<"AssignmentSubmission"> | string
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
@@ -318,6 +358,10 @@ export type AssignmentSubmissionOrderByWithAggregationInput = {
   isGraded?: Prisma.SortOrder
   isLate?: Prisma.SortOrder
   attemptNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   assignmentId?: Prisma.SortOrder
   _count?: Prisma.AssignmentSubmissionCountOrderByAggregateInput
@@ -340,6 +384,10 @@ export type AssignmentSubmissionScalarWhereWithAggregatesInput = {
   isGraded?: Prisma.BoolWithAggregatesFilter<"AssignmentSubmission"> | boolean
   isLate?: Prisma.BoolWithAggregatesFilter<"AssignmentSubmission"> | boolean
   attemptNumber?: Prisma.IntWithAggregatesFilter<"AssignmentSubmission"> | number
+  status?: Prisma.EnumSubmissionStatusWithAggregatesFilter<"AssignmentSubmission"> | $Enums.SubmissionStatus
+  gradedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssignmentSubmission"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"AssignmentSubmission"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AssignmentSubmission"> | Date | string
   studentId?: Prisma.StringWithAggregatesFilter<"AssignmentSubmission"> | string
   assignmentId?: Prisma.StringWithAggregatesFilter<"AssignmentSubmission"> | string
 }
@@ -354,6 +402,10 @@ export type AssignmentSubmissionCreateInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutAssignmentSubmissionsInput
   assignment: Prisma.AssignmentCreateNestedOneWithoutSubmissionsInput
 }
@@ -368,6 +420,10 @@ export type AssignmentSubmissionUncheckedCreateInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   studentId: string
   assignmentId: string
 }
@@ -382,6 +438,10 @@ export type AssignmentSubmissionUpdateInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutAssignmentSubmissionsNestedInput
   assignment?: Prisma.AssignmentUpdateOneRequiredWithoutSubmissionsNestedInput
 }
@@ -396,6 +456,10 @@ export type AssignmentSubmissionUncheckedUpdateInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   assignmentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -410,6 +474,10 @@ export type AssignmentSubmissionCreateManyInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   studentId: string
   assignmentId: string
 }
@@ -424,6 +492,10 @@ export type AssignmentSubmissionUpdateManyMutationInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssignmentSubmissionUncheckedUpdateManyInput = {
@@ -436,6 +508,10 @@ export type AssignmentSubmissionUncheckedUpdateManyInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   assignmentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -466,6 +542,10 @@ export type AssignmentSubmissionCountOrderByAggregateInput = {
   isGraded?: Prisma.SortOrder
   isLate?: Prisma.SortOrder
   attemptNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   assignmentId?: Prisma.SortOrder
 }
@@ -485,6 +565,10 @@ export type AssignmentSubmissionMaxOrderByAggregateInput = {
   isGraded?: Prisma.SortOrder
   isLate?: Prisma.SortOrder
   attemptNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   assignmentId?: Prisma.SortOrder
 }
@@ -499,6 +583,10 @@ export type AssignmentSubmissionMinOrderByAggregateInput = {
   isGraded?: Prisma.SortOrder
   isLate?: Prisma.SortOrder
   attemptNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   assignmentId?: Prisma.SortOrder
 }
@@ -592,6 +680,10 @@ export type AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentNestedInput 
   deleteMany?: Prisma.AssignmentSubmissionScalarWhereInput | Prisma.AssignmentSubmissionScalarWhereInput[]
 }
 
+export type EnumSubmissionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.SubmissionStatus
+}
+
 export type AssignmentSubmissionCreateWithoutStudentInput = {
   id?: string
   submissionUrl?: string | null
@@ -602,6 +694,10 @@ export type AssignmentSubmissionCreateWithoutStudentInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   assignment: Prisma.AssignmentCreateNestedOneWithoutSubmissionsInput
 }
 
@@ -615,6 +711,10 @@ export type AssignmentSubmissionUncheckedCreateWithoutStudentInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   assignmentId: string
 }
 
@@ -657,6 +757,10 @@ export type AssignmentSubmissionScalarWhereInput = {
   isGraded?: Prisma.BoolFilter<"AssignmentSubmission"> | boolean
   isLate?: Prisma.BoolFilter<"AssignmentSubmission"> | boolean
   attemptNumber?: Prisma.IntFilter<"AssignmentSubmission"> | number
+  status?: Prisma.EnumSubmissionStatusFilter<"AssignmentSubmission"> | $Enums.SubmissionStatus
+  gradedAt?: Prisma.DateTimeNullableFilter<"AssignmentSubmission"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"AssignmentSubmission"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AssignmentSubmission"> | Date | string
   studentId?: Prisma.StringFilter<"AssignmentSubmission"> | string
   assignmentId?: Prisma.StringFilter<"AssignmentSubmission"> | string
 }
@@ -671,6 +775,10 @@ export type AssignmentSubmissionCreateWithoutAssignmentInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutAssignmentSubmissionsInput
 }
 
@@ -684,6 +792,10 @@ export type AssignmentSubmissionUncheckedCreateWithoutAssignmentInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   studentId: string
 }
 
@@ -723,6 +835,10 @@ export type AssignmentSubmissionCreateManyStudentInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   assignmentId: string
 }
 
@@ -736,6 +852,10 @@ export type AssignmentSubmissionUpdateWithoutStudentInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignment?: Prisma.AssignmentUpdateOneRequiredWithoutSubmissionsNestedInput
 }
 
@@ -749,6 +869,10 @@ export type AssignmentSubmissionUncheckedUpdateWithoutStudentInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignmentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -762,6 +886,10 @@ export type AssignmentSubmissionUncheckedUpdateManyWithoutStudentInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignmentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -775,6 +903,10 @@ export type AssignmentSubmissionCreateManyAssignmentInput = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: number
+  status?: $Enums.SubmissionStatus
+  gradedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   studentId: string
 }
 
@@ -788,6 +920,10 @@ export type AssignmentSubmissionUpdateWithoutAssignmentInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutAssignmentSubmissionsNestedInput
 }
 
@@ -801,6 +937,10 @@ export type AssignmentSubmissionUncheckedUpdateWithoutAssignmentInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -814,6 +954,10 @@ export type AssignmentSubmissionUncheckedUpdateManyWithoutAssignmentInput = {
   isGraded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isLate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attemptNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumSubmissionStatusFieldUpdateOperationsInput | $Enums.SubmissionStatus
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -829,6 +973,10 @@ export type AssignmentSubmissionSelect<ExtArgs extends runtime.Types.Extensions.
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: boolean
+  status?: boolean
+  gradedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   studentId?: boolean
   assignmentId?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -845,6 +993,10 @@ export type AssignmentSubmissionSelectCreateManyAndReturn<ExtArgs extends runtim
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: boolean
+  status?: boolean
+  gradedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   studentId?: boolean
   assignmentId?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -861,6 +1013,10 @@ export type AssignmentSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtim
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: boolean
+  status?: boolean
+  gradedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   studentId?: boolean
   assignmentId?: boolean
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -877,11 +1033,15 @@ export type AssignmentSubmissionSelectScalar = {
   isGraded?: boolean
   isLate?: boolean
   attemptNumber?: boolean
+  status?: boolean
+  gradedAt?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   studentId?: boolean
   assignmentId?: boolean
 }
 
-export type AssignmentSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submissionUrl" | "content" | "submittedAt" | "score" | "feedback" | "isGraded" | "isLate" | "attemptNumber" | "studentId" | "assignmentId", ExtArgs["result"]["assignmentSubmission"]>
+export type AssignmentSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "submissionUrl" | "content" | "submittedAt" | "score" | "feedback" | "isGraded" | "isLate" | "attemptNumber" | "status" | "gradedAt" | "createdAt" | "updatedAt" | "studentId" | "assignmentId", ExtArgs["result"]["assignmentSubmission"]>
 export type AssignmentSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   assignment?: boolean | Prisma.AssignmentDefaultArgs<ExtArgs>
@@ -911,6 +1071,10 @@ export type $AssignmentSubmissionPayload<ExtArgs extends runtime.Types.Extension
     isGraded: boolean
     isLate: boolean
     attemptNumber: number
+    status: $Enums.SubmissionStatus
+    gradedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
     studentId: string
     assignmentId: string
   }, ExtArgs["result"]["assignmentSubmission"]>
@@ -1347,6 +1511,10 @@ export interface AssignmentSubmissionFieldRefs {
   readonly isGraded: Prisma.FieldRef<"AssignmentSubmission", 'Boolean'>
   readonly isLate: Prisma.FieldRef<"AssignmentSubmission", 'Boolean'>
   readonly attemptNumber: Prisma.FieldRef<"AssignmentSubmission", 'Int'>
+  readonly status: Prisma.FieldRef<"AssignmentSubmission", 'SubmissionStatus'>
+  readonly gradedAt: Prisma.FieldRef<"AssignmentSubmission", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"AssignmentSubmission", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"AssignmentSubmission", 'DateTime'>
   readonly studentId: Prisma.FieldRef<"AssignmentSubmission", 'String'>
   readonly assignmentId: Prisma.FieldRef<"AssignmentSubmission", 'String'>
 }

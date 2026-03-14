@@ -2,7 +2,7 @@
 import { prisma } from "@/lib/server/prisma";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
 import { generateVerificationToken } from "@/lib/utils";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 import bcrypt from "bcryptjs";
 import { Student } from "@/lib/types/s/index";
 import { env } from "process";
@@ -18,7 +18,7 @@ export class StudentPasswordService {
         email: await unprotectData(student.email, "email"),
         phone: await unprotectData(student.phone, "phone"),
         firstName: await unprotectData(student.firstName, "name"),
-        surname: await unprotectData(student.surname, "name"),
+        lastname: await unprotectData(student.lastname, "name"),
         otherName: student.otherName
           ? await unprotectData(student.otherName, "name")
           : null,

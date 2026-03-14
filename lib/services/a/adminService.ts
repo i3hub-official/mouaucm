@@ -2,11 +2,50 @@
 import { prisma } from "@/lib/server/prisma";
 import {
   protectData,
+  unprotectData,
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 import { AdminUser } from "@/lib/types/a/index";
+
+// Define the actual return type from Prisma
+type PrismaAdminResult = {
+  id: string;
+  lastname: string;
+  firstname: string;
+  othername: string | null;
+  gender: string | null;
+  email: string;
+  phone: string;
+  department: string;
+  institution: string | null;
+  qualification: string | null;
+  specialization: string | null;
+  experience: string | null;
+  dateJoined: Date;
+  isActive: boolean;
+  passportUrl: string | null;
+  userId: string;
+  emailSearchHash: string | null;
+  phoneSearchHash: string | null;
+  employeeIdSearchHash: string | null;
+  lastActivityAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    role: string;
+    isActive: boolean;
+    emailVerified: Date | null;
+    lastLoginAt: Date | null;
+    createdAt: Date;
+  };
+} & {
+  employeeId: string; // Add employeeId explicitly
+};
 
 export class AdminService {
   /**
@@ -36,20 +75,29 @@ export class AdminService {
         return null;
       }
 
+      // Since we know employeeId exists in the schema but TypeScript doesn't,
+      // we need to access it carefully
+      const employeeId = (admin as any).employeeId;
+      
+      if (!employeeId) {
+        console.error("Employee ID not found in admin record");
+        return null;
+      }
+
       // Decrypt sensitive data
       const decryptedAdmin: AdminUser = {
         id: admin.id,
-        teacherId: admin.teacherId,
+        teacherId: employeeId, // Map employeeId to teacherId for the interface
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        surname: await this.decryptField(admin.surname, "name"),
-        otherName: admin.otherName
+        lastname: await this.decryptField(admin.lastname, "name"),
+              otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
-        gender: admin.gender ?? "OTHER",
+        gender: (admin.gender as "MALE" | "FEMALE" | "OTHER") ?? "OTHER",
         department: admin.department,
-        institution: admin.institution,
+        institution: admin.institution || "",
         qualification: admin.qualification ?? undefined,
         specialization: admin.specialization ?? undefined,
         experience: admin.experience,
@@ -57,11 +105,12 @@ export class AdminService {
         isActive: admin.user.isActive,
         passportUrl: admin.passportUrl,
         // Add required properties from user
-        role: "ADMIN", // Replace with enum if available
+        role: "ADMIN",
         name: admin.user.name ?? "",
         emailVerified: admin.user.emailVerified,
         lastLoginAt: admin.user.lastLoginAt,
         createdAt: admin.user.createdAt,
+        address: null,
       };
 
       return decryptedAdmin;
@@ -98,32 +147,39 @@ export class AdminService {
         return null;
       }
 
+      const employeeId = (admin as any).employeeId;
+      
+      if (!employeeId) {
+        console.error("Employee ID not found in admin record");
+        return null;
+      }
+
       // Decrypt sensitive data
       const decryptedAdmin: AdminUser = {
         id: admin.id,
-        teacherId: admin.teacherId,
+        teacherId: employeeId,
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        surname: await this.decryptField(admin.surname, "name"),
-        otherName: admin.otherName
+        lastname: await this.decryptField(admin.lastname, "name"),
+               otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
-        gender: admin.gender ?? "OTHER",
+        gender: (admin.gender as "MALE" | "FEMALE" | "OTHER") ?? "OTHER",
         department: admin.department,
-        institution: admin.institution,
+        institution: admin.institution || "",
         qualification: admin.qualification ?? undefined,
         specialization: admin.specialization ?? undefined,
         experience: admin.experience,
         dateJoined: admin.dateJoined,
         isActive: admin.user.isActive,
         passportUrl: admin.passportUrl,
-        // Add required properties from user
         role: "ADMIN",
         name: admin.user.name ?? "",
         emailVerified: admin.user.emailVerified,
         lastLoginAt: admin.user.lastLoginAt,
         createdAt: admin.user.createdAt,
+        address: null,
       };
 
       return decryptedAdmin;
@@ -164,32 +220,39 @@ export class AdminService {
         return null;
       }
 
+      const employeeId = (admin as any).employeeId;
+      
+      if (!employeeId) {
+        console.error("Employee ID not found in admin record");
+        return null;
+      }
+
       // Decrypt sensitive data
       const decryptedAdmin: AdminUser = {
         id: admin.id,
-        teacherId: admin.teacherId,
+        teacherId: employeeId,
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        surname: await this.decryptField(admin.surname, "name"),
-        otherName: admin.otherName
+        lastname: await this.decryptField(admin.lastname, "name"),
+              otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
-        gender: admin.gender ?? "OTHER",
+        gender: (admin.gender as "MALE" | "FEMALE" | "OTHER") ?? "OTHER",
         department: admin.department,
-        institution: admin.institution,
+        institution: admin.institution || "",
         qualification: admin.qualification ?? undefined,
         specialization: admin.specialization ?? undefined,
         experience: admin.experience,
         dateJoined: admin.dateJoined,
         isActive: admin.user.isActive,
         passportUrl: admin.passportUrl,
-        // Add required properties from user
         role: "ADMIN",
         name: admin.user.name ?? "",
         emailVerified: admin.user.emailVerified,
         lastLoginAt: admin.user.lastLoginAt,
         createdAt: admin.user.createdAt,
+        address: null,
       };
 
       return decryptedAdmin;
@@ -202,12 +265,12 @@ export class AdminService {
   /**
    * Get admin by employee ID
    */
-  static async getAdminByTeacherId(
-    teacherId: string
+  static async getAdminByEmployeeId(
+    employeeId: string
   ): Promise<AdminUser | null> {
     try {
       const admin = await prisma.admin.findUnique({
-        where: { teacherId },
+        where: { employeeId },
         include: {
           user: {
             select: {
@@ -229,33 +292,35 @@ export class AdminService {
       }
 
       // Decrypt sensitive data
-      const decryptedAdmin = {
-        ...admin,
+      const decryptedAdmin: AdminUser = {
+        id: admin.id,
+        teacherId: admin.employeeId, // This works because we're querying by employeeId
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        surname: await this.decryptField(admin.surname, "name"),
+        lastname: await this.decryptField(admin.lastName, "name"),
+        lastName: await this.decryptField(admin.lastName, "name"),
         otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
-        gender: admin.gender,
+        gender: (admin.gender as "MALE" | "FEMALE" | "OTHER") ?? "OTHER",
         department: admin.department,
-        institution: admin.institution,
-        qualification: admin.qualification,
-        specialization: admin.specialization,
+        institution: admin.institution || "",
+        qualification: admin.qualification ?? undefined,
+        specialization: admin.specialization ?? undefined,
         experience: admin.experience,
         dateJoined: admin.dateJoined,
         isActive: admin.user.isActive,
         passportUrl: admin.passportUrl,
-        // Add required properties from user
         role: "ADMIN",
         name: admin.user.name ?? "",
         emailVerified: admin.user.emailVerified,
         lastLoginAt: admin.user.lastLoginAt,
         createdAt: admin.user.createdAt,
+        address: null,
       };
 
-      return decryptedAdmin as AdminUser;
+      return decryptedAdmin;
     } catch (error) {
       console.error("Error getting admin by employee ID:", error);
       throw error;
@@ -266,15 +331,15 @@ export class AdminService {
    * Create admin
    */
   static async createAdmin(adminData: {
-    teacherId: string;
+    employeeId: string;
     firstName: string;
-    surname: string;
+    lastName: string;
     otherName?: string;
     gender?: string;
     email: string;
     phone: string;
     department: string;
-    institution: string;
+    institution?: string;
     qualification?: string;
     specialization?: string;
     experience?: string;
@@ -295,7 +360,7 @@ export class AdminService {
 
       // Check if employee ID already exists
       const existingAdmin = await prisma.admin.findFirst({
-        where: { teacherId: adminData.teacherId },
+        where: { employeeId: adminData.employeeId },
       });
 
       if (existingAdmin) {
@@ -319,8 +384,9 @@ export class AdminService {
           email: protectedEmail.encrypted,
           passwordHash: hashedPassword.encrypted,
           role: "ADMIN",
-          isActive: false, // Will be activated after email verification
+          isActive: false,
           emailVerified: null,
+          name: `${adminData.firstName} ${adminData.lastName}`,
         },
       });
 
@@ -328,9 +394,9 @@ export class AdminService {
       const admin = await prisma.admin.create({
         data: {
           userId: user.id,
-          teacherId: adminData.teacherId,
+          employeeId: adminData.employeeId,
           firstName: (await protectData(adminData.firstName, "name")).encrypted,
-          surname: (await protectData(adminData.surname, "name")).encrypted,
+          lastName: (await protectData(adminData.lastName, "name")).encrypted,
           otherName: adminData.otherName
             ? (
                 await protectData(adminData.otherName, "name")
@@ -352,8 +418,8 @@ export class AdminService {
           phoneSearchHash: (
             await protectData(adminData.phone, "phone")
           ).searchHash,
-          teacherIdSearchHash: (
-            await protectData(adminData.teacherId, "name")
+          employeeIdSearchHash: (
+            await protectData(adminData.employeeId, "name")
           ).searchHash,
         },
       });
@@ -363,10 +429,10 @@ export class AdminService {
         data: {
           userId: user.id,
           action: AuditAction.ADMIN_REGISTERED,
-          resourceType: ResourceType.USER,
+          resourceType: ResourceType.ADMIN,
           resourceId: admin.id,
           details: {
-            teacherId: adminData.teacherId,
+            employeeId: adminData.employeeId,
             email: protectedEmail.encrypted,
             department: adminData.department,
             institution: adminData.institution,
@@ -374,7 +440,6 @@ export class AdminService {
         },
       });
 
-      // In a real implementation, send verification email here
       console.log(`Admin account created for: ${adminData.email}`);
 
       return {
@@ -382,9 +447,9 @@ export class AdminService {
         admin: {
           id: admin.id,
           userId: user.id,
-          email: protectedEmail.encrypted,
-          firstName: adminData.firstName,
-          surname: adminData.surname,
+          email: adminData.email,
+          lastname: adminData.lastname,
+          firstname: adminData.firstname,
           otherName: adminData.otherName,
           gender: adminData.gender,
           phone: adminData.phone,
@@ -412,7 +477,7 @@ export class AdminService {
     adminId: string,
     profileData: {
       firstName?: string;
-      surname?: string;
+      lastName?: string;
       otherName?: string;
       gender?: string;
       phone?: string;
@@ -425,7 +490,6 @@ export class AdminService {
     }
   ) {
     try {
-      // Get existing admin
       const admin = await prisma.admin.findUnique({
         where: { id: adminId },
         include: {
@@ -443,20 +507,19 @@ export class AdminService {
         throw new Error("Admin not found");
       }
 
-      // Prepare update data
       const updateData: any = {};
 
       if (profileData.firstName !== undefined) {
-        updateData.firstName = await protectData(profileData.firstName, "name");
+        updateData.firstName = (await protectData(profileData.firstName, "name")).encrypted;
       }
-      if (profileData.surname !== undefined) {
-        updateData.surname = await protectData(profileData.surname, "name");
+      if (profileData.lastName !== undefined) {
+        updateData.lastName = (await protectData(profileData.lastName, "name")).encrypted;
       }
       if (profileData.otherName !== undefined) {
-        updateData.otherName = await protectData(profileData.otherName, "name");
+        updateData.otherName = (await protectData(profileData.otherName, "name")).encrypted;
       }
       if (profileData.gender !== undefined) {
-        updateData.gender = profileData.gender;
+        updateData.gender = profileData.gender.toUpperCase() as "MALE" | "FEMALE" | "OTHER";
       }
       if (profileData.phone !== undefined) {
         const protectedPhone = await protectData(profileData.phone, "phone");
@@ -482,7 +545,6 @@ export class AdminService {
         updateData.passportUrl = profileData.passportUrl;
       }
 
-      // Update admin profile
       await prisma.admin.update({
         where: { id: adminId },
         data: {
@@ -491,12 +553,11 @@ export class AdminService {
         },
       });
 
-      // Log profile update
       await prisma.auditLog.create({
         data: {
           userId: admin.userId,
           action: AuditAction.PROFILE_UPDATED,
-          resourceType: ResourceType.USER,
+          resourceType: ResourceType.ADMIN,
           resourceId: adminId,
           details: {
             updatedFields: Object.keys(profileData),
@@ -522,7 +583,6 @@ export class AdminService {
     password: string
   ): Promise<AdminUser> {
     try {
-      // Find admin by email
       const protectedEmail = await protectData(email, "email");
 
       const admin = await prisma.admin.findFirst({
@@ -554,7 +614,12 @@ export class AdminService {
         throw new Error("Invalid email or password");
       }
 
-      // Check if account is locked
+      const employeeId = (admin as any).employeeId;
+      
+      if (!employeeId) {
+        throw new Error("Invalid admin record");
+      }
+
       if (
         admin.user.accountLocked &&
         admin.user.lockedUntil &&
@@ -565,7 +630,6 @@ export class AdminService {
         );
       }
 
-      // Verify password
       if (!admin.user.passwordHash) {
         throw new Error("Invalid email or password");
       }
@@ -575,17 +639,15 @@ export class AdminService {
       );
 
       if (!isValidPassword) {
-        // Increment failed attempts
         const failedAttempts = admin.user.failedLoginAttempts + 1;
         const updateData: any = {
           failedLoginAttempts: failedAttempts,
           lastFailedLoginAt: new Date(),
         };
 
-        // Lock account after 5 failed attempts
         if (failedAttempts >= 5) {
           updateData.accountLocked = true;
-          updateData.lockedUntil = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+          updateData.lockedUntil = new Date(Date.now() + 30 * 60 * 1000);
         }
 
         await prisma.user.update({
@@ -596,7 +658,6 @@ export class AdminService {
         throw new Error("Invalid email or password");
       }
 
-      // Reset failed attempts on successful login
       if (admin.user.failedLoginAttempts > 0) {
         await prisma.user.update({
           where: { id: admin.user.id },
@@ -609,7 +670,6 @@ export class AdminService {
         });
       }
 
-      // Update last login
       await prisma.user.update({
         where: { id: admin.user.id },
         data: {
@@ -618,12 +678,11 @@ export class AdminService {
         },
       });
 
-      // Log successful login
       await prisma.auditLog.create({
         data: {
           userId: admin.user.id,
           action: AuditAction.USER_LOGGED_IN,
-          resourceType: ResourceType.USER,
+          resourceType: ResourceType.ADMIN,
           resourceId: admin.id,
           details: {
             email: protectedEmail.encrypted,
@@ -632,34 +691,35 @@ export class AdminService {
         },
       });
 
-      // Decrypt sensitive data
-      const decryptedAdmin = {
-        ...admin,
+      const decryptedAdmin: AdminUser = {
+        id: admin.id,
+        teacherId: employeeId,
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        surname: await this.decryptField(admin.surname, "name"),
+        lastname: await this.decryptField(admin.lastname, "name"),
+        lastName: await this.decryptField(admin.lastName, "name"),
         otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
-        gender: admin.gender,
+        gender: (admin.gender as "MALE" | "FEMALE" | "OTHER") ?? "OTHER",
         department: admin.department,
-        institution: admin.institution,
-        qualification: admin.qualification,
-        specialization: admin.specialization,
+        institution: admin.institution || "",
+        qualification: admin.qualification ?? undefined,
+        specialization: admin.specialization ?? undefined,
         experience: admin.experience,
         dateJoined: admin.dateJoined,
         isActive: admin.user.isActive,
         passportUrl: admin.passportUrl,
-        // Add required properties from user
         role: "ADMIN",
         name: admin.user.name ?? "",
         emailVerified: admin.user.emailVerified,
         lastLoginAt: admin.user.lastLoginAt,
         createdAt: admin.user.createdAt,
+        address: null,
       };
 
-      return decryptedAdmin as AdminUser;
+      return decryptedAdmin;
     } catch (error) {
       console.error("Admin authentication error:", error);
       throw error;
@@ -680,7 +740,6 @@ export class AdminService {
     try {
       const skip = (page - 1) * limit;
 
-      // Build where clause
       const where: any = {};
       if (filters?.department) {
         where.department = filters.department;
@@ -714,27 +773,34 @@ export class AdminService {
         prisma.admin.count({ where }),
       ]);
 
-      // Decrypt sensitive data for each admin
+      // Process each admin to extract employeeId
       const decryptedAdmins = await Promise.all(
-        admins.map(async (admin) => ({
-          ...admin,
-          email: await this.decryptField(admin.user.email, "email"),
-          phone: await this.decryptField(admin.phone, "phone"),
-          firstName: await this.decryptField(admin.firstName, "name"),
-          surname: await this.decryptField(admin.surname, "name"),
-          otherName: admin.otherName
-            ? await this.decryptField(admin.otherName, "name")
-            : null,
-          gender: admin.gender,
-          department: admin.department,
-          institution: admin.institution,
-          qualification: admin.qualification,
-          specialization: admin.specialization,
-          experience: admin.experience,
-          dateJoined: admin.dateJoined,
-          isActive: admin.user.isActive,
-          passportUrl: admin.passportUrl,
-        }))
+        admins.map(async (admin) => {
+          const employeeId = (admin as any).employeeId;
+          
+          return {
+            id: admin.id,
+            employeeId: employeeId || "",
+            firstName: await this.decryptField(admin.firstName, "name"),
+            lastName: await this.decryptField(admin.lastName, "name"),
+            otherName: admin.otherName
+              ? await this.decryptField(admin.otherName, "name")
+              : null,
+            email: await this.decryptField(admin.user.email, "email"),
+            phone: await this.decryptField(admin.phone, "phone"),
+            department: admin.department,
+            institution: admin.institution,
+            qualification: admin.qualification,
+            specialization: admin.specialization,
+            experience: admin.experience,
+            dateJoined: admin.dateJoined,
+            isActive: admin.user.isActive,
+            passportUrl: admin.passportUrl,
+            gender: admin.gender,
+            userId: admin.userId,
+            user: admin.user,
+          };
+        })
       );
 
       return {
@@ -766,14 +832,11 @@ export class AdminService {
     try {
       const skip = (page - 1) * limit;
 
-      // Build where clause
       const where: any = {};
       if (filters?.department) {
         where.department = filters.department;
       }
 
-      // For a real implementation, you would need to use a search service
-      // This is a simplified version that searches by name and employee ID
       const [admins, total] = await Promise.all([
         prisma.admin.findMany({
           where: {
@@ -793,12 +856,13 @@ export class AdminService {
                 },
               },
               {
-                teacherId: {
+                employeeId: {
                   contains: query,
                   mode: "insensitive",
                 },
               },
             ],
+            ...where,
           },
           skip,
           take: limit,
@@ -820,27 +884,34 @@ export class AdminService {
         prisma.admin.count({ where }),
       ]);
 
-      // Decrypt sensitive data for each admin
+      // Process each admin to extract employeeId
       const decryptedAdmins = await Promise.all(
-        admins.map(async (admin) => ({
-          ...admin,
-          email: await this.decryptField(admin.user.email, "email"),
-          phone: await this.decryptField(admin.phone, "phone"),
-          firstName: await this.decryptField(admin.firstName, "name"),
-          surname: await this.decryptField(admin.surname, "name"),
-          otherName: admin.otherName
-            ? await this.decryptField(admin.otherName, "name")
-            : null,
-          gender: admin.gender,
-          department: admin.department,
-          institution: admin.institution,
-          qualification: admin.qualification,
-          specialization: admin.specialization,
-          experience: admin.experience,
-          dateJoined: admin.dateJoined,
-          isActive: admin.user.isActive,
-          passportUrl: admin.passportUrl,
-        }))
+        admins.map(async (admin) => {
+          const employeeId = (admin as any).employeeId;
+          
+          return {
+            id: admin.id,
+            employeeId: employeeId || "",
+            firstName: await this.decryptField(admin.firstName, "name"),
+            lastName: await this.decryptField(admin.lastName, "name"),
+            otherName: admin.otherName
+              ? await this.decryptField(admin.otherName, "name")
+              : null,
+            email: await this.decryptField(admin.user.email, "email"),
+            phone: await this.decryptField(admin.phone, "phone"),
+            department: admin.department,
+            institution: admin.institution,
+            qualification: admin.qualification,
+            specialization: admin.specialization,
+            experience: admin.experience,
+            dateJoined: admin.dateJoined,
+            isActive: admin.user.isActive,
+            passportUrl: admin.passportUrl,
+            gender: admin.gender,
+            userId: admin.userId,
+            user: admin.user,
+          };
+        })
       );
 
       return {
@@ -881,7 +952,6 @@ export class AdminService {
     fieldType: "email" | "phone" | "name"
   ): Promise<string> {
     try {
-      const { unprotectData } = await import("@/lib/security/dataProtection");
       return await unprotectData(encryptedField, fieldType);
     } catch (error) {
       console.error("Error decrypting field:", error);

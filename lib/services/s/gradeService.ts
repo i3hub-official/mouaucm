@@ -1,7 +1,7 @@
 // lib/services/gradeService.ts
 
 import { prisma } from "@/lib/server/prisma";
-import { Grade } from "@prisma/client";
+import { Grade } from "@/lib/generated/prisma/enums";
 import {
   GradeInfo,
   SemesterGrades,
@@ -134,7 +134,7 @@ export class StudentGradeService {
           id: true,
           matricNumber: true,
           firstName: true,
-          surname: true,
+          lastName: true,
           otherName: true,
           email: true,
           phone: true,

@@ -59,7 +59,7 @@ export function StudentHeader({
 
             <div className="hidden sm:block text-left">
               <p className="text-sm font-medium text-foreground">
-                {user.firstName} {user.surname}
+                {user.firstName} {user.lastname}
               </p>
               <p className="text-xs text-muted-foreground capitalize">
                 {user.role.toLowerCase()}

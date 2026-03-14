@@ -20,8 +20,18 @@ export type UserPreferencesModel = runtime.Types.Result.DefaultSelection<Prisma.
 
 export type AggregateUserPreferences = {
   _count: UserPreferencesCountAggregateOutputType | null
+  _avg: UserPreferencesAvgAggregateOutputType | null
+  _sum: UserPreferencesSumAggregateOutputType | null
   _min: UserPreferencesMinAggregateOutputType | null
   _max: UserPreferencesMaxAggregateOutputType | null
+}
+
+export type UserPreferencesAvgAggregateOutputType = {
+  itemsPerPage: number | null
+}
+
+export type UserPreferencesSumAggregateOutputType = {
+  itemsPerPage: number | null
 }
 
 export type UserPreferencesMinAggregateOutputType = {
@@ -29,9 +39,17 @@ export type UserPreferencesMinAggregateOutputType = {
   userId: string | null
   emailNotifications: boolean | null
   pushNotifications: boolean | null
+  smsNotifications: boolean | null
   assignmentReminders: boolean | null
   gradeAlerts: boolean | null
   lectureReminders: boolean | null
+  examReminders: boolean | null
+  theme: string | null
+  language: string | null
+  timezone: string | null
+  dateFormat: string | null
+  timeFormat: string | null
+  itemsPerPage: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -41,9 +59,17 @@ export type UserPreferencesMaxAggregateOutputType = {
   userId: string | null
   emailNotifications: boolean | null
   pushNotifications: boolean | null
+  smsNotifications: boolean | null
   assignmentReminders: boolean | null
   gradeAlerts: boolean | null
   lectureReminders: boolean | null
+  examReminders: boolean | null
+  theme: string | null
+  language: string | null
+  timezone: string | null
+  dateFormat: string | null
+  timeFormat: string | null
+  itemsPerPage: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,23 +79,48 @@ export type UserPreferencesCountAggregateOutputType = {
   userId: number
   emailNotifications: number
   pushNotifications: number
+  smsNotifications: number
   assignmentReminders: number
   gradeAlerts: number
   lectureReminders: number
+  examReminders: number
+  theme: number
+  language: number
+  timezone: number
+  dateFormat: number
+  timeFormat: number
+  itemsPerPage: number
+  dashboardLayout: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
+export type UserPreferencesAvgAggregateInputType = {
+  itemsPerPage?: true
+}
+
+export type UserPreferencesSumAggregateInputType = {
+  itemsPerPage?: true
+}
+
 export type UserPreferencesMinAggregateInputType = {
   id?: true
   userId?: true
   emailNotifications?: true
   pushNotifications?: true
+  smsNotifications?: true
   assignmentReminders?: true
   gradeAlerts?: true
   lectureReminders?: true
+  examReminders?: true
+  theme?: true
+  language?: true
+  timezone?: true
+  dateFormat?: true
+  timeFormat?: true
+  itemsPerPage?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -79,9 +130,17 @@ export type UserPreferencesMaxAggregateInputType = {
   userId?: true
   emailNotifications?: true
   pushNotifications?: true
+  smsNotifications?: true
   assignmentReminders?: true
   gradeAlerts?: true
   lectureReminders?: true
+  examReminders?: true
+  theme?: true
+  language?: true
+  timezone?: true
+  dateFormat?: true
+  timeFormat?: true
+  itemsPerPage?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -91,9 +150,18 @@ export type UserPreferencesCountAggregateInputType = {
   userId?: true
   emailNotifications?: true
   pushNotifications?: true
+  smsNotifications?: true
   assignmentReminders?: true
   gradeAlerts?: true
   lectureReminders?: true
+  examReminders?: true
+  theme?: true
+  language?: true
+  timezone?: true
+  dateFormat?: true
+  timeFormat?: true
+  itemsPerPage?: true
+  dashboardLayout?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -137,6 +205,18 @@ export type UserPreferencesAggregateArgs<ExtArgs extends runtime.Types.Extension
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserPreferencesAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserPreferencesSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserPreferencesMinAggregateInputType
@@ -167,6 +247,8 @@ export type UserPreferencesGroupByArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   _count?: UserPreferencesCountAggregateInputType | true
+  _avg?: UserPreferencesAvgAggregateInputType
+  _sum?: UserPreferencesSumAggregateInputType
   _min?: UserPreferencesMinAggregateInputType
   _max?: UserPreferencesMaxAggregateInputType
 }
@@ -176,12 +258,23 @@ export type UserPreferencesGroupByOutputType = {
   userId: string
   emailNotifications: boolean
   pushNotifications: boolean
+  smsNotifications: boolean
   assignmentReminders: boolean
   gradeAlerts: boolean
   lectureReminders: boolean
+  examReminders: boolean
+  theme: string | null
+  language: string | null
+  timezone: string | null
+  dateFormat: string | null
+  timeFormat: string | null
+  itemsPerPage: number | null
+  dashboardLayout: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
   _count: UserPreferencesCountAggregateOutputType | null
+  _avg: UserPreferencesAvgAggregateOutputType | null
+  _sum: UserPreferencesSumAggregateOutputType | null
   _min: UserPreferencesMinAggregateOutputType | null
   _max: UserPreferencesMaxAggregateOutputType | null
 }
@@ -209,9 +302,18 @@ export type UserPreferencesWhereInput = {
   userId?: Prisma.StringFilter<"UserPreferences"> | string
   emailNotifications?: Prisma.BoolFilter<"UserPreferences"> | boolean
   pushNotifications?: Prisma.BoolFilter<"UserPreferences"> | boolean
+  smsNotifications?: Prisma.BoolFilter<"UserPreferences"> | boolean
   assignmentReminders?: Prisma.BoolFilter<"UserPreferences"> | boolean
   gradeAlerts?: Prisma.BoolFilter<"UserPreferences"> | boolean
   lectureReminders?: Prisma.BoolFilter<"UserPreferences"> | boolean
+  examReminders?: Prisma.BoolFilter<"UserPreferences"> | boolean
+  theme?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  language?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  timezone?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  dateFormat?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  timeFormat?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  itemsPerPage?: Prisma.IntNullableFilter<"UserPreferences"> | number | null
+  dashboardLayout?: Prisma.JsonNullableFilter<"UserPreferences">
   createdAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -222,9 +324,18 @@ export type UserPreferencesOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
   pushNotifications?: Prisma.SortOrder
+  smsNotifications?: Prisma.SortOrder
   assignmentReminders?: Prisma.SortOrder
   gradeAlerts?: Prisma.SortOrder
   lectureReminders?: Prisma.SortOrder
+  examReminders?: Prisma.SortOrder
+  theme?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateFormat?: Prisma.SortOrderInput | Prisma.SortOrder
+  timeFormat?: Prisma.SortOrderInput | Prisma.SortOrder
+  itemsPerPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  dashboardLayout?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -238,9 +349,18 @@ export type UserPreferencesWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserPreferencesWhereInput | Prisma.UserPreferencesWhereInput[]
   emailNotifications?: Prisma.BoolFilter<"UserPreferences"> | boolean
   pushNotifications?: Prisma.BoolFilter<"UserPreferences"> | boolean
+  smsNotifications?: Prisma.BoolFilter<"UserPreferences"> | boolean
   assignmentReminders?: Prisma.BoolFilter<"UserPreferences"> | boolean
   gradeAlerts?: Prisma.BoolFilter<"UserPreferences"> | boolean
   lectureReminders?: Prisma.BoolFilter<"UserPreferences"> | boolean
+  examReminders?: Prisma.BoolFilter<"UserPreferences"> | boolean
+  theme?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  language?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  timezone?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  dateFormat?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  timeFormat?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  itemsPerPage?: Prisma.IntNullableFilter<"UserPreferences"> | number | null
+  dashboardLayout?: Prisma.JsonNullableFilter<"UserPreferences">
   createdAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -251,14 +371,25 @@ export type UserPreferencesOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
   pushNotifications?: Prisma.SortOrder
+  smsNotifications?: Prisma.SortOrder
   assignmentReminders?: Prisma.SortOrder
   gradeAlerts?: Prisma.SortOrder
   lectureReminders?: Prisma.SortOrder
+  examReminders?: Prisma.SortOrder
+  theme?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateFormat?: Prisma.SortOrderInput | Prisma.SortOrder
+  timeFormat?: Prisma.SortOrderInput | Prisma.SortOrder
+  itemsPerPage?: Prisma.SortOrderInput | Prisma.SortOrder
+  dashboardLayout?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserPreferencesCountOrderByAggregateInput
+  _avg?: Prisma.UserPreferencesAvgOrderByAggregateInput
   _max?: Prisma.UserPreferencesMaxOrderByAggregateInput
   _min?: Prisma.UserPreferencesMinOrderByAggregateInput
+  _sum?: Prisma.UserPreferencesSumOrderByAggregateInput
 }
 
 export type UserPreferencesScalarWhereWithAggregatesInput = {
@@ -269,9 +400,18 @@ export type UserPreferencesScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"UserPreferences"> | string
   emailNotifications?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
   pushNotifications?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
+  smsNotifications?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
   assignmentReminders?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
   gradeAlerts?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
   lectureReminders?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
+  examReminders?: Prisma.BoolWithAggregatesFilter<"UserPreferences"> | boolean
+  theme?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  language?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  timezone?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  dateFormat?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  timeFormat?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  itemsPerPage?: Prisma.IntNullableWithAggregatesFilter<"UserPreferences"> | number | null
+  dashboardLayout?: Prisma.JsonNullableWithAggregatesFilter<"UserPreferences">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserPreferences"> | Date | string
 }
@@ -280,9 +420,18 @@ export type UserPreferencesCreateInput = {
   id?: string
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: string | null
+  language?: string | null
+  timezone?: string | null
+  dateFormat?: string | null
+  timeFormat?: string | null
+  itemsPerPage?: number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserPreferencesInput
@@ -293,9 +442,18 @@ export type UserPreferencesUncheckedCreateInput = {
   userId: string
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: string | null
+  language?: string | null
+  timezone?: string | null
+  dateFormat?: string | null
+  timeFormat?: string | null
+  itemsPerPage?: number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -304,9 +462,18 @@ export type UserPreferencesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assignmentReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   gradeAlerts?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserPreferencesNestedInput
@@ -317,9 +484,18 @@ export type UserPreferencesUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assignmentReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   gradeAlerts?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -329,9 +505,18 @@ export type UserPreferencesCreateManyInput = {
   userId: string
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: string | null
+  language?: string | null
+  timezone?: string | null
+  dateFormat?: string | null
+  timeFormat?: string | null
+  itemsPerPage?: number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -340,9 +525,18 @@ export type UserPreferencesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assignmentReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   gradeAlerts?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,9 +546,18 @@ export type UserPreferencesUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assignmentReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   gradeAlerts?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -369,11 +572,24 @@ export type UserPreferencesCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
   pushNotifications?: Prisma.SortOrder
+  smsNotifications?: Prisma.SortOrder
   assignmentReminders?: Prisma.SortOrder
   gradeAlerts?: Prisma.SortOrder
   lectureReminders?: Prisma.SortOrder
+  examReminders?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  dateFormat?: Prisma.SortOrder
+  timeFormat?: Prisma.SortOrder
+  itemsPerPage?: Prisma.SortOrder
+  dashboardLayout?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserPreferencesAvgOrderByAggregateInput = {
+  itemsPerPage?: Prisma.SortOrder
 }
 
 export type UserPreferencesMaxOrderByAggregateInput = {
@@ -381,9 +597,17 @@ export type UserPreferencesMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
   pushNotifications?: Prisma.SortOrder
+  smsNotifications?: Prisma.SortOrder
   assignmentReminders?: Prisma.SortOrder
   gradeAlerts?: Prisma.SortOrder
   lectureReminders?: Prisma.SortOrder
+  examReminders?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  dateFormat?: Prisma.SortOrder
+  timeFormat?: Prisma.SortOrder
+  itemsPerPage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -393,11 +617,23 @@ export type UserPreferencesMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   emailNotifications?: Prisma.SortOrder
   pushNotifications?: Prisma.SortOrder
+  smsNotifications?: Prisma.SortOrder
   assignmentReminders?: Prisma.SortOrder
   gradeAlerts?: Prisma.SortOrder
   lectureReminders?: Prisma.SortOrder
+  examReminders?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  dateFormat?: Prisma.SortOrder
+  timeFormat?: Prisma.SortOrder
+  itemsPerPage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserPreferencesSumOrderByAggregateInput = {
+  itemsPerPage?: Prisma.SortOrder
 }
 
 export type UserPreferencesCreateNestedOneWithoutUserInput = {
@@ -436,9 +672,18 @@ export type UserPreferencesCreateWithoutUserInput = {
   id?: string
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: string | null
+  language?: string | null
+  timezone?: string | null
+  dateFormat?: string | null
+  timeFormat?: string | null
+  itemsPerPage?: number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -447,9 +692,18 @@ export type UserPreferencesUncheckedCreateWithoutUserInput = {
   id?: string
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: string | null
+  language?: string | null
+  timezone?: string | null
+  dateFormat?: string | null
+  timeFormat?: string | null
+  itemsPerPage?: number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -474,9 +728,18 @@ export type UserPreferencesUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assignmentReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   gradeAlerts?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -485,9 +748,18 @@ export type UserPreferencesUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotifications?: Prisma.BoolFieldUpdateOperationsInput | boolean
   assignmentReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   gradeAlerts?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lectureReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeFormat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemsPerPage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  dashboardLayout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -499,9 +771,18 @@ export type UserPreferencesSelect<ExtArgs extends runtime.Types.Extensions.Inter
   userId?: boolean
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: boolean
+  language?: boolean
+  timezone?: boolean
+  dateFormat?: boolean
+  timeFormat?: boolean
+  itemsPerPage?: boolean
+  dashboardLayout?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -512,9 +793,18 @@ export type UserPreferencesSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   userId?: boolean
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: boolean
+  language?: boolean
+  timezone?: boolean
+  dateFormat?: boolean
+  timeFormat?: boolean
+  itemsPerPage?: boolean
+  dashboardLayout?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -525,9 +815,18 @@ export type UserPreferencesSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   userId?: boolean
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: boolean
+  language?: boolean
+  timezone?: boolean
+  dateFormat?: boolean
+  timeFormat?: boolean
+  itemsPerPage?: boolean
+  dashboardLayout?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -538,14 +837,23 @@ export type UserPreferencesSelectScalar = {
   userId?: boolean
   emailNotifications?: boolean
   pushNotifications?: boolean
+  smsNotifications?: boolean
   assignmentReminders?: boolean
   gradeAlerts?: boolean
   lectureReminders?: boolean
+  examReminders?: boolean
+  theme?: boolean
+  language?: boolean
+  timezone?: boolean
+  dateFormat?: boolean
+  timeFormat?: boolean
+  itemsPerPage?: boolean
+  dashboardLayout?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "emailNotifications" | "pushNotifications" | "assignmentReminders" | "gradeAlerts" | "lectureReminders" | "createdAt" | "updatedAt", ExtArgs["result"]["userPreferences"]>
+export type UserPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "emailNotifications" | "pushNotifications" | "smsNotifications" | "assignmentReminders" | "gradeAlerts" | "lectureReminders" | "examReminders" | "theme" | "language" | "timezone" | "dateFormat" | "timeFormat" | "itemsPerPage" | "dashboardLayout" | "createdAt" | "updatedAt", ExtArgs["result"]["userPreferences"]>
 export type UserPreferencesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -566,9 +874,18 @@ export type $UserPreferencesPayload<ExtArgs extends runtime.Types.Extensions.Int
     userId: string
     emailNotifications: boolean
     pushNotifications: boolean
+    smsNotifications: boolean
     assignmentReminders: boolean
     gradeAlerts: boolean
     lectureReminders: boolean
+    examReminders: boolean
+    theme: string | null
+    language: string | null
+    timezone: string | null
+    dateFormat: string | null
+    timeFormat: string | null
+    itemsPerPage: number | null
+    dashboardLayout: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userPreferences"]>
@@ -999,9 +1316,18 @@ export interface UserPreferencesFieldRefs {
   readonly userId: Prisma.FieldRef<"UserPreferences", 'String'>
   readonly emailNotifications: Prisma.FieldRef<"UserPreferences", 'Boolean'>
   readonly pushNotifications: Prisma.FieldRef<"UserPreferences", 'Boolean'>
+  readonly smsNotifications: Prisma.FieldRef<"UserPreferences", 'Boolean'>
   readonly assignmentReminders: Prisma.FieldRef<"UserPreferences", 'Boolean'>
   readonly gradeAlerts: Prisma.FieldRef<"UserPreferences", 'Boolean'>
   readonly lectureReminders: Prisma.FieldRef<"UserPreferences", 'Boolean'>
+  readonly examReminders: Prisma.FieldRef<"UserPreferences", 'Boolean'>
+  readonly theme: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly language: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly timezone: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly dateFormat: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly timeFormat: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly itemsPerPage: Prisma.FieldRef<"UserPreferences", 'Int'>
+  readonly dashboardLayout: Prisma.FieldRef<"UserPreferences", 'Json'>
   readonly createdAt: Prisma.FieldRef<"UserPreferences", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserPreferences", 'DateTime'>
 }

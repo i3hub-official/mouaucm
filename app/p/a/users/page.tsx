@@ -60,7 +60,7 @@ interface UserWithDetails {
     id: string;
     matricNumber: string;
     firstName: string;
-    surname: string;
+    lastname: string;
     otherName?: string | null;
     gender?: string | null;
     phone?: string | null;
@@ -75,7 +75,7 @@ interface UserWithDetails {
     id: string;
     teacherId: string;
     firstName: string;
-    surname: string;
+    lastname: string;
     otherName?: string | null;
     gender?: string | null;
     phone?: string | null;
@@ -92,7 +92,7 @@ interface UserWithDetails {
     id: string;
     teacherId: string;
     firstName: string;
-    surname: string;
+    lastname: string;
     otherName?: string | null;
     gender?: string | null;
     phone?: string | null;
@@ -746,7 +746,7 @@ async function getUsers(
             id: true,
             matricNumber: true,
             firstName: true,
-            surname: true,
+            lastname: true,
             department: true,
             dateEnrolled: true,
             isActive: true,
@@ -757,7 +757,7 @@ async function getUsers(
             id: true,
             teacherId: true,
             firstName: true,
-            surname: true,
+            lastname: true,
             department: true,
             institution: true,
             dateJoined: true,
@@ -769,7 +769,7 @@ async function getUsers(
             id: true,
             teacherId: true,
             firstName: true,
-            surname: true,
+            lastname: true,
             department: true,
             institution: true,
             dateJoined: true,

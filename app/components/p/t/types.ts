@@ -8,7 +8,7 @@ export interface TeacherUser {
   lastLoginAt?: Date;
   profile?: {
     firstName: string;
-    surname: string;
+    lastname: string;
     department: string;
     college: string;
     teacherId: string;

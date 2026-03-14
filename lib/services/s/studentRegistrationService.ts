@@ -19,7 +19,7 @@ export class StudentRegistrationService {
   static async registerStudent(data: StudentRegistrationData) {
     const {
       firstName,
-      surname,
+      lastname,
       otherName = "",
       gender,
       dateOfBirth,
@@ -35,6 +35,7 @@ export class StudentRegistrationService {
       passportUrl,
       state = "",
       lga = "",
+      
     } = data;
 
     // === VALIDATION ===
@@ -76,7 +77,7 @@ export class StudentRegistrationService {
           ? protectData(matricNumber.trim(), "matric")
           : { encrypted: "", searchHash: "" },
         protectData(firstName.trim(), "name"),
-        protectData(surname.trim(), "name"),
+        protectData(lastname.trim(), "name"),
         otherName ? protectData(otherName.trim(), "name") : { encrypted: "" },
         state ? protectData(state.trim(), "location") : { encrypted: "" },
         lga ? protectData(lga.trim(), "location") : { encrypted: "" },
@@ -87,7 +88,7 @@ export class StudentRegistrationService {
       const phoneSearchHash = protectedPhone.searchHash!;
       const ninSearchHash = protectedNin.searchHash!;
       const jambSearchHash = protectedJamb.searchHash!;
-      const matricSearchHash = protectedMatric.searchHash || "";
+      const matricSearchHash = protectedMatric.searchHash! || "";
 
       // === UNIQUENESS CHECKS (Parallel + Accurate) ===
       const [
@@ -125,13 +126,12 @@ export class StudentRegistrationService {
       const user = await prisma.user.create({
         data: {
           name:
-            `${surname.trim()} ${firstName.trim()}` +
+            `${lastname.trim()} ${firstName.trim()}` +
             (otherName ? ` ${otherName.trim()}` : ""),
           email: protectedEmail.encrypted,
           passwordHash: protectedPassword.encrypted,
           role: "STUDENT",
-          isActive: false,
-          emailVerificationRequired: true,
+          isActive: false
           passportUrl: finalPassportUrl,
         },
       });
@@ -144,7 +144,7 @@ export class StudentRegistrationService {
           jambRegNumber: protectedJamb.encrypted,
           nin: protectedNin.encrypted,
           firstName: protectedFirstName.encrypted,
-          surname: protectedSurname.encrypted,
+          lastName: protectedSurname.encrypted,
           otherName: protectedOtherName.encrypted || "",
           gender,
           dateOfBirth: dateOfBirth,
@@ -284,7 +284,7 @@ export class StudentRegistrationService {
       // Extract fields that can be updated
       const {
         firstName,
-        surname,
+        lastname,
         otherName,
         gender,
         dateOfBirth,
@@ -307,9 +307,9 @@ export class StudentRegistrationService {
         updateData.firstName = protectedFirstName.encrypted;
       }
 
-      if (surname) {
-        const protectedSurname = await protectData(surname.trim(), "name");
-        updateData.surname = protectedSurname.encrypted;
+      if (lastname) {
+        const protectedSurname = await protectData(lastname.trim(), "name");
+        updateData.lastname = protectedSurname.encrypted;
       }
 
       if (otherName) {

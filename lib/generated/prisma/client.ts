@@ -77,6 +77,11 @@ export type Student = Prisma.StudentModel
  */
 export type Teacher = Prisma.TeacherModel
 /**
+ * Model Admin
+ * 
+ */
+export type Admin = Prisma.AdminModel
+/**
  * Model Course
  * 
  */
@@ -106,6 +111,21 @@ export type AssignmentSubmission = Prisma.AssignmentSubmissionModel
  * 
  */
 export type Submission = Prisma.SubmissionModel
+/**
+ * Model Exam
+ * 
+ */
+export type Exam = Prisma.ExamModel
+/**
+ * Model ExamResult
+ * 
+ */
+export type ExamResult = Prisma.ExamResultModel
+/**
+ * Model Attendance
+ * 
+ */
+export type Attendance = Prisma.AttendanceModel
 /**
  * Model Portfolio
  * 
@@ -151,3 +171,8 @@ export type UserActivity = Prisma.UserActivityModel
  * 
  */
 export type UserPreferences = Prisma.UserPreferencesModel
+/**
+ * Model RequestLog
+ * 
+ */
+export type RequestLog = Prisma.RequestLogModel
