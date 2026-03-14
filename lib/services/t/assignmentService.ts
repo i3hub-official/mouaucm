@@ -26,7 +26,7 @@ type PrismaSubmissionWithStudent = {
     id: string;
     matricNumber: string;
     firstName: string;
-    lastname: string;
+    lastName: string;
     email: string;
   };
 };
@@ -77,7 +77,7 @@ export class TeacherAssignmentService {
                     id: true,
                     matricNumber: true,
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                     email: true,
                     phone: true,
                     department: true,
@@ -235,7 +235,7 @@ export class TeacherAssignmentService {
                   id: true,
                   matricNumber: true,
                   firstName: true,
-                  lastname: true,
+                  lastName: true,
                   email: true,
                   phone: true,
                   department: true,
@@ -381,7 +381,7 @@ export class TeacherAssignmentService {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                lastname: true,
+                lastName: true,
                 email: true,
                 phone: true,
                 department: true,
@@ -475,7 +475,7 @@ export class TeacherAssignmentService {
               id: true,
               matricNumber: true,
               firstName: true,
-              lastname: true,
+              lastName: true,
               email: true,
               phone: true,
               department: true,

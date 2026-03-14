@@ -117,7 +117,9 @@ export const AuditAction = {
   ATTENDANCE_MARKED: 'ATTENDANCE_MARKED',
   EXAM_CREATED: 'EXAM_CREATED',
   EXAM_SUBMITTED: 'EXAM_SUBMITTED',
-  EXAM_RESULT_PUBLISHED: 'EXAM_RESULT_PUBLISHED'
+  EXAM_RESULT_PUBLISHED: 'EXAM_RESULT_PUBLISHED',
+  MIDDLEWARE_FAILURE: 'MIDDLEWARE_FAILURE',
+  EXAM_COMPLETED: 'EXAM_COMPLETED'
 } as const
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]
@@ -140,7 +142,8 @@ export const ResourceType = {
   EXAM_RESULT: 'EXAM_RESULT',
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
   SECURITY_EVENT: 'SECURITY_EVENT',
-  AUDIT_LOG: 'AUDIT_LOG'
+  AUDIT_LOG: 'AUDIT_LOG',
+  SYSTEM: 'SYSTEM'
 } as const
 
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]

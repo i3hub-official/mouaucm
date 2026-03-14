@@ -91,7 +91,7 @@ export class AdminService {
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        lastname: await this.decryptField(admin.lastname, "name"),
+        lastName: await this.decryptField(admin.lastName, "name"),
               otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
@@ -161,7 +161,7 @@ export class AdminService {
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        lastname: await this.decryptField(admin.lastname, "name"),
+        lastName: await this.decryptField(admin.lastName, "name"),
                otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
@@ -234,7 +234,7 @@ export class AdminService {
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        lastname: await this.decryptField(admin.lastname, "name"),
+        lastName: await this.decryptField(admin.lastName, "name"),
               otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
@@ -298,8 +298,7 @@ export class AdminService {
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        lastname: await this.decryptField(admin.lastName, "name"),
-        lastName: await this.decryptField(admin.lastName, "name"),
+               lastName: await this.decryptField(admin.lastName, "name"),
         otherName: admin.otherName
           ? await this.decryptField(admin.otherName, "name")
           : null,
@@ -448,8 +447,8 @@ export class AdminService {
           id: admin.id,
           userId: user.id,
           email: adminData.email,
-          lastname: adminData.lastname,
-          firstname: adminData.firstname,
+          lastname: adminData.lastName,
+          firstname: adminData.firstName,
           otherName: adminData.otherName,
           gender: adminData.gender,
           phone: adminData.phone,
@@ -697,11 +696,8 @@ export class AdminService {
         email: await this.decryptField(admin.user.email, "email"),
         phone: await this.decryptField(admin.phone, "phone"),
         firstName: await this.decryptField(admin.firstName, "name"),
-        lastname: await this.decryptField(admin.lastname, "name"),
         lastName: await this.decryptField(admin.lastName, "name"),
-        otherName: admin.otherName
-          ? await this.decryptField(admin.otherName, "name")
-          : null,
+        otherName: await this.decryptField(admin.otherName || "", "name"),
         gender: (admin.gender as "MALE" | "FEMALE" | "OTHER") ?? "OTHER",
         department: admin.department,
         institution: admin.institution || "",

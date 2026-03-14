@@ -12,9 +12,8 @@ import {AuditAction,ResourceType,SessionSecurityLevel,Gender,Role, NotificationT
 export interface AdminUser extends BaseUser {
   role: "ADMIN";
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
-  otherName?: string | null;
+  lastName: string;
+   otherName?: string | null;
   gender: Gender;
   teacherId: string;
   department: string;

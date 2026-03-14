@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/server/prisma";
 import { SystemConfig, SystemConfigFormData } from "@/lib/types/a/index";
-import { AuditAction, ResourceType } from "@prisma/client";
+import { AuditAction, ResourceType } from "@/lib/generated/prisma/enums";
 
 export class AdminSystemService {
   /**

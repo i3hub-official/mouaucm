@@ -78,16 +78,14 @@ export class IntegrationUtils {
   ): MiddlewareContext {
     const merged: MiddlewareContext = {
       // Core identifiers
-      requestId:
-        base.requestId ||
+      requestId: base.requestId ||
         additional.requestId ||
         `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       startTime: base.startTime || additional.startTime || Date.now(),
 
       // User & session
       userId: additional.userId ?? base.userId ?? null,
-      isAuthenticated:
-        additional.isAuthenticated ?? base.isAuthenticated ?? false,
+      isAuthenticated: additional.isAuthenticated ?? base.isAuthenticated ?? false,
 
       // Security & threat
       threatScore: Math.max(base.threatScore || 0, additional.threatScore || 0),
@@ -98,8 +96,7 @@ export class IntegrationUtils {
 
       // Technical
       nonce: additional.nonce || base.nonce,
-      isDev:
-        base.isDev ??
+      isDev: base.isDev ??
         additional.isDev ??
         process.env.NODE_ENV === "development",
       isPrivatePath: additional.isPrivatePath ?? base.isPrivatePath ?? true,
@@ -131,6 +128,30 @@ export class IntegrationUtils {
       userRole: additional.userRole ?? base.userRole ?? "",
       sessionData: additional.sessionData ?? base.sessionData ?? null,
       sessionAgeMs: additional.sessionAgeMs ?? base.sessionAgeMs ?? 0,
+      processingTimeMs: 0,
+      method: "",
+      pathname: "",
+      fullUrl: "",
+      isAdmin: false,
+      clientIpSource: "",
+      clientIpConfidence: 0,
+      isProxy: false,
+      country: "",
+      region: "",
+      acceptLanguage: "",
+      secFetchSite: "",
+      sessionCreatedAt: null,
+      deviceFingerprint: null,
+      _BANDWIDTH: 0,
+      botScore: 0,
+      consent: {
+        cookies: false,
+        analytics: false,
+        processing: false,
+        marketing: false,
+        version: ""
+      },
+      headers: {}
     };
 
     return merged;

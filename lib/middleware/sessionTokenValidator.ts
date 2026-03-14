@@ -5,7 +5,7 @@ import { JWTUtils, type TokenPayload } from "@/lib/server/jwt";
 import { nanoid } from "nanoid";
 import { ClientIPDetector } from "@/lib/clientIp";
 import type { MiddlewareContext } from "./types";
-import { Role } from "@/lib/types/s";
+import { Role } from "@/lib/generated/prisma/enums";
 
 interface SessionUser {
   id: string;

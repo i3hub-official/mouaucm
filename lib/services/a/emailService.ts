@@ -1,7 +1,6 @@
 // lib/services/a/emailService.ts
 import { prisma } from "@/lib/server/prisma";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
-import { AuditAction } from "@/lib/generated/prisma/enums";
 
 export class AdminEmailService {
   /**
@@ -179,10 +178,10 @@ export class AdminEmailService {
       const decryptedEmail = await unprotectData(admin.email, "email");
 
       // Verify the hash matches
-      const { generateSearchHash } = await import(
+      const { generateSearchableHash } = await import(
         "@/lib/security/dataProtection"
       );
-      const expectedHash = generateSearchHash(decryptedEmail);
+      const expectedHash = await generateSearchableHash(decryptedEmail);
 
       if (hash !== expectedHash) {
         throw new Error("Invalid verification code");
