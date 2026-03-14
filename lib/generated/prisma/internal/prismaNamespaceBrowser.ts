@@ -77,7 +77,8 @@ export const ModelName = {
   SecurityEvent: 'SecurityEvent',
   UserActivity: 'UserActivity',
   UserPreferences: 'UserPreferences',
-  RequestLog: 'RequestLog'
+  RequestLog: 'RequestLog',
+  DataProcessingLog: 'DataProcessingLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -640,6 +641,37 @@ export const RequestLogScalarFieldEnum = {
 export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
 
 
+export const DataProcessingLogScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  userId: 'userId',
+  method: 'method',
+  path: 'path',
+  ipAddress: 'ipAddress',
+  timestamp: 'timestamp',
+  country: 'country',
+  jurisdiction: 'jurisdiction',
+  dataCategories: 'dataCategories',
+  legalBasis: 'legalBasis',
+  consentGiven: 'consentGiven',
+  purpose: 'purpose',
+  retentionDays: 'retentionDays',
+  rightsExercised: 'rightsExercised',
+  rightsRequestId: 'rightsRequestId',
+  thirdPartyDisclosure: 'thirdPartyDisclosure',
+  thirdPartyNames: 'thirdPartyNames',
+  dataMinimized: 'dataMinimized',
+  anonymized: 'anonymized',
+  encryptionLevel: 'encryptionLevel',
+  processedBy: 'processedBy',
+  processorVersion: 'processorVersion',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type DataProcessingLogScalarFieldEnum = (typeof DataProcessingLogScalarFieldEnum)[keyof typeof DataProcessingLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -654,6 +686,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

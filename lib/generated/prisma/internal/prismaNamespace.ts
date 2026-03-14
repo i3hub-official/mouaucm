@@ -410,7 +410,8 @@ export const ModelName = {
   SecurityEvent: 'SecurityEvent',
   UserActivity: 'UserActivity',
   UserPreferences: 'UserPreferences',
-  RequestLog: 'RequestLog'
+  RequestLog: 'RequestLog',
+  DataProcessingLog: 'DataProcessingLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -426,7 +427,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "student" | "teacher" | "admin" | "course" | "lecture" | "enrollment" | "assignment" | "assignmentSubmission" | "submission" | "exam" | "examResult" | "attendance" | "portfolio" | "auditLog" | "notification" | "systemConfig" | "metric" | "rateLimit" | "securityEvent" | "userActivity" | "userPreferences" | "requestLog"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "student" | "teacher" | "admin" | "course" | "lecture" | "enrollment" | "assignment" | "assignmentSubmission" | "submission" | "exam" | "examResult" | "attendance" | "portfolio" | "auditLog" | "notification" | "systemConfig" | "metric" | "rateLimit" | "securityEvent" | "userActivity" | "userPreferences" | "requestLog" | "dataProcessingLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2428,6 +2429,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DataProcessingLog: {
+      payload: Prisma.$DataProcessingLogPayload<ExtArgs>
+      fields: Prisma.DataProcessingLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DataProcessingLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DataProcessingLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>
+        }
+        findFirst: {
+          args: Prisma.DataProcessingLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DataProcessingLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>
+        }
+        findMany: {
+          args: Prisma.DataProcessingLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>[]
+        }
+        create: {
+          args: Prisma.DataProcessingLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>
+        }
+        createMany: {
+          args: Prisma.DataProcessingLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DataProcessingLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>[]
+        }
+        delete: {
+          args: Prisma.DataProcessingLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>
+        }
+        update: {
+          args: Prisma.DataProcessingLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.DataProcessingLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DataProcessingLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DataProcessingLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.DataProcessingLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DataProcessingLogPayload>
+        }
+        aggregate: {
+          args: Prisma.DataProcessingLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDataProcessingLog>
+        }
+        groupBy: {
+          args: Prisma.DataProcessingLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DataProcessingLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DataProcessingLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DataProcessingLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3011,6 +3086,37 @@ export const RequestLogScalarFieldEnum = {
 export type RequestLogScalarFieldEnum = (typeof RequestLogScalarFieldEnum)[keyof typeof RequestLogScalarFieldEnum]
 
 
+export const DataProcessingLogScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  userId: 'userId',
+  method: 'method',
+  path: 'path',
+  ipAddress: 'ipAddress',
+  timestamp: 'timestamp',
+  country: 'country',
+  jurisdiction: 'jurisdiction',
+  dataCategories: 'dataCategories',
+  legalBasis: 'legalBasis',
+  consentGiven: 'consentGiven',
+  purpose: 'purpose',
+  retentionDays: 'retentionDays',
+  rightsExercised: 'rightsExercised',
+  rightsRequestId: 'rightsRequestId',
+  thirdPartyDisclosure: 'thirdPartyDisclosure',
+  thirdPartyNames: 'thirdPartyNames',
+  dataMinimized: 'dataMinimized',
+  anonymized: 'anonymized',
+  encryptionLevel: 'encryptionLevel',
+  processedBy: 'processedBy',
+  processorVersion: 'processorVersion',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type DataProcessingLogScalarFieldEnum = (typeof DataProcessingLogScalarFieldEnum)[keyof typeof DataProcessingLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3025,6 +3131,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -3438,6 +3551,7 @@ export type GlobalOmitConfig = {
   userActivity?: Prisma.UserActivityOmit
   userPreferences?: Prisma.UserPreferencesOmit
   requestLog?: Prisma.RequestLogOmit
+  dataProcessingLog?: Prisma.DataProcessingLogOmit
 }
 
 /* Types for Logging */

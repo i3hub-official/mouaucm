@@ -152,3 +152,8 @@ export type UserPreferences = Prisma.UserPreferencesModel
  * 
  */
 export type RequestLog = Prisma.RequestLogModel
+/**
+ * Model DataProcessingLog
+ * 
+ */
+export type DataProcessingLog = Prisma.DataProcessingLogModel
