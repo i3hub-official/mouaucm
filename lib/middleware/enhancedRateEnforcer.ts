@@ -35,9 +35,12 @@ export class EnhancedRateEnforcer {
     );
 
      // Only rate-limit API routes
-  if (!request.nextUrl.pathname.startsWith("/api")) {
-    return NextResponse.next();
-  }
+  if (
+  !request.nextUrl.pathname.startsWith("/api") &&
+  !request.nextUrl.pathname.startsWith("/auth")
+) {
+  return NextResponse.next();
+}
 
     // Development bypass
     if (process.env.NODE_ENV !== "production") {
