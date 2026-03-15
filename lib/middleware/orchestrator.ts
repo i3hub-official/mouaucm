@@ -363,6 +363,14 @@ export class orchestrator {
           request,
         });
 
+          if (!exec.success || exec.result.status === 403) {
+        console.error(`🔥 BLOCKED BY ${layer.name}:`, {
+          path: request.nextUrl.pathname,
+          status: exec.result.status,
+          headers: Object.fromEntries(exec.result.headers.entries())
+        });
+      }
+
         console.log(`[orchestrator] Layer ${layer.name} completed:`, {
           success: exec.success,
           status: exec.result.status,

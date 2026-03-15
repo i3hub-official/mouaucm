@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCspConfig } from "@/lib/security/cspConfig";
 import type { MiddlewareContext } from "./types";
-import crypto from "crypto"; // Add this import
+import crypto from "crypto";
 
 export class SecurityGuard {
   // ───────────────────────────────────────────────────────────────────────
@@ -14,14 +14,13 @@ export class SecurityGuard {
     // Vercel preview & deploy URLs
     "https://*.vercel.app",
     "https://*.vercel.pub",
+    // Your custom domain (add this)
+    "https://mouaucm.vercel.app",
     // Local development
     "http://localhost",
     "https://localhost",
     "http://192.168.0.*",
     "https://192.168.0.*",
-    // Optional: Allow trusted mobile apps / desktop clients
-    // "capacitor://localhost",
-    // "ionic://localhost",
   ].filter(Boolean) as string[];
 
   private static readonly ALLOWED_METHODS = [
@@ -44,6 +43,9 @@ export class SecurityGuard {
     "Cache-Control",
     "x-client-ip",
     "x-request-id",
+    "x-user-id",           // Add these
+    "x-user-role",          // custom headers
+    "x-authenticated",      // your app uses
   ];
 
   private static readonly EXPOSED_HEADERS = [
@@ -52,6 +54,9 @@ export class SecurityGuard {
     "x-ratelimit-limit",
     "x-ratelimit-remaining",
     "x-ratelimit-reset",
+    "x-user-id",            // Expose these to client
+    "x-user-role",
+    "x-authenticated",
   ];
 
   // ───────────────────────────────────────────────────────────────────────
@@ -90,6 +95,8 @@ export class SecurityGuard {
   // ───────────────────────────────────────────────────────────────────────
   private static handlePreflight(request: NextRequest): NextResponse {
     const origin = request.headers.get("origin");
+    
+    // In production, always allow your domain
     const isAllowed = origin ? this.isOriginAllowed(origin) : false;
 
     const headers = new Headers({
@@ -101,9 +108,10 @@ export class SecurityGuard {
 
     if (isAllowed && origin) {
       headers.set("Access-Control-Allow-Origin", origin);
+      headers.set("Access-Control-Allow-Credentials", "true");
     } else {
-      // Still respond 204, but without allowing credentials/origin
-      headers.set("Access-Control-Allow-Origin", "null");
+      // For same-origin requests, allow
+      headers.set("Access-Control-Allow-Origin", request.nextUrl.origin);
     }
 
     return new NextResponse(null, { status: 204, headers });
@@ -117,19 +125,10 @@ export class SecurityGuard {
     context: MiddlewareContext
   ): void {
     const headers: Record<string, string> = {
-      // Clickjacking Protection
       "X-Frame-Options": "DENY",
-
-      // MIME Sniffing Protection
       "X-Content-Type-Options": "nosniff",
-
-      // XSS Auditor (legacy but harmless)
       "X-XSS-Protection": "1; mode=block",
-
-      // Referrer Policy
       "Referrer-Policy": "strict-origin-when-cross-origin",
-
-      // Feature Policy → Permissions Policy
       "Permissions-Policy": [
         "camera=()",
         "microphone=()",
@@ -141,44 +140,49 @@ export class SecurityGuard {
         "magnetometer=()",
         "usb=()",
       ].join(", "),
-
-      // HSTS — 2 years + preload (must be served over HTTPS!)
-      "Strict-Transport-Security":
-        "max-age=63072000; includeSubDomains; preload",
-
-      // Prevent DNS prefetching (optional)
+      "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
       "X-DNS-Prefetch-Control": "off",
-
-      // Hide powered-by (optional)
       "X-Powered-By": "MOUAU ClassMate",
     };
 
-    // Apply headers
     Object.entries(headers).forEach(([key, value]) => {
       if (!response.headers.has(key)) {
         response.headers.set(key, value);
       }
     });
 
-    // ──────────────────────────────
-    // Content-Security-Policy (with nonce support)
-    // ──────────────────────────────
-    const nonce =
-      context.nonce || Buffer.from(crypto.randomUUID()).toString("base64");
-    const csp = this.buildCsp(nonce, context.isDev || process.env.NODE_ENV === "development");
+    // Content-Security-Policy - Make it less strict in production for now
+    const nonce = context.nonce || Buffer.from(crypto.randomUUID()).toString("base64");
+    
+    // Use a simpler CSP for production to avoid blocks
+    const csp = process.env.NODE_ENV === "production" 
+      ? this.getProductionCsp(nonce)
+      : this.buildCsp(nonce, true);
 
     response.headers.set("Content-Security-Policy", csp);
     response.headers.set("X-CSP-Nonce", nonce);
 
-    // Store nonce for React SSR (if needed)
     if (!response.headers.has("x-nonce")) {
       response.headers.set("x-nonce", nonce);
     }
   }
 
-  // ───────────────────────────────────────────────────────────────────────
-  // Build Dynamic CSP with Nonce & Dev Mode Support
-  // ───────────────────────────────────────────────────────────────────────
+  private static getProductionCsp(nonce: string): string {
+    // More permissive CSP for production to avoid blocking legitimate requests
+    return [
+      "default-src 'self' https:",
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https: 'nonce-${nonce}'`,
+      "style-src 'self' 'unsafe-inline' https:",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data: https:",
+      "connect-src 'self' https: wss:",
+      "frame-src 'self' https:",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; ");
+  }
+
   private static buildCsp(nonce: string, isDev: boolean = false): string {
     const baseConfig = getCspConfig();
 
@@ -189,23 +193,18 @@ export class SecurityGuard {
         if (Array.isArray(values)) {
           let sources = [...values];
 
-          // Inject nonce where needed
           if (["script-src", "style-src"].includes(directive)) {
             sources = sources.filter((s) => s !== "'unsafe-inline'");
             sources.unshift(`'nonce-${nonce}'`);
           }
 
-          // Dev relaxations
           if (isDev) {
             if (directive === "script-src") sources.push("'unsafe-eval'");
             if (directive === "style-src") sources.push("'unsafe-inline'");
-            if (directive === "connect-src")
-              sources.push("ws://localhost:3000");
+            if (directive === "connect-src") sources.push("ws://localhost:3000");
           }
 
-          return sources.length > 0
-            ? `${directive} ${sources.join(" ")}`
-            : null;
+          return sources.length > 0 ? `${directive} ${sources.join(" ")}` : null;
         }
 
         return `${directive} ${values}`;
@@ -234,8 +233,8 @@ export class SecurityGuard {
       );
       response.headers.set("Vary", "Origin");
     } else {
-      // Explicitly deny if not allowed
-      response.headers.set("Access-Control-Allow-Origin", "null");
+      // For same-origin requests, don't block
+      response.headers.set("Access-Control-Allow-Origin", request.nextUrl.origin);
     }
   }
 
@@ -245,11 +244,14 @@ export class SecurityGuard {
   private static isOriginAllowed(origin: string): boolean {
     try {
       const url = new URL(origin);
+      
+      // Always allow your own domain
+      if (url.hostname === 'mouaucm.vercel.app') return true;
+      
       return this.ALLOWED_ORIGINS.some((pattern) => {
+        if (!pattern) return false;
         const regex = new RegExp(
-          "^" +
-            pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace("*", ".*") +
-            "$"
+          "^" + pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace("*", ".*") + "$"
         );
         return regex.test(origin);
       });
