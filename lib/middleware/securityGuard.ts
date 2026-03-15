@@ -2,15 +2,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCspConfig } from "@/lib/security/cspConfig";
 import type { MiddlewareContext } from "./types";
+import crypto from "crypto"; // Add this import
 
 export class SecurityGuard {
   // ───────────────────────────────────────────────────────────────────────
   // CONFIG: Trusted Origins (supports wildcards & environment fallbacks)
   // ───────────────────────────────────────────────────────────────────────
- 
-// Inside SecurityGuard.apply() — at the very top
-// Moved into the apply() method below
- 
   private static readonly ALLOWED_ORIGINS = [
     // Production domain
     process.env.NEXT_PUBLIC_BASE_URL,
@@ -66,48 +63,26 @@ export class SecurityGuard {
       return this.handlePreflight(request);
     }
 
-  // Development IP bypass
-  if (process.env.NODE_ENV === "development") {
-    const ip = context.clientIp || "";
-    if (ip === "0.0.0.0" || ip === "127.0.0.1" || ip === "::1") {
-      console.log("[SecurityGuard] Local dev IP detected — bypassing strict checks");
-      return NextResponse.next(); // Let it through in dev
-    }
-  }
-
-  // Handle CORS preflight early
-  if (request.method === "OPTIONS") {
-    return this.handlePreflight(request);
-  }
-
-  const response = NextResponse.next();
-
-  // Apply all security + CORS headers
-  this.applySecurityHeaders(response, context);
-  this.applyCorsHeaders(request, response);
-
-  // Mark as protected
-  response.headers.set("x-security-guard", "active");
-  response.headers.set("x-protected-by", "MOUAU ClassMate Shield");
-
-  return response;
-    const isAllowed = origin ? this.isOriginAllowed(origin) : false;
-
-    const headers = new Headers({
-      Vary: "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
-      "Access-Control-Allow-Methods": this.ALLOWED_METHODS.join(", "),
-      "Access-Control-Allow-Headers": this.ALLOWED_HEADERS.join(", "),
-      "Access-Control-Max-Age": "86400", // 24 hours
-    });
-
-    if (isAllowed && origin) {
-      headers.set("Access-Control-Allow-Origin", origin);
-    } else {
-      // Still respond 204, but without allowing credentials/origin
-      headers.set("Access-Control-Allow-Origin", "null");
+    // Development IP bypass
+    if (process.env.NODE_ENV === "development") {
+      const ip = context.clientIp || "";
+      if (ip === "0.0.0.0" || ip === "127.0.0.1" || ip === "::1") {
+        console.log("[SecurityGuard] Local dev IP detected — bypassing strict checks");
+        return NextResponse.next();
+      }
     }
 
-    return new NextResponse(null, { status: 204, headers });
+    const response = NextResponse.next();
+
+    // Apply all security + CORS headers
+    this.applySecurityHeaders(response, context);
+    this.applyCorsHeaders(request, response);
+
+    // Mark as protected
+    response.headers.set("x-security-guard", "active");
+    response.headers.set("x-protected-by", "MOUAU ClassMate Shield");
+
+    return response;
   }
 
   // ───────────────────────────────────────────────────────────────────────
@@ -127,6 +102,7 @@ export class SecurityGuard {
     if (isAllowed && origin) {
       headers.set("Access-Control-Allow-Origin", origin);
     } else {
+      // Still respond 204, but without allowing credentials/origin
       headers.set("Access-Control-Allow-Origin", "null");
     }
 
@@ -189,7 +165,7 @@ export class SecurityGuard {
     // ──────────────────────────────
     const nonce =
       context.nonce || Buffer.from(crypto.randomUUID()).toString("base64");
-    const csp = this.buildCsp(nonce, context.isDev);
+    const csp = this.buildCsp(nonce, context.isDev || process.env.NODE_ENV === "development");
 
     response.headers.set("Content-Security-Policy", csp);
     response.headers.set("X-CSP-Nonce", nonce);
