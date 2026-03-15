@@ -94,7 +94,7 @@ export class StudentProfileService {
         matricNumber: student.matricNumber,
         fullName,
         firstName: decryptedFirstName,
-        lastname: decryptedSurname,
+        lastName: decryptedSurname,
         otherName: decryptedOtherName,
         email: decryptedEmail,
         phone: decryptedPhone,
@@ -123,11 +123,11 @@ export class StudentProfileService {
    * Format full name from components
    */
   private static formatFullName(
-    lastname: string,
+    lastName: string,
     firstName: string,
     otherName: string | null
   ): string {
-    let fullName = `${lastname} ${firstName}`;
+    let fullName = `${lastName} ${firstName}`;
     if (otherName) {
       fullName += ` ${otherName}`;
     }
@@ -161,9 +161,9 @@ export class StudentProfileService {
         ).encrypted;
       }
 
-      if (profileData.lastname) {
-        updateData.lastname = (
-          await protectData(profileData.lastname, "name")
+      if (profileData.lastName) {
+        updateData.lastName = (
+          await protectData(profileData.lastName, "name")
         ).encrypted;
       }
 
@@ -264,7 +264,7 @@ export class StudentProfileService {
         matricNumber: updatedStudent.matricNumber,
         fullName,
         firstName: decryptedFirstName,
-        lastname: decryptedSurname,
+        lastName: decryptedSurname,
         otherName: decryptedOtherName,
         email: decryptedEmail,
         phone: decryptedPhone,

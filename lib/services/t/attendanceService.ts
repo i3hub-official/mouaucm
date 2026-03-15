@@ -445,7 +445,7 @@ export class TeacherAttendanceService {
           id: studentId,
           matricNumber: "",
           firstName: "",
-          lastname: "",
+          lastName: "",
         },
         courseId,
         totalSessions,

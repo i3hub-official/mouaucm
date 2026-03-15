@@ -12,8 +12,8 @@ import {
   X,
 } from "lucide-react";
 import { ThemeToggle } from "@/app/components/theme-toggle";
-import { SignOutModal } from "@/app/components/s/SignOutModal";
-import { NotificationDropdown } from "@/app/components/s/NotificationDropdown";
+import { SignOutModal } from "./SignOutModal";
+import { NotificationDropdown } from "./NotificationDropdown";
 import { UserService } from "@/lib/services/userService";
 import { NotificationService } from "@/lib/services/s/notificationService";
 
@@ -37,6 +37,7 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
   const [showSignOutModal, setShowSignOutModal] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [userId, setUserId] = useState<string | null>(null);
   const pathname = usePathname();
 
   // Navigation items with their paths
@@ -51,18 +52,39 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
   const tagline = "Your Academic Partner";
 
   useEffect(() => {
-    fetchUserData();
-    fetchUnreadCount();
-
-    // Refresh unread count every 30 seconds
-    const interval = setInterval(fetchUnreadCount, 30000);
-    return () => clearInterval(interval);
+    // Get user ID from session or cookie first
+    const getUserId = async () => {
+      try {
+        const response = await fetch("/api/auth/session");
+        const session = await response.json();
+        if (session?.user?.id) {
+          setUserId(session.user.id);
+        }
+      } catch (error) {
+        console.error("Error getting user ID:", error);
+      }
+    };
+    
+    getUserId();
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      fetchUserData();
+      fetchUnreadCount();
+
+      // Refresh unread count every 30 seconds
+      const interval = setInterval(fetchUnreadCount, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [userId]);
+
   const fetchUserData = async () => {
+    if (!userId) return;
+    
     try {
       setLoading(true);
-      const userData = await UserService.getHeaderUserData();
+      const userData = await UserService.getUserHeaderData(userId);
       setUserData(userData);
     } catch (error) {
       console.error("Error fetching user data for header:", error);
@@ -73,8 +95,10 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
   };
 
   const fetchUnreadCount = async () => {
+    if (!userId) return;
+    
     try {
-      const count = await NotificationService.getUnreadCount();
+      const count = await NotificationService.getUnreadCount(userId);
       setUnreadCount(count);
     } catch (error) {
       console.error("Error fetching unread count:", error);
@@ -146,7 +170,7 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
     setShowUserMenu(false);
 
     // Refresh unread count when opening notifications
-    if (!showNotifications) {
+    if (!showNotifications && userId) {
       fetchUnreadCount();
     }
   };
@@ -215,10 +239,14 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
                     )}
                   </button>
 
-                  <NotificationDropdown
-                    isOpen={showNotifications}
-                    onClose={() => setShowNotifications(false)}
-                  />
+                  {/* Pass userId to NotificationDropdown */}
+                  {userId && (
+                    <NotificationDropdown
+                      isOpen={showNotifications}
+                      onClose={() => setShowNotifications(false)}
+                      userId={userId}
+                    />
+                  )}
                 </div>
 
                 {/* User Menu */}
@@ -433,12 +461,6 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
           }}
         />
       )}
-
-      {/* Notification Dropdown */}
-      <NotificationDropdown
-        isOpen={showNotifications}
-        onClose={() => setShowNotifications(false)}
-      />
     </>
   );
 }

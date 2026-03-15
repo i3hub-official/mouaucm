@@ -48,7 +48,10 @@ export function TeacherHeader({
             <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
               {user.profile?.photo ? (
                 <img
-                  src={user.profile.photo}
+                  src={typeof user.profile.photo === 'string' 
+                    ? user.profile.photo 
+                    : URL.createObjectURL(user.profile.photo)
+                  }
                   alt="Profile"
                   className="w-8 h-8 rounded-full object-cover"
                 />
@@ -59,7 +62,7 @@ export function TeacherHeader({
 
             <div className="hidden sm:block text-left">
               <p className="text-sm font-medium text-foreground">
-                {user.profile?.firstName} {user.profile?.lastname}
+                {user.profile?.firstName} {user.profile?.lastName}
               </p>
               <p className="text-xs text-muted-foreground capitalize">
                 {user.role.toLowerCase()}

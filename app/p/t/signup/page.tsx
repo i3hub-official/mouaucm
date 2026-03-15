@@ -141,7 +141,7 @@ export default function TeacherSignupPage() {
   const [formData, setFormData] = useState({
     teacherId: "",
     staffNumber: "",
-    lastname: "",
+    lastName: "",
     firstName: "",
     otherName: "",
     gender: "",
@@ -331,7 +331,7 @@ export default function TeacherSignupPage() {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
-    if (!formData.lastname) newErrors.lastname = "Surname is required";
+    if (!formData.lastName) newErrors.lastName = "Surname is required";
     if (!formData.firstName) newErrors.firstName = "First name is required";
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.college) newErrors.college = "College is required";
@@ -386,7 +386,7 @@ export default function TeacherSignupPage() {
       // Prepare teacher data for registration
       const teacherData = {
         firstName: formData.firstName,
-        lastname: formData.lastname,
+        lastName: formData.lastName,
         otherName: formData.otherName,
         gender: formData.gender,
         teacherId: formData.teacherId,
@@ -850,15 +850,15 @@ export default function TeacherSignupPage() {
                 </label>
                 <input
                   type="text"
-                  value={formData.lastname}
-                  onChange={(e) => handleInputChange("lastname", e.target.value)}
+                  value={formData.lastName}
+                  onChange={(e) => handleInputChange("lastName", e.target.value)}
                   className={`form-input w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border focus:ring-2 focus:ring-primary focus:border-transparent ${
-                    errors.lastname ? "border-error" : "border-border"
+                    errors.lastName ? "border-error" : "border-border"
                   }`}
                 />
-                {errors.lastname && (
+                {errors.lastName && (
                   <p className="text-error text-[10px] md:text-xs mt-1">
-                    {errors.lastname}
+                    {errors.lastName}
                   </p>
                 )}
               </div>
@@ -1203,7 +1203,7 @@ export default function TeacherSignupPage() {
                     Full Name
                   </label>
                   <p className="font-medium text-sm md:text-base text-foreground">
-                    {formData.lastname} {formData.firstName} {formData.otherName}
+                    {formData.lastName} {formData.firstName} {formData.otherName}
                   </p>
                 </div>
                 <div>

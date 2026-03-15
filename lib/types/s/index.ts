@@ -20,8 +20,8 @@ export interface Student {
   nin: string | null;
   // Personal (encrypted)
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname for compatibility
+  lastName: string;
+  lastName?: string; // Alias for lastName for compatibility
   otherName: string | null;
   gender: Gender | null;
   dateOfBirth: Date | null;
@@ -59,12 +59,14 @@ export interface Student {
 
 // Safe public profile (for dashboards, APIs, transcripts)
 export interface StudentProfile {
+  academicRank: string;
+  dateEnrolled: Date;
   id: string;
   matricNumber: string;
-  fullName: string; // lastname + firstName + otherName
+  fullName: string; // lastName + firstName + otherName
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+  lastName: string;
+  lastName?: string; // Alias for lastName
   otherName: string | null;
   email: string;
   phone: string;
@@ -88,7 +90,7 @@ export interface StudentProfile {
 export interface StudentRegistrationData {
   // Personal Information (Required)
   firstName: string;
-   lastName: string; // Alias for lastname
+   lastName: string; // Alias for lastName
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: string; // String for form input, converted to Date in service
@@ -119,7 +121,7 @@ export interface StudentRegistrationData {
 // Alternative registration data without confirmPassword for internal use
 export interface StudentRegistrationInput {
   firstName: string;
-  lastname: string;
+  lastName: string;
   lastName?: string;
   otherName?: string;
   gender?: Gender;
@@ -280,7 +282,7 @@ export interface AssignmentWithStudentSubmission extends Assignment {
 export interface AssignmentWithAllSubmissions extends Assignment {
   course: Course;
   submissions: (AssignmentSubmission & {
-    student: Pick<Student, "id" | "matricNumber" | "lastname" | "firstName">;
+    student: Pick<Student, "id" | "matricNumber" | "lastName" | "firstName">;
   })[];
 }
 
@@ -304,7 +306,7 @@ export interface AssignmentSubmission {
   assignment?: Assignment;
   student?: Pick<
     Student,
-    "id" | "matricNumber" | "lastname" | "firstName" | "otherName"
+    "id" | "matricNumber" | "lastName" | "firstName" | "otherName"
   >;
 }
 
@@ -402,9 +404,9 @@ export interface Attendance {
 export interface Teacher {
   id: string;
   teacherId: string;
-  lastname: string;
+  lastName: string;
   firstName: string;
-  lastName?: string; // Alias for lastname
+  lastName?: string; // Alias for lastName
   otherName?: string | null;
   email: string;
   phone: string;
@@ -419,9 +421,9 @@ export interface Teacher {
 export interface Admin {
   id: string;
   teacherId: string;
-  lastname: string;
+  lastName: string;
   firstName: string;
-  lastName?: string; // Alias for lastname
+  lastName?: string; // Alias for lastName
   otherName?: string | null;
   email: string;
   phone: string;
@@ -532,7 +534,7 @@ export interface PaginatedResponse<T> {
 // ===========================================================
 export interface StudentProfileUpdateData {
   firstName?: string;
-  lastname?: string;
+  lastName?: string;
   lastName?: string;
   otherName?: string;
   gender?: Gender;
@@ -666,7 +668,7 @@ export interface CreateNotificationData {
 // ===========================================================
 export interface ProfileUpdateData {
   firstName?: string;
-  lastname?: string;
+  lastName?: string;
   lastName?: string;
   otherName?: string;
   phone?: string;

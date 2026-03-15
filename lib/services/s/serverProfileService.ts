@@ -68,7 +68,7 @@ export class ServerProfileService {
       if (!student) return null;
 
       // Decrypt all sensitive data in parallel
-      const [firstName, lastname, otherName, email, phone, state, lga] =
+      const [firstName, lastName, otherName, email, phone, state, lga] =
         await Promise.all([
           unprotectData(student.firstName, "name"),
           unprotectData(student.lastName, "name"),
@@ -85,7 +85,7 @@ export class ServerProfileService {
             : Promise.resolve(""),
         ]);
 
-      const fullName = [lastname, firstName, otherName]
+      const fullName = [lastName, firstName, otherName]
         .filter(Boolean)
         .join(" ")
         .trim();
@@ -94,7 +94,7 @@ export class ServerProfileService {
         id: student.id,
         matricNumber: student.matricNumber,
         firstName,
-        lastname,
+        lastName,
         otherName,
         fullName,
         email,
@@ -149,7 +149,7 @@ export class ServerProfileService {
     studentId: string,
     data: Partial<{
       firstName: string;
-      lastname: string;
+      lastName: string;
       otherName?: string;
       phone: string;
       passportUrl?: string;
@@ -176,10 +176,10 @@ export class ServerProfileService {
         updatedFields.push("firstName");
       }
 
-      if (data.lastname !== undefined) {
-        const { encrypted } = await protectData(data.lastname.trim(), "name");
-        updateData.lastname = encrypted;
-        updatedFields.push("lastname");
+      if (data.lastName !== undefined) {
+        const { encrypted } = await protectData(data.lastName.trim(), "name");
+        updateData.lastName = encrypted;
+        updatedFields.push("lastName");
       }
 
       if (data.otherName !== undefined) {

@@ -4,17 +4,19 @@ import { useState, useEffect, useRef } from "react";
 import { Bell, Check, Trash2, ExternalLink, Loader, X } from "lucide-react";
 import {
   NotificationService,
-  Notification,
 } from "@/lib/services/s/notificationService";
+import { Notification } from "@/lib/types/s";
 
 interface NotificationDropdownProps {
   isOpen: boolean;
   onClose: () => void;
+  userId: string; // Add userId prop
 }
 
 export function NotificationDropdown({
   isOpen,
   onClose,
+  userId, // Add userId prop
 }: NotificationDropdownProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,10 +25,10 @@ export function NotificationDropdown({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && userId) {
       fetchNotifications();
     }
-  }, [isOpen]);
+  }, [isOpen, userId]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -60,9 +62,11 @@ export function NotificationDropdown({
   }, [isOpen, onClose]);
 
   const fetchNotifications = async () => {
+    if (!userId) return;
+    
     try {
       setLoading(true);
-      const data = await NotificationService.getNotifications(20);
+      const data = await NotificationService.getNotifications(userId, 20);
       setNotifications(data);
     } catch (error) {
       console.error("Error fetching notifications:", error);
@@ -72,6 +76,8 @@ export function NotificationDropdown({
   };
 
   const handleRefresh = async () => {
+    if (!userId) return;
+    
     try {
       setRefreshing(true);
       await fetchNotifications();
@@ -100,9 +106,11 @@ export function NotificationDropdown({
   };
 
   const handleMarkAllAsRead = async () => {
+    if (!userId) return;
+    
     try {
       setRefreshing(true);
-      const success = await NotificationService.markAllAsRead();
+      const success = await NotificationService.markAllAsRead(userId);
 
       if (success) {
         setNotifications((prev) =>
@@ -226,7 +234,7 @@ export function NotificationDropdown({
                   onClick={() => handleNotificationClick(notification)}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div className="1 min-w-0">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span
                           className={`text-sm font-medium ${

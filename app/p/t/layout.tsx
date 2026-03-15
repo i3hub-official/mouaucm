@@ -11,7 +11,7 @@ import {
   type UserRole,
 } from "@/hooks/useRoleProtection";
 
-// Define proper types
+// Define proper types to match the component expectations
 interface TeacherUser {
   id: string;
   name: string;
@@ -21,12 +21,15 @@ interface TeacherUser {
   lastLoginAt?: Date;
   profile?: {
     firstName: string;
-    lastname: string;
+    lastName: string;
     department: string;
-    teacherId: string;
+    employeeId: string; // Changed from teacherId to employeeId
     college: string;
     academicRank: string;
     passportUrl?: string;
+    photo?: string | Blob | null; // Added to match component
+    phone?: string | null; // Added optional fields
+    dateEmployed?: string | null;
   };
 }
 
@@ -535,7 +538,7 @@ export default function TeacherLayout({
                 </div>
                 <div className="text-right text-sm text-muted-foreground">
                   <p>Academic Rank: {authState.user.profile?.academicRank}</p>
-                  <p>Employee ID: {authState.user.profile?.teacherId}</p>
+                  <p>Employee ID: {authState.user.profile?.employeeId}</p>
                 </div>
               </div>
             </div>

@@ -60,7 +60,7 @@ interface UserWithDetails {
     id: string;
     matricNumber: string;
     firstName: string;
-    lastname: string;
+    lastName: string; // Fixed: changed from lastName to lastName
     otherName?: string | null;
     gender?: string | null;
     phone?: string | null;
@@ -73,9 +73,9 @@ interface UserWithDetails {
   } | null;
   teacher?: {
     id: string;
-    teacherId: string;
+    employeeId: string; // Fixed: changed from teacherId to employeeId
     firstName: string;
-    lastname: string;
+    lastName: string; // Fixed: changed from lastName to lastName
     otherName?: string | null;
     gender?: string | null;
     phone?: string | null;
@@ -90,9 +90,9 @@ interface UserWithDetails {
   } | null;
   admin?: {
     id: string;
-    teacherId: string;
+    employeeId: string; // Fixed: changed from teacherId to employeeId
     firstName: string;
-    lastname: string;
+    lastName: string; // Fixed: changed from lastName to lastName
     otherName?: string | null;
     gender?: string | null;
     phone?: string | null;
@@ -132,7 +132,6 @@ export default async function AdminUsersPage({
   };
 }) {
   // Check if user is authenticated and is an admin
-  // Check if user is authenticated and is an admin
   const session = (await getServerSession()) as { user?: SessionUser } | null;
   if (!session || session.user?.role !== "ADMIN") {
     redirect("/signin");
@@ -151,14 +150,6 @@ export default async function AdminUsersPage({
 
   // Fetch users with pagination and filters
   const usersData = await getUsers(page, limit, filters);
-
-  function deleteUser(id: string) {
-    throw new Error("Function not implemented.");
-  }
-
-  function exportUsers(selectedUsers: never[]) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <div className="container mx-auto py-6 space-y-6">
@@ -179,7 +170,7 @@ export default async function AdminUsersPage({
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
         <div className="rounded-lg border bg-card p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -427,58 +418,53 @@ export default async function AdminUsersPage({
               ) : (
                 usersData.users.map((user) => (
                   <tr key={user.id} className="border-b hover:bg-muted/50">
-                    <>
-                      <td className="p-4">
-                        <div className="flex items-center space-x-3">
-                          <input
-                            type="checkbox"
-                            className="user-checkbox rounded border-input"
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                // Add to selected users list
-                              } else {
-                                // Remove from selected users list
-                              }
-                            }}
+                    <td className="p-4">
+                      <input
+                        type="checkbox"
+                        className="user-checkbox rounded border-input"
+                      />
+                    </td>
+                    <td className="p-4">
+                      <div className="flex items-center space-x-3">
+                        {user.image ? (
+                          <Image
+                            src={user.image}
+                            alt={user.name || "User"}
+                            width={40}
+                            height={40}
+                            className="rounded-full"
                           />
-                          {user.image ? (
-                            <Image
-                              src={user.image}
-                              alt={user.name || "User"}
-                              width={40}
-                              height={40}
-                              className="rounded-full"
-                            />
-                          ) : (
-                            <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                              <User className="h-5 w-5 text-gray-500" />
-                            </div>
-                          )}
-                          <div>
-                            <div className="font-medium">
-                              {user.name || "Unknown User"}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              {user.email}
-                            </div>
+                        ) : (
+                          <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                            <User className="h-5 w-5 text-gray-500" />
+                          </div>
+                        )}
+                        <div>
+                          <div className="font-medium">
+                            {user.name || "Unknown User"}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {user.email}
                           </div>
                         </div>
-                      </td>
-                      <td className="p-4">
-                        <span
-                          className={cn(
-                            "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                            user.role === "ADMIN" && "bg-red-100 text-red-800",
-                            user.role === "TEACHER" &&
-                              "bg-blue-100 text-blue-800",
-                            user.role === "STUDENT" &&
-                              "bg-green-100 text-green-800"
-                          )}
-                        >
-                          {user.role}
-                        </span>
-                      </td>
-                      <td className="p-4">
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
+                          user.role === "ADMIN" && "bg-red-100 text-red-800",
+                          user.role === "TEACHER" &&
+                            "bg-blue-100 text-blue-800",
+                          user.role === "STUDENT" &&
+                            "bg-green-100 text-green-800"
+                        )}
+                      >
+                        {user.role}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex flex-col space-y-1">
                         <div className="flex items-center space-x-2">
                           <div
                             className={cn(
@@ -506,87 +492,86 @@ export default async function AdminUsersPage({
                             </span>
                           </div>
                         )}
-                      </td>
-                      <td className="p-4 text-sm text-muted-foreground">
-                        {user.lastLoginAt
-                          ? format(user.lastLoginAt, "PPP p")
-                          : "Never"}
-                      </td>
-                      <td className="p-4 text-sm text-muted-foreground">
-                        {format(user.createdAt, "PPP p")}
-                      </td>
-                      <td className="p-4">
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={() => {
-                              window.location.href = `/p/a/users/${user.id}`;
-                            }}
-                            className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3 py-2 mr-2"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => {
-                              window.location.href = `/p/a/users/${user.id}/edit`;
-                            }}
-                            className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3 py-2"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => {
-                              // Toggle user status
-                              toggleUserStatus(user.id, !user.isActive);
-                            }}
-                            className={cn(
-                              "inline-flex items-center justify-center rounded-md h-8 px-3 py-2",
-                              user.isActive
-                                ? "bg-red-100 text-red-800 hover:bg-red-200"
-                                : "bg-green-100 text-green-800 hover:bg-green-200"
-                            )}
-                          >
-                            {user.isActive ? (
-                              <>
-                                <Lock className="h-4 w-4 mr-2" />
-                                Deactivate
-                              </>
-                            ) : (
-                              <>
-                                <Unlock className="h-4 w-4 mr-2" />
-                                Activate
-                              </>
-                            )}
-                          </button>
-                          <button
-                            onClick={() => {
-                              // Reset user password
-                              resetUserPassword(user.id);
-                            }}
-                            className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3 py-2"
-                          >
-                            <Key className="h-4 w-4" />
-                            Reset Password
-                          </button>
-                          <button
-                            onClick={() => {
-                              // Delete user with confirmation
-                              if (
-                                confirm(
-                                  `Are you sure you want to delete ${
-                                    user.name || "this user"
-                                  }?`
-                                )
-                              ) {
-                                deleteUser(user.id);
-                              }
-                            }}
-                            className="inline-flex items-center justify-center rounded-md bg-red-100 text-red-800 hover:bg-red-200 h-8 px-3 py-2"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </>
+                      </div>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">
+                      {user.lastLoginAt
+                        ? format(new Date(user.lastLoginAt), "PPP p")
+                        : "Never"}
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">
+                      {format(new Date(user.createdAt), "PPP p")}
+                    </td>
+                    <td className="p-4">
+                      <div className="flex items-center space-x-2">
+                        <a
+                          href={`/p/a/users/${user.id}`}
+                          className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3 py-2"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </a>
+                        <a
+                          href={`/p/a/users/${user.id}/edit`}
+                          className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3 py-2"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </a>
+                        <button
+                          onClick={() => {
+                            // Toggle user status
+                            console.log(
+                              `Toggling user ${user.id} to ${
+                                !user.isActive ? "active" : "inactive"
+                              }`
+                            );
+                          }}
+                          className={cn(
+                            "inline-flex items-center justify-center rounded-md h-8 px-3 py-2",
+                            user.isActive
+                              ? "bg-red-100 text-red-800 hover:bg-red-200"
+                              : "bg-green-100 text-green-800 hover:bg-green-200"
+                          )}
+                        >
+                          {user.isActive ? (
+                            <>
+                              <Lock className="h-4 w-4 mr-2" />
+                              Deactivate
+                            </>
+                          ) : (
+                            <>
+                              <Unlock className="h-4 w-4 mr-2" />
+                              Activate
+                            </>
+                          )}
+                        </button>
+                        <button
+                          onClick={() => {
+                            // Reset user password
+                            console.log(`Resetting password for user ${user.id}`);
+                          }}
+                          className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3 py-2"
+                        >
+                          <Key className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            // Delete user with confirmation
+                            if (
+                              confirm(
+                                `Are you sure you want to delete ${
+                                  user.name || "this user"
+                                }?`
+                              )
+                            ) {
+                              console.log(`Deleting user ${user.id}`);
+                            }
+                          }}
+                          className="inline-flex items-center justify-center rounded-md bg-red-100 text-red-800 hover:bg-red-200 h-8 px-3 py-2"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
@@ -628,55 +613,6 @@ export default async function AdminUsersPage({
           </div>
         </div>
       </div>
-
-      {/* Bulk Actions */}
-      {usersData.selectedUsers.length > 0 && (
-        <div className="rounded-lg border bg-card p-6 mt-6">
-          <h2 className="text-lg font-semibold mb-4">Bulk Actions</h2>
-          <div className="flex flex-wrap gap-4">
-            <button
-              onClick={() => {
-                // Activate selected users
-                bulkUpdateUserStatus(usersData.selectedUsers, true);
-              }}
-              className="inline-flex items-center justify-center rounded-md bg-green-100 text-green-800 hover:bg-green-200 h-9 px-4 py-2"
-            >
-              <UserCheck className="h-4 w-4 mr-2" />
-              Activate Selected
-            </button>
-            <button
-              onClick={() => {
-                // Deactivate selected users
-                bulkUpdateUserStatus(usersData.selectedUsers, false);
-              }}
-              className="inline-flex items-center justify-center rounded-md bg-red-100 text-red-800 hover:bg-red-200 h-9 px-4 py-2"
-            >
-              <UserX className="h-4 w-4 mr-2" />
-              Deactivate Selected
-            </button>
-            <button
-              onClick={() => {
-                // Send verification emails to selected users
-                bulkSendVerificationEmails(usersData.selectedUsers);
-              }}
-              className="inline-flex items-center justify-center rounded-md bg-blue-100 text-blue-800 hover:bg-blue-200 h-9 px-4 py-2"
-            >
-              <Mail className="h-4 w-4 mr-2" />
-              Send Verification
-            </button>
-            <button
-              onClick={() => {
-                // Export selected users
-                exportUsers(usersData.selectedUsers);
-              }}
-              className="inline-flex items-center justify-center rounded-md bg-amber-100 text-amber-800 hover:bg-amber-200 h-9 px-4 py-2"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export Selected
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -736,7 +672,7 @@ async function getUsers(
     ];
   }
 
-  // Get users with their related profiles
+  // Get users with their related profiles - FIXED FIELD NAMES
   const [users, total] = await Promise.all([
     prisma.user.findMany({
       where,
@@ -746,7 +682,7 @@ async function getUsers(
             id: true,
             matricNumber: true,
             firstName: true,
-            lastname: true,
+            lastName: true, // Fixed: changed from lastName to lastName
             department: true,
             dateEnrolled: true,
             isActive: true,
@@ -755,9 +691,9 @@ async function getUsers(
         teacher: {
           select: {
             id: true,
-            teacherId: true,
+            employeeId: true, // Fixed: changed from teacherId to employeeId
             firstName: true,
-            lastname: true,
+            lastName: true, // Fixed: changed from lastName to lastName
             department: true,
             institution: true,
             dateJoined: true,
@@ -767,9 +703,9 @@ async function getUsers(
         admin: {
           select: {
             id: true,
-            teacherId: true,
+            employeeId: true, // Fixed: changed from teacherId to employeeId
             firstName: true,
-            lastname: true,
+            lastName: true, // Fixed: changed from lastName to lastName
             department: true,
             institution: true,
             dateJoined: true,
@@ -778,7 +714,7 @@ async function getUsers(
         },
         _count: true,
       },
-      orderBy: { [filters.sortBy as string]: filters.sortOrder },
+      orderBy: { [filters.sortBy as string]: filters.sortOrder || "desc" },
       skip,
       take: limit,
     }),
@@ -799,42 +735,5 @@ async function getUsers(
     inactive,
     locked,
     unverified,
-    selectedUsers: [], // This would be managed in state
   };
-}
-
-// Client-side functions (would be in a separate file or in a client component)
-function toggleUserStatus(userId: string, isActive: boolean) {
-  // In a real implementation, this would call an API endpoint
-  console.log(`Toggling user ${userId} to ${isActive ? "active" : "inactive"}`);
-}
-
-function resetUserPassword(userId: string) {
-  // In a real implementation, this would call an API endpoint
-  console.log(`Resetting password for user ${userId}`);
-}
-
-function bulkUpdateUserStatus(userIds: string[], isActive: boolean) {
-  // In a real implementation, this would call an API endpoint
-  console.log(
-    `Bulk updating ${userIds.length} users to ${
-      isActive ? "active" : "inactive"
-    }`
-  );
-}
-
-function bulkSendVerificationEmails(userIds: string[]) {
-  // In a real implementation, this would call an API endpoint
-  console.log(`Sending verification emails to ${userIds.length} users`);
-  function exportUsers(userIds: string[]) {
-    // In a real implementation, this would call an API endpoint
-    console.log(`Exporting ${userIds.length} users`);
-  }
-
-  // Stub for deleteUser to prevent compile error
-  function deleteUser(userId: string) {
-    // In a real implementation, this would call an API endpoint
-    console.log(`Deleting user ${userId}`);
-  } // In a real implementation, this would call an API endpoint
-  console.log(`Exporting ${userIds.length} users`);
 }

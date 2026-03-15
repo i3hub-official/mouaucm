@@ -1,4 +1,4 @@
-// File: app/t/layout.tsx
+// app/t/layout.tsx - Fix the TeacherHeader usage
 "use client";
 
 import { useState, useEffect } from "react";
@@ -21,9 +21,9 @@ interface TeacherUser {
   lastLoginAt?: Date;
   profile?: {
     firstName: string;
-    lastname: string;
+    lastName: string; // Fixed: changed from lastName to lastName
     department: string;
-    teacherId: string;
+    employeeId: string; // Fixed: changed from teacherId to employeeId
     college: string;
     academicRank: string;
     photo?: string;
@@ -512,6 +512,7 @@ export default function TeacherLayout({
       />
 
       <div className="flex-1 flex flex-col overflow-hidden">
+        {/* FIX: Pass the entire user object, not just the ID */}
         <TeacherHeader
           onMenuClick={() => setSidebarOpen(true)}
           user={authState.user}
@@ -535,7 +536,7 @@ export default function TeacherLayout({
                 </div>
                 <div className="text-right text-sm text-muted-foreground">
                   <p>Academic Rank: {authState.user.profile?.academicRank}</p>
-                  <p>Employee ID: {authState.user.profile?.teacherId}</p>
+                  <p>Employee ID: {authState.user.profile?.employeeId}</p>
                 </div>
               </div>
             </div>

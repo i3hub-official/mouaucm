@@ -15,7 +15,7 @@ export interface TeacherUser extends BaseUser {
   department: string;
   institution: string;
   firstName: string;
-  lastName: string; // Alias for lastname
+  lastName: string; // Alias for lastName
   otherName?: string | null;
   phone: string;
   qualification?: string;
@@ -30,8 +30,8 @@ export interface Teacher {
   id: string;
   teacherId: string;
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+  lastName: string;
+  lastName?: string; // Alias for lastName
   otherName?: string | null;
   gender?: Gender | null;
   phone: string;
@@ -54,8 +54,8 @@ export interface TeacherProfile {
   id: string;
   teacherId: string;
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+  lastName: string;
+  lastName?: string; // Alias for lastName
   otherName?: string | null;
   email: string;
   phone: string;
@@ -70,8 +70,8 @@ export interface TeacherProfile {
 // Teacher registration data
 export interface TeacherRegistrationData {
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+  lastName: string;
+  lastName?: string; // Alias for lastName
   otherName?: string;
   gender?: Gender;
   email: string;

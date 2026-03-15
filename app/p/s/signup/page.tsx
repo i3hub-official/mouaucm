@@ -120,7 +120,7 @@ export default function SignupPage() {
     hasMatricNumber: "",
     matricNumber: "",
     jambRegNumber: "",
-    lastname: "",
+    lastName: "",
     firstName: "",
     otherName: "",
     gender: "",
@@ -232,7 +232,7 @@ export default function SignupPage() {
       hasMatricNumber: "",
       matricNumber: "",
       jambRegNumber: "",
-      lastname: "",
+      lastName: "",
       firstName: "",
       otherName: "",
       gender: "",
@@ -361,8 +361,8 @@ export default function SignupPage() {
         "Please enter a valid Matric Number (e.g., MOUAU/20/12345)";
     }
 
-    if (!formData.lastname || formData.lastname.trim() === "") {
-      newErrors.lastname = "Surname is required";
+    if (!formData.lastName || formData.lastName.trim() === "") {
+      newErrors.lastName = "Surname is required";
     }
     if (!formData.firstName || formData.firstName.trim() === "") {
       newErrors.firstName = "First name is required";
@@ -460,7 +460,7 @@ export default function SignupPage() {
         hasMatricNumber: formData.hasMatricNumber,
         matricNumber: formData.matricNumber,
         jambRegNumber: formData.jambRegNumber,
-        lastname: formData.lastname,
+        lastName: formData.lastName,
         firstName: formData.firstName,
         otherName: formData.otherName,
         gender: formData.gender,
@@ -995,15 +995,15 @@ export default function SignupPage() {
                 </label>
                 <input
                   type="text"
-                  value={formData.lastname || ""} // Ensure it's never undefined
-                  onChange={(e) => handleInputChange("lastname", e.target.value)}
+                  value={formData.lastName || ""} // Ensure it's never undefined
+                  onChange={(e) => handleInputChange("lastName", e.target.value)}
                   className={`form-input w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border focus:ring-2 focus:ring-primary focus:border-transparent ${
-                    errors.lastname ? "border-error" : "border-border"
+                    errors.lastName ? "border-error" : "border-border"
                   }`}
                 />
-                {errors.lastname && (
+                {errors.lastName && (
                   <p className="text-error text-[10px] md:text-xs mt-1">
-                    {errors.lastname}
+                    {errors.lastName}
                   </p>
                 )}
               </div>
@@ -1415,7 +1415,7 @@ export default function SignupPage() {
                       Full Name
                     </label>
                     <p className="font-medium text-sm md:text-base text-foreground">
-                      {formData.lastname} {formData.firstName}{" "}
+                      {formData.lastName} {formData.firstName}{" "}
                       {formData.otherName}
                     </p>
                   </div>

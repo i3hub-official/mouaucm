@@ -7,7 +7,7 @@ import { StudentProfile } from "@/lib/types/s/index";
 interface StudentHeaderProps {
   onMenuClick: () => void;
   user: StudentProfile;
-  onLogout: () => void;
+    onLogout: () => void;
 }
 
 export function StudentHeader({
@@ -59,7 +59,7 @@ export function StudentHeader({
 
             <div className="hidden sm:block text-left">
               <p className="text-sm font-medium text-foreground">
-                {user.firstName} {user.lastname}
+                {user.firstName} {user.lastName}
               </p>
               <p className="text-xs text-muted-foreground capitalize">
                 {user.role.toLowerCase()}

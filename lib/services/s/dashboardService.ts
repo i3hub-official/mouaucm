@@ -57,12 +57,12 @@ export class StudentDashboardService {
         id: student.id,
         matricNumber: student.matricNumber,
         fullName: this.formatFullName(
-          student.lastname,
+          student.lastName,
           student.firstName,
           student.otherName
         ),
         firstName: student.firstName,
-        lastname: student.lastname,
+        lastName: student.lastName,
         otherName: student.otherName,
         email: student.email,
         phone: student.phone,
@@ -114,11 +114,11 @@ export class StudentDashboardService {
    * Format full name from components
    */
   private static formatFullName(
-    lastname: string,
+    lastName: string,
     firstName: string,
     otherName: string | null
   ): string {
-    let fullName = `${lastname} ${firstName}`;
+    let fullName = `${lastName} ${firstName}`;
     if (otherName) {
       fullName += ` ${otherName}`;
     }

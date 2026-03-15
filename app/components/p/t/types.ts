@@ -7,15 +7,16 @@ export interface TeacherUser {
   isActive: boolean;
   lastLoginAt?: Date;
   profile?: {
+    photo?: string | Blob | null; // Made optional with proper union
     firstName: string;
-    lastname: string;
+    lastName: string;
     department: string;
     college: string;
-    teacherId: string;
+    employeeId: string; // Changed from teacherId to employeeId
     academicRank: string;
-    passportUrl?: string;
-    phone?: string;
-    dateEmployed?: string;
+    passportUrl?: string | null;
+    phone?: string | null;
+    dateEmployed?: string | null;
   };
 }
 

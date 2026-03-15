@@ -9,8 +9,18 @@ import {
 import { AuditAction } from "@/lib/generated/prisma/enums";
 import { UserProfile, ProfileUpdateResponse, PasswordChangeResponse, AccountDeletionResponse, UserPreferences, PreferencesResponse } from "@/lib/types/shared";
 
+// Define the header user data type
+export interface HeaderUserData {
+  name: string;
+  role: string;
+  matricNumber?: string;
+  employeeId?: string;
+  department?: string;
+  email?: string;
+}
 
 export class UserService {
+  
   /**
    * Get user by ID
    */
@@ -32,16 +42,16 @@ export class UserService {
               id: true,
               matricNumber: true,
               firstName: true,
-              lastName: true, // Changed from lastname to lastName
+              lastName: true,
               department: true,
             },
           },
           teacher: {
             select: {
               id: true,
-              employeeId: true, // Changed from teacherId to employeeId
+              employeeId: true,
               firstName: true,
-              lastName: true, // Changed from lastname to lastName
+              lastName: true,
               department: true,
             },
           },
@@ -99,6 +109,82 @@ export class UserService {
       return decryptedUser;
     } catch (error) {
       console.error("Error getting user by ID:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get user header data (simplified for dashboard header)
+   */
+  static async getUserHeaderData(userId: string): Promise<HeaderUserData | null> {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+          student: {
+            select: {
+              matricNumber: true,
+              firstName: true,
+              lastName: true,
+              department: true,
+            },
+          },
+          teacher: {
+            select: {
+              employeeId: true,
+              firstName: true,
+              lastName: true,
+              department: true,
+            },
+          },
+        },
+      });
+
+      if (!user) return null;
+
+      let name = user.name || "";
+      let matricNumber: string | undefined;
+      let employeeId: string | undefined;
+      let department: string | undefined;
+
+      // Decrypt and set role-specific fields
+      if (user.student) {
+        const [firstName, lastName] = await Promise.all([
+          unprotectData(user.student.firstName, "name"),
+          unprotectData(user.student.lastName, "name"),
+        ]);
+        
+        name = `${lastName} ${firstName}`;
+        matricNumber = user.student.matricNumber;
+        department = user.student.department;
+      } else if (user.teacher) {
+        const [firstName, lastName] = await Promise.all([
+          unprotectData(user.teacher.firstName, "name"),
+          unprotectData(user.teacher.lastName, "name"),
+        ]);
+        
+        name = `${lastName} ${firstName}`;
+        employeeId = user.teacher.employeeId;
+        department = user.teacher.department;
+      }
+
+      // Decrypt email
+      const email = await unprotectData(user.email, "email");
+
+      return {
+        name,
+        role: user.role,
+        matricNumber,
+        employeeId,
+        department,
+        email,
+      };
+    } catch (error) {
+      console.error("Error getting user header data:", error);
       throw error;
     }
   }

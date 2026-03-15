@@ -12,7 +12,7 @@ import { AdminUser } from "@/lib/types/a/index";
 // Define the actual return type from Prisma
 type PrismaAdminResult = {
   id: string;
-  lastname: string;
+  lastName: string;
   firstname: string;
   othername: string | null;
   gender: string | null;
@@ -447,7 +447,7 @@ export class AdminService {
           id: admin.id,
           userId: user.id,
           email: adminData.email,
-          lastname: adminData.lastName,
+          lastName: adminData.lastName,
           firstname: adminData.firstName,
           otherName: adminData.otherName,
           gender: adminData.gender,

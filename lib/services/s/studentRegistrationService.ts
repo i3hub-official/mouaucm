@@ -287,7 +287,7 @@ export class StudentRegistrationService {
       // Extract fields that can be updated
       const {
         firstName,
-        lastName, // Fixed: changed from lastname
+        lastName, // Fixed: changed from lastName
         otherName,
         gender,
         dateOfBirth,
@@ -311,9 +311,9 @@ export class StudentRegistrationService {
         updateData.firstName = protectedFirstName.encrypted;
       }
 
-      if (lastName) { // Fixed: changed from lastname
+      if (lastName) { // Fixed: changed from lastName
         const protectedLastName = await protectData(lastName.trim(), "name");
-        updateData.lastName = protectedLastName.encrypted; // Fixed: changed from lastname to lastName
+        updateData.lastName = protectedLastName.encrypted; // Fixed: changed from lastName to lastName
       }
 
       if (otherName) {

@@ -12,7 +12,7 @@ export class StudentService {
     try {
       const decrypted = await Promise.all([
         unprotectData(student.firstName, "name"),
-        unprotectData(student.lastname, "name"),
+        unprotectData(student.lastName, "name"),
         student.otherName ? unprotectData(student.otherName, "name") : null,
         unprotectData(student.email, "email"),
         unprotectData(student.phone, "phone"),
@@ -28,7 +28,7 @@ export class StudentService {
       return {
         ...student,
         firstName: decrypted[0],
-        lastname: decrypted[1],
+        lastName: decrypted[1],
         otherName: decrypted[2],
         email: decrypted[3],
         phone: decrypted[4],
@@ -165,7 +165,7 @@ export class StudentService {
 
     if (!student) return null;
 
-    const [firstName, lastname, otherName, email, phone, state, lga] =
+    const [firstName, lastName, otherName, email, phone, state, lga] =
       await Promise.all([
         unprotectData(student.firstName, "name"),
         unprotectData(student.lastName, "name"),
@@ -176,7 +176,7 @@ export class StudentService {
         unprotectData(student.lga || "", "location"),
       ]);
 
-    const fullName = [lastname, firstName, otherName]
+    const fullName = [lastName, firstName, otherName]
       .filter(Boolean)
       .join(" ")
       .trim();
@@ -185,7 +185,7 @@ export class StudentService {
       id: student.id,
       matricNumber: student.matricNumber,
       firstName,
-      lastname,
+      lastName,
       otherName,
       fullName,
       email,

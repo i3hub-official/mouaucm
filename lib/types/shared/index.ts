@@ -39,8 +39,8 @@ export interface StudentUser extends BaseUser {
   college: string;
   course: string;
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+  lastName: string;
+  lastName?: string; // Alias for lastName
   phone: string;
   admissionYear?: number;
 }
@@ -526,14 +526,14 @@ export interface UserProfile {
     id: string;
     matricNumber: string;
     firstName: string;
-    lastName: string; // Changed from lastname to lastName
+    lastName: string; // Changed from lastName to lastName
     department: string;
   };
   teacher?: {
     id: string;
     employeeId: string; // Changed from teacherId to employeeId
     firstName: string;
-    lastName: string; // Changed from lastname to lastName
+    lastName: string; // Changed from lastName to lastName
     department: string;
   };
 }

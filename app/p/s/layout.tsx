@@ -500,7 +500,14 @@ export default function StudentLayout({
               // Map StudentProfile to StudentProfile
               matricNumber: authState.user.id || "",
               firstName: authState.user.firstName || "",
-              lastname: authState.user.lastname || "",
+              lastName: authState.user.lastName || "",
+              otherName: authState.user.otherName || "",
+              fullName: `${authState.user.firstName || ""} ${authState.user.lastName || ""}`,
+              gender: authState.user.gender || null,
+              dateOfBirth: authState.user.dateOfBirth || null,
+              admissionYear: authState.user.admissionYear || null,
+              state: authState.user.state || "",
+              lga: authState.user.lga || "",
               phone: "", // Provide default or fetch from elsewhere
               department: authState.user.department || "",
               college: authState.user.college || "",
@@ -510,6 +517,7 @@ export default function StudentLayout({
               id: authState.user.id,
               isActive: authState.user.isActive,
               course: "", // Provide default or fetch from elsewhere
+              createdAt: new Date(), // Provide default or fetch from elsewhere
               dateEnrolled: authState.user.dateEnrolled || new Date(), // Provide default or fetch from elsewhere
               role: "STUDENT", // Map from authState.user.role or default
             }}

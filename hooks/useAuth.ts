@@ -245,10 +245,10 @@ export function useAuth() {
     switch (user.role) {
       case "STUDENT":
         const student = user as StudentUser;
-        return `${student.firstName} ${student.lastname}`;
+        return `${student.firstName} ${student.lastName}`;
       case "TEACHER":
         const teacher = user as TeacherUser;
-        return `${teacher.firstName} ${teacher.lastname}`;
+        return `${teacher.firstName} ${teacher.lastName}`;
       case "ADMIN":
         return user.name || user.email;
       default:

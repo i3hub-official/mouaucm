@@ -18,7 +18,7 @@ export class StudentPasswordService {
         email: await unprotectData(student.email, "email"),
         phone: await unprotectData(student.phone, "phone"),
         firstName: await unprotectData(student.firstName, "name"),
-        lastname: await unprotectData(student.lastname, "name"),
+        lastName: await unprotectData(student.lastName, "name"),
         otherName: student.otherName
           ? await unprotectData(student.otherName, "name")
           : null,
