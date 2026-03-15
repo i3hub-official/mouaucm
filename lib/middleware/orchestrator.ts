@@ -26,7 +26,7 @@ import { Defense } from "./UnifiedThreatDefenseSystem";
 import { ComprehensiveHealthMonitor } from "./healthMonitor";
 
 // NEW: The bulletproof executor
-import { enhancedExecute } from "./executionWrapper"; // ← ADD THIS LINE
+import { enhancedExecute } from "./executionWrapper";
 
 // IP Detection — THE SOURCE OF TRUTH
 import { ClientIPDetector } from "@/lib/clientIp";
@@ -49,6 +49,64 @@ interface LayerResult {
 }
 
 export class orchestrator {
+  // ===========================================================
+  // TEMPORARY DISABLE FLAGS - Set to true to disable specific layers
+  // ===========================================================
+  private static readonly DISABLED_LAYERS = {
+    // Foundation Layers
+    SecurityGuard: false,           // Set to true to disable
+    EnhancedRateEnforcer: false,     // Set to true to disable
+    EncryptionEnforcer: false,       // Set to true to disable
+    SessionTokenValidator: false,    // Set to true to disable
+    
+    // Defense Layers
+    UnifiedThreatDefense: false,     // Set to true to disable
+    
+    // Secondary Layers
+    GeoGuard: false,                 // Set to true to disable
+    CacheManager: false,             // Set to true to disable
+    BehaviorAnalyst: false,          // Set to true to disable
+    ComplianceMonitor: false,        // Set to true to disable
+    RequestTransformer: false,       // Set to true to disable
+    
+    // Observability
+    ActivityLogger: false,           // Set to true to disable
+  };
+
+  // ===========================================================
+  // ENVIRONMENT-BASED DISABLE - Disable layers in specific environments
+  // ===========================================================
+  private static shouldDisableLayer(layerName: string): boolean {
+    // Check if explicitly disabled
+    if (this.DISABLED_LAYERS[layerName as keyof typeof this.DISABLED_LAYERS]) {
+      return true;
+    }
+
+    // Disable specific layers in development
+    if (process.env.NODE_ENV === 'development') {
+      const devDisabledLayers = [
+        'EnhancedRateEnforcer',  // Disable rate limiting in dev
+        'GeoGuard',              // Disable geo blocking in dev
+        // Add more as needed
+      ];
+      
+      if (devDisabledLayers.includes(layerName)) {
+        console.log(`[orchestrator] 🚧 Layer ${layerName} disabled in development`);
+        return true;
+      }
+    }
+
+    // Disable based on feature flags
+    if (process.env.DISABLE_SECURITY === 'true') {
+      const securityLayers = ['SecurityGuard', 'EncryptionEnforcer', 'SessionTokenValidator'];
+      if (securityLayers.includes(layerName)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   private static readonly LAYERS = {
     FOUNDATION: [
       { name: "SecurityGuard", fn: SecurityGuard.apply, critical: true },
@@ -83,24 +141,45 @@ export class orchestrator {
     ],
   };
 
-  
-
   static async execute(request: NextRequest): Promise<NextResponse> {
     const globalStart = performance.now();
     let context: MiddlewareContext = {} as any;
     let authContext: AuthenticatedActionContext = {} as any;
     const results: LayerResult[] = [];
 
-        try {
+    // ===========================================================
+    // TEMPORARY BYPASS - Use this to completely bypass all security
+    // ===========================================================
+    if (process.env.BYPASS_ALL_SECURITY === 'true') {
+      console.warn('⚠️⚠️⚠️ ALL SECURITY LAYERS BYPASSED ⚠️⚠️⚠️');
+      return NextResponse.next();
+    }
+
+    // ===========================================================
+    // PATH-BASED BYPASS - Skip security for specific paths
+    // ===========================================================
+    const bypassPaths = [
+      '/api/public',
+      '/health',
+      '/_next',
+      '/favicon.ico',
+      ...(process.env.NODE_ENV === 'development' ? ['/sr', '/check'] : [])
+    ];
+
+    if (bypassPaths.some(path => request.nextUrl.pathname.startsWith(path))) {
+      console.log(`[orchestrator] 🚧 Bypassing security for path: ${request.nextUrl.pathname}`);
+      return NextResponse.next();
+    }
+
+    try {
       // Initialize trusted sources once
       TrustedSourceManager.initialize();
 
       // ──────────────────────────────
       // PHASE 0: Get Real Client IP (Critical Foundation)
       // ──────────────────────────────
-      const ipInfo = ClientIPDetector.getClientIP(request); // THE SOURCE OF TRUTH
+      const ipInfo = ClientIPDetector.getClientIP(request);
       
-      // Log the IP info for debugging
       console.log(`[orchestrator] Request from IP: ${ipInfo.ip}, Source: ${ipInfo.source}, Confidence: ${ipInfo.confidence}`);
 
       // ──────────────────────────────
@@ -121,8 +200,7 @@ export class orchestrator {
         clientIp: ipInfo.ip,
         clientIpSource: ipInfo.source,
         clientIpConfidence: Number(ipInfo.confidence),
-        isProxy:
-          ipInfo.isProxy || ipInfo.isVPN || ipInfo.isTor || ipInfo.isDatacenter,
+        isProxy: ipInfo.isProxy || ipInfo.isVPN || ipInfo.isTor || ipInfo.isDatacenter,
         country: ipInfo.geo?.country || "XX",
         region: ipInfo.geo?.city || "XX",
       });
@@ -156,60 +234,48 @@ export class orchestrator {
 
       if (orchestrator.shouldEarlyExit(response, results)) {
         console.log("[orchestrator] Early exit triggered in FOUNDATION phase");
-        return orchestrator.finalize(
-          request,
-          response,
-          results,
-          globalStart,
-          ipInfo.ip
-        );
+        return orchestrator.finalize(request, response, results, globalStart, ipInfo.ip);
       }
 
       // ──────────────────────────────
       // PHASE 3: AI Defense (uses real IP)
       // ──────────────────────────────
-      console.log("[orchestrator] Starting DEFENSE layer...");
-      const defenseExec = await enhancedExecute(
-        () => Defense.defend(request, context),
-        {
-          fallback: NextResponse.next(),
+      if (!this.shouldDisableLayer("UnifiedThreatDefense")) {
+        console.log("[orchestrator] Starting DEFENSE layer...");
+        const defenseExec = await enhancedExecute(
+          () => Defense.defend(request, context),
+          {
+            fallback: NextResponse.next(),
+            name: "UnifiedThreatDefense",
+            context: authContext,
+            request,
+          }
+        );
+
+        const action = defenseExec.result.headers.get("x-action") || "ALLOW";
+        const score = parseFloat(defenseExec.result.headers.get("x-threat-final") || "0");
+
+        results.push({
           name: "UnifiedThreatDefense",
-          context: authContext,
-          request,
+          result: defenseExec.result,
+          logs: defenseExec.logs,
+          executionTime: defenseExec.executionTime,
+          status: defenseExec.result.status,
+          success: action === "ALLOW",
+          threatScore: score,
+          decision: action,
+          earlyExit: !["ALLOW", "RATE_LIMIT"].includes(action),
+        });
+
+        if (!["ALLOW", "RATE_LIMIT"].includes(action)) {
+          console.log(`[DEFENSE] ${action} → ${ipInfo.ip} blocked (Score: ${score})`);
+          return orchestrator.finalize(request, defenseExec.result, results, globalStart, ipInfo.ip);
         }
-      );
 
-      const action = defenseExec.result.headers.get("x-action") || "ALLOW";
-      const score = parseFloat(
-        defenseExec.result.headers.get("x-threat-final") || "0"
-      );
-
-      results.push({
-        name: "UnifiedThreatDefense",
-        result: defenseExec.result,
-        logs: defenseExec.logs,
-        executionTime: defenseExec.executionTime,
-        status: defenseExec.result.status,
-        success: action === "ALLOW",
-        threatScore: score,
-        decision: action,
-        earlyExit: !["ALLOW", "RATE_LIMIT"].includes(action),
-      });
-
-      if (!["ALLOW", "RATE_LIMIT"].includes(action)) {
-        console.log(
-          `[DEFENSE] ${action} → ${ipInfo.ip} blocked (Score: ${score})`
-        );
-        return orchestrator.finalize(
-          request,
-          defenseExec.result,
-          results,
-          globalStart,
-          ipInfo.ip
-        );
+        response = defenseExec.result;
+      } else {
+        console.log("[orchestrator] 🚧 UnifiedThreatDefense layer disabled");
       }
-
-      response = defenseExec.result;
 
       // ──────────────────────────────
       // PHASE 4: Secondary Layer
@@ -227,38 +293,20 @@ export class orchestrator {
       // ──────────────────────────────
       // PHASE 5: Async Logging (with real IP)
       // ──────────────────────────────
-      enhancedExecute(() => ActivityLogger.log(request, authContext), {
-        fallback: undefined,
-        name: "ActivityLogger",
-        context: authContext,
-      }).catch(() => {});
+      if (!this.shouldDisableLayer("ActivityLogger")) {
+        enhancedExecute(() => ActivityLogger.log(request, authContext), {
+          fallback: undefined,
+          name: "ActivityLogger",
+          context: authContext,
+        }).catch(() => {});
+      }
 
       console.log("[orchestrator] All layers completed successfully");
-      return orchestrator.finalize(
-        request,
-        response,
-        results,
-        globalStart,
-        ipInfo.ip
-      );
+      return orchestrator.finalize(request, response, results, globalStart, ipInfo.ip);
     } catch (error) {
-      console.error(
-        `[orchestrator] CRASH after ${(performance.now() - globalStart).toFixed(
-          1
-        )}ms:`,
-        error
-      );
-      const resp = NextResponse.json(
-        { error: "System failure" },
-        { status: 503 }
-      );
-      return orchestrator.finalize(
-        request,
-        resp,
-        results,
-        globalStart,
-        "crash"
-      );
+      console.error(`[orchestrator] CRASH after ${(performance.now() - globalStart).toFixed(1)}ms:`, error);
+      const resp = NextResponse.json({ error: "System failure" }, { status: 503 });
+      return orchestrator.finalize(request, resp, results, globalStart, "crash");
     }
   }
 
@@ -274,11 +322,24 @@ export class orchestrator {
     let response = base;
 
     for (const layer of layers) {
+      // Check if this layer is disabled
+      if (this.shouldDisableLayer(layer.name)) {
+        console.log(`[orchestrator] 🚧 Layer ${layer.name} is disabled, skipping...`);
+        results.push({
+          name: layer.name,
+          result: NextResponse.next(),
+          logs: ["DISABLED"],
+          executionTime: 0,
+          status: 200,
+          success: true,
+          skipped: true,
+        });
+        continue;
+      }
+
       console.log(`[orchestrator] Executing layer: ${layer.name}`);
 
-      if (
-        AuthenticatedActionHandler.shouldSkipMiddleware(layer.name, authContext)
-      ) {
+      if (AuthenticatedActionHandler.shouldSkipMiddleware(layer.name, authContext)) {
         console.log(`[orchestrator] Layer ${layer.name} skipped`);
         results.push({
           name: layer.name,
@@ -302,7 +363,6 @@ export class orchestrator {
           request,
         });
 
-        // Log the result
         console.log(`[orchestrator] Layer ${layer.name} completed:`, {
           success: exec.success,
           status: exec.result.status,
@@ -321,7 +381,6 @@ export class orchestrator {
           threatScore: exec.threatScore,
         });
 
-        // If this is a critical layer and it failed, return the error response
         if (layer.critical && !exec.success) {
           console.log(`[orchestrator] Critical layer ${layer.name} failed, returning error response`);
           return exec.result;
@@ -331,7 +390,6 @@ export class orchestrator {
       } catch (layerError) {
         console.error(`[orchestrator] Error in layer ${layer.name}:`, layerError);
         
-        // If this is a critical layer, return the fallback error response
         if (layer.critical) {
           const errorResponse = NextResponse.json(
             { error: "Blocked by security" },
@@ -345,16 +403,8 @@ export class orchestrator {
     return response;
   }
 
-
-  private static shouldEarlyExit(
-    response: NextResponse,
-    results: LayerResult[]
-  ): boolean {
-    return (
-      response.status >= 400 ||
-      response.redirected ||
-      results.some((r) => r.earlyExit)
-    );
+  private static shouldEarlyExit(response: NextResponse, results: LayerResult[]): boolean {
+    return response.status >= 400 || response.redirected || results.some((r) => r.earlyExit);
   }
 
   private static finalize(
@@ -376,10 +426,7 @@ export class orchestrator {
 
     const defense = results.find((r) => r.name === "UnifiedThreatDefense");
     if (defense) {
-      response.headers.set(
-        "X-Threat-Final",
-        defense.threatScore?.toFixed(1) || "0"
-      );
+      response.headers.set("X-Threat-Final", defense.threatScore?.toFixed(1) || "0");
       response.headers.set("X-Defense-Action", defense.decision || "ALLOW");
     }
 
@@ -389,26 +436,19 @@ export class orchestrator {
     return response;
   }
 
-  private static printSummary(
-    results: LayerResult[],
-    total: number,
-    ip: string
-  ) {
+  private static printSummary(results: LayerResult[], total: number, ip: string) {
     if (process.env.NODE_ENV !== "development") return;
 
     console.log("\norchestrator SUMMARY");
     console.log("=".repeat(90));
     results.forEach((r, i) => {
-      const icon = r.skipped ? "Skipped" : r.success ? "Success" : "Failed";
+      const icon = r.skipped ? "⏭️" : r.success ? "✅" : "❌";
+      const status = r.skipped ? "SKIPPED" : r.status;
       const time = r.executionTime > 0 ? `${r.executionTime.toFixed(1)}ms` : "";
-      const extra = r.threatScore
-        ? ` | Score: ${r.threatScore.toFixed(1)}`
-        : "";
-      console.log(
-        `${i + 1}. ${icon} ${r.name.padEnd(25)} → ${r.status}${time}${extra}`
-      );
+      const extra = r.threatScore ? ` | Score: ${r.threatScore.toFixed(1)}` : "";
+      console.log(`${i + 1}. ${icon} ${r.name.padEnd(25)} → ${status}${time}${extra}`);
     });
     console.log("=".repeat(90));
-    console.log(`IP: ${ip} | Total: ${total.toFixed(1)}ms | Defense: ACTIVE\n`);
+    console.log(`IP: ${ip} | Total: ${total.toFixed(1)}ms | Defense: ${process.env.BYPASS_ALL_SECURITY === 'true' ? 'BYPASSED' : 'ACTIVE'}\n`);
   }
 }
