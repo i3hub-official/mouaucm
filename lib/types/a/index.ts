@@ -100,7 +100,6 @@ export interface StudentProfile {
   matricNumber: string;
   firstName: string;
   lastName: string;
-  lastName?: string; // Alias for lastName
   otherName?: string | null;
   email: string;
   phone: string;
@@ -117,7 +116,6 @@ export interface TeacherProfile {
   teacherId: string;
   firstName: string;
   lastName: string;
-  lastName?: string; // Alias for lastName
   otherName?: string | null;
   email: string;
   phone: string;
