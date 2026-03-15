@@ -89,6 +89,13 @@ export class StudentProfileService {
         decryptedOtherName
       );
 
+         
+       // Create a default academic rank based on admission year or set a default
+    const academicRank = student.admissionYear 
+      ? `${new Date().getFullYear() - student.admissionYear} Year` 
+      : "Student";
+
+
       const profile: StudentProfile = {
         id: student.id,
         matricNumber: student.matricNumber,
@@ -108,6 +115,8 @@ export class StudentProfileService {
         state: decryptedState,
         lga: decryptedLga,
         isActive: student.isActive,
+        dateEnrolled: student.dateEnrolled, // Add dateEnrolled
+     academicRank, // Add academicRank
         role: "STUDENT",
         createdAt: student.createdAt,
       };
@@ -218,7 +227,7 @@ export class StudentProfileService {
           lga: true,
           isActive: true,
           dateEnrolled: true,
-          createdAt: true,
+                    createdAt: true,
           user: {
             select: {
               role: true,
@@ -226,9 +235,10 @@ export class StudentProfileService {
             },
           },
         },
+        
       });
-
-      // Decrypt sensitive data for response using new protection tiers
+      
+          // Decrypt sensitive data for response using new protection tiers
       const [
         decryptedEmail,
         decryptedPhone,
@@ -258,6 +268,13 @@ export class StudentProfileService {
         decryptedFirstName,
         decryptedOtherName
       );
+  
+      
+       // Create a default academic rank based on admission year or set a default
+    const academicRank = updatedStudent.admissionYear 
+      ? `${new Date().getFullYear() - updatedStudent.admissionYear} Year` 
+      : "Student";
+
 
       const profile: StudentProfile = {
         id: updatedStudent.id,
@@ -278,9 +295,13 @@ export class StudentProfileService {
         state: decryptedState,
         lga: decryptedLga,
         isActive: updatedStudent.isActive,
+        dateEnrolled: updatedStudent.dateEnrolled, // Add dateEnrolled
+      academicRank, // Add academicRank
         role: "STUDENT",
         createdAt: updatedStudent.createdAt,
       };
+
+
 
       // Log the profile update
       await prisma.auditLog.create({

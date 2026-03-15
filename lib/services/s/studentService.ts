@@ -156,10 +156,8 @@ export class StudentService {
         lga: true,
         isActive: true,
         dateEnrolled: true,
-        course: true, // Add course property to select
-        user: {
-          select: { role: true },
-        },
+        course: true,
+        // Add any other fields needed for StudentProfile
       },
     });
 
@@ -181,6 +179,11 @@ export class StudentService {
       .join(" ")
       .trim();
 
+    // Create a default academic rank based on admission year or set a default
+    const academicRank = student.admissionYear 
+      ? `${new Date().getFullYear() - student.admissionYear} Year` 
+      : "Student";
+
     return {
       id: student.id,
       matricNumber: student.matricNumber,
@@ -200,8 +203,10 @@ export class StudentService {
       lga: lga || "",
       isActive: student.isActive,
       createdAt: student.dateEnrolled,
+      dateEnrolled: student.dateEnrolled, // Add dateEnrolled
+      academicRank, // Add academicRank
       role: "STUDENT",
-      course: student.course ?? "", // Add course property, fallback to empty string if undefined
+      course: student.course ?? "",
     };
   }
 
