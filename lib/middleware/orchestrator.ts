@@ -97,6 +97,9 @@ export class orchestrator {
       // PHASE 0: Get Real Client IP (Critical Foundation)
       // ──────────────────────────────
       const ipInfo = ClientIPDetector.getClientIP(request); // THE SOURCE OF TRUTH
+      
+      // Log the IP info for debugging
+      console.log(`[orchestrator] Request from IP: ${ipInfo.ip}, Source: ${ipInfo.source}, Confidence: ${ipInfo.confidence}`);
 
       // ──────────────────────────────
       // PHASE 1: Build Context (with real IP)
@@ -140,6 +143,7 @@ export class orchestrator {
       // ──────────────────────────────
       // PHASE 2: Foundation Security
       // ──────────────────────────────
+      console.log("[orchestrator] Starting FOUNDATION layers...");
       let response = await orchestrator.executeLayer(
         request,
         authContext,
@@ -149,6 +153,7 @@ export class orchestrator {
       );
 
       if (orchestrator.shouldEarlyExit(response, results)) {
+        console.log("[orchestrator] Early exit triggered in FOUNDATION phase");
         return orchestrator.finalize(
           request,
           response,
@@ -161,6 +166,7 @@ export class orchestrator {
       // ──────────────────────────────
       // PHASE 3: AI Defense (uses real IP)
       // ──────────────────────────────
+      console.log("[orchestrator] Starting DEFENSE layer...");
       const defenseExec = await enhancedExecute(
         () => Defense.defend(request, context),
         {
@@ -206,6 +212,7 @@ export class orchestrator {
       // ──────────────────────────────
       // PHASE 4: Secondary Layer
       // ──────────────────────────────
+      console.log("[orchestrator] Starting SECONDARY layers...");
       response = await orchestrator.executeLayer(
         request,
         authContext,
@@ -224,6 +231,7 @@ export class orchestrator {
         context: authContext,
       }).catch(() => {});
 
+      console.log("[orchestrator] All layers completed successfully");
       return orchestrator.finalize(
         request,
         response,
@@ -264,9 +272,12 @@ export class orchestrator {
     let response = base;
 
     for (const layer of layers) {
+      console.log(`[orchestrator] Executing layer: ${layer.name}`);
+
       if (
         AuthenticatedActionHandler.shouldSkipMiddleware(layer.name, authContext)
       ) {
+        console.log(`[orchestrator] Layer ${layer.name} skipped`);
         results.push({
           name: layer.name,
           result: NextResponse.next(),
@@ -279,33 +290,59 @@ export class orchestrator {
         continue;
       }
 
-      const exec = await enhancedExecute(() => layer.fn(request, authContext), {
-        fallback: layer.critical
-          ? NextResponse.json({ error: "Blocked by security" }, { status: 403 })
-          : NextResponse.next(),
-        name: layer.name,
-        context: authContext,
-        request,
-      });
+      try {
+        const exec = await enhancedExecute(() => layer.fn(request, authContext), {
+          fallback: layer.critical
+            ? NextResponse.json({ error: "Blocked by security" }, { status: 403 })
+            : NextResponse.next(),
+          name: layer.name,
+          context: authContext,
+          request,
+        });
 
-      results.push({
-        name: layer.name,
-        result: exec.result,
-        logs: exec.logs,
-        executionTime: exec.executionTime,
-        status: exec.result.status,
-        success: exec.success,
-        earlyExit: layer.critical && !exec.success,
-        threatScore: exec.threatScore,
-      });
+        // Log the result
+        console.log(`[orchestrator] Layer ${layer.name} completed:`, {
+          success: exec.success,
+          status: exec.result.status,
+          hasLogs: exec.logs.length > 0,
+          threatScore: exec.threatScore
+        });
 
-      if (layer.critical && !exec.success) return exec.result;
+        results.push({
+          name: layer.name,
+          result: exec.result,
+          logs: exec.logs,
+          executionTime: exec.executionTime,
+          status: exec.result.status,
+          success: exec.success,
+          earlyExit: layer.critical && !exec.success,
+          threatScore: exec.threatScore,
+        });
 
-      response = ResponseMerger.merge(response, exec.result);
+        // If this is a critical layer and it failed, return the error response
+        if (layer.critical && !exec.success) {
+          console.log(`[orchestrator] Critical layer ${layer.name} failed, returning error response`);
+          return exec.result;
+        }
+
+        response = ResponseMerger.merge(response, exec.result);
+      } catch (layerError) {
+        console.error(`[orchestrator] Error in layer ${layer.name}:`, layerError);
+        
+        // If this is a critical layer, return the fallback error response
+        if (layer.critical) {
+          const errorResponse = NextResponse.json(
+            { error: "Blocked by security" },
+            { status: 403 }
+          );
+          return errorResponse;
+        }
+      }
     }
 
     return response;
   }
+
 
   private static shouldEarlyExit(
     response: NextResponse,
