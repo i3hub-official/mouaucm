@@ -10,6 +10,7 @@ type SessionUser = {
   role?: string;
   matricNumber?: string;
   teacherId?: string;
+  employeeId?: string; // Added employeeId for teachers/admins
   name?: string | null;
   email?: string | null;
   image?: string | null;
@@ -43,20 +44,23 @@ function clearAuthCookies(response: NextResponse): void {
 
 // Helper function to get user-friendly identifier
 function getUserIdentifier(user: SessionUser): string {
-  return user.matricNumber || user.teacherId || user.email || user.id;
+  return user.matricNumber || user.employeeId || user.teacherId || user.email || user.id;
 }
 
-// Build IP details for logging
-function buildIPDetails(ipInfo: IPInfo): Record<string, unknown> {
+// Build IP details for logging - with proper type handling
+function buildIPDetails(ipInfo: any): Record<string, unknown> {
   return {
     ip: ipInfo.ip,
     source: ipInfo.source,
     confidence: ipInfo.confidence,
-    isProxy: ipInfo.isProxy,
-    isVPN: ipInfo.isVPN,
-    isTor: ipInfo.isTor,
-    isDatacenter: ipInfo.isDatacenter,
-    ipChain: ipInfo.chain,
+    isProxy: ipInfo.isProxy || false,
+    isVPN: ipInfo.isVPN || false,
+    isTor: ipInfo.isTor || false,
+    isDatacenter: ipInfo.isDatacenter || false,
+    ipChain: ipInfo.chain || [],
+    country: ipInfo.country,
+    region: ipInfo.region,
+    city: ipInfo.city,
   };
 }
 
@@ -111,29 +115,32 @@ export async function POST(request: NextRequest) {
 
     // Log logout with full context including IP intelligence
     try {
+      // Create a safe details object that can be serialized
+      const details = {
+        role,
+        identifier,
+        method: "api_endpoint",
+        userAgent: userAgent.substring(0, 500),
+        duration: Date.now() - startTime,
+        // IP Intelligence
+        ipDetails: buildIPDetails(ipInfo),
+        // Security flags
+        securityFlags: {
+          proxied: ipInfo.isProxy || false,
+          vpn: ipInfo.isVPN || false,
+          tor: ipInfo.isTor || false,
+          datacenter: ipInfo.isDatacenter || false,
+          ipConfidence: ipInfo.confidence,
+        },
+      };
+
       await prisma.auditLog.create({
         data: {
           userId,
           action: "USER_LOGGED_OUT",
           resourceType: "USER",
           resourceId: userId,
-          details: JSON.parse(JSON.stringify({
-            role,
-            identifier,
-            method: "api_endpoint",
-            userAgent: userAgent.substring(0, 500),
-            duration: Date.now() - startTime,
-            // IP Intelligence
-            ipDetails: buildIPDetails(ipInfo),
-            // Security flags
-            securityFlags: {
-              proxied: ipInfo.isProxy,
-              vpn: ipInfo.isVPN,
-              tor: ipInfo.isTor,
-              datacenter: ipInfo.isDatacenter,
-              ipConfidence: ipInfo.confidence,
-            },
-          })),
+          details: details as any, // Use type assertion for Prisma JSON
           ipAddress: clientIP,
           userAgent,
         },
@@ -166,7 +173,7 @@ export async function POST(request: NextRequest) {
 
     // Add IP tracking headers (for debugging/monitoring)
     response.headers.set("X-Client-IP", clientIP);
-    response.headers.set("X-IP-Confidence", ipInfo.confidence);
+    response.headers.set("X-IP-Confidence", String(ipInfo.confidence));
 
     console.log(
       `[SIGNOUT] ✅ Successfully signed out user ${identifier} in ${
