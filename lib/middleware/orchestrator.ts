@@ -55,9 +55,9 @@ export class orchestrator {
   private static readonly DISABLED_LAYERS = {
     // Foundation Layers
     SecurityGuard: false,           // Set to true to disable
-    EnhancedRateEnforcer: true,     // Set to true to disable
+    EnhancedRateEnforcer: false,     // Set to true to disable
     EncryptionEnforcer: false,       // Set to true to disable
-    SessionTokenValidator: false,    // Set to true to disable
+    SessionTokenValidator: true,    // Set to true to disable
     
     // Defense Layers
     UnifiedThreatDefense: false,     // Set to true to disable
