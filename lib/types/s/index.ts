@@ -21,7 +21,6 @@ export interface Student {
   // Personal (encrypted)
   firstName: string;
   lastName: string;
-  lastName?: string; // Alias for lastName for compatibility
   otherName: string | null;
   gender: Gender | null;
   dateOfBirth: Date | null;
@@ -66,7 +65,6 @@ export interface StudentProfile {
   fullName: string; // lastName + firstName + otherName
   firstName: string;
   lastName: string;
-  lastName?: string; // Alias for lastName
   otherName: string | null;
   email: string;
   phone: string;
@@ -90,7 +88,7 @@ export interface StudentProfile {
 export interface StudentRegistrationData {
   // Personal Information (Required)
   firstName: string;
-   lastName: string; // Alias for lastName
+   lastName: string; 
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: string; // String for form input, converted to Date in service
@@ -122,7 +120,6 @@ export interface StudentRegistrationData {
 export interface StudentRegistrationInput {
   firstName: string;
   lastName: string;
-  lastName?: string;
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: Date; // Use Date for internal processing
@@ -406,7 +403,6 @@ export interface Teacher {
   teacherId: string;
   lastName: string;
   firstName: string;
-  lastName?: string; // Alias for lastName
   otherName?: string | null;
   email: string;
   phone: string;
@@ -421,7 +417,6 @@ export interface Teacher {
 export interface Admin {
   id: string;
   teacherId: string;
-  lastName: string;
   firstName: string;
   lastName?: string; // Alias for lastName
   otherName?: string | null;
@@ -534,7 +529,6 @@ export interface PaginatedResponse<T> {
 // ===========================================================
 export interface StudentProfileUpdateData {
   firstName?: string;
-  lastName?: string;
   lastName?: string;
   otherName?: string;
   gender?: Gender;
@@ -668,7 +662,6 @@ export interface CreateNotificationData {
 // ===========================================================
 export interface ProfileUpdateData {
   firstName?: string;
-  lastName?: string;
   lastName?: string;
   otherName?: string;
   phone?: string;
