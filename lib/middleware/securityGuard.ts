@@ -1,6 +1,5 @@
 // src/lib/middleware/securityGuard.ts
 import { NextRequest, NextResponse } from "next/server";
-import { getCspConfig } from "@/lib/security/cspConfig";
 import type { MiddlewareContext } from "./types";
 import crypto from "crypto";
 
@@ -19,13 +18,7 @@ export class SecurityGuard {
   ].filter(Boolean) as string[];
 
   private static readonly ALLOWED_METHODS = [
-    "GET",
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE",
-    "OPTIONS",
-    "HEAD",
+    "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"
   ];
 
   private static readonly ALLOWED_HEADERS = [
@@ -63,18 +56,19 @@ export class SecurityGuard {
     "x-ip-reputation",
   ];
 
+  // ENTRY POINT
   static apply(request: NextRequest, context: MiddlewareContext): NextResponse {
     try {
       // Handle CORS preflight
       if (request.method === "OPTIONS") {
-        return this.handlePreflight(request);
+        return SecurityGuard.handlePreflight(request);
       }
 
       const response = NextResponse.next();
 
       // Add security headers
-      this.applySecurityHeaders(response, context);
-      this.applyCorsHeaders(request, response);
+      SecurityGuard.applySecurityHeaders(response, context);
+      SecurityGuard.applyCorsHeaders(request, response);
 
       // Mark as protected
       response.headers.set("x-security-guard", "active");
@@ -83,22 +77,21 @@ export class SecurityGuard {
       return response;
     } catch (error) {
       console.error("[SecurityGuard] Error:", error);
-      // Never block on errors
       return NextResponse.next();
     }
   }
 
   private static handlePreflight(request: NextRequest): NextResponse {
     const origin = request.headers.get("origin");
-    
+
     const headers = new Headers({
-      "Access-Control-Allow-Methods": this.ALLOWED_METHODS.join(", "),
-      "Access-Control-Allow-Headers": this.ALLOWED_HEADERS.join(", "),
+      "Access-Control-Allow-Methods": SecurityGuard.ALLOWED_METHODS.join(", "),
+      "Access-Control-Allow-Headers": SecurityGuard.ALLOWED_HEADERS.join(", "),
       "Access-Control-Max-Age": "86400",
       "Vary": "Origin",
     });
 
-    if (origin && this.isOriginAllowed(origin)) {
+    if (origin && SecurityGuard.isOriginAllowed(origin)) {
       headers.set("Access-Control-Allow-Origin", origin);
       headers.set("Access-Control-Allow-Credentials", "true");
     } else {
@@ -112,7 +105,6 @@ export class SecurityGuard {
     response: NextResponse,
     context: MiddlewareContext
   ): void {
-    // Basic security headers
     const headers: Record<string, string> = {
       "X-Frame-Options": "DENY",
       "X-Content-Type-Options": "nosniff",
@@ -128,7 +120,6 @@ export class SecurityGuard {
       }
     });
 
-    // HSTS - only in production
     if (process.env.NODE_ENV === "production") {
       response.headers.set(
         "Strict-Transport-Security",
@@ -136,20 +127,16 @@ export class SecurityGuard {
       );
     }
 
-    // Content-Security-Policy - Permissive in dev, report-only in prod
-    const nonce = context.nonce || Buffer.from(crypto.randomUUID()).toString("base64");
-    
+    const nonce = context.nonce || crypto.randomUUID();
+
+    const csp = SecurityGuard.getPermissiveCsp(nonce);
     if (process.env.NODE_ENV === "production") {
-      // Use report-only mode in production to avoid blocking
-      const csp = this.getPermissiveCsp(nonce);
       response.headers.set("Content-Security-Policy-Report-Only", csp);
     } else {
-      const csp = this.getPermissiveCsp(nonce);
       response.headers.set("Content-Security-Policy", csp);
     }
-    
+
     response.headers.set("X-CSP-Nonce", nonce);
-    
     if (!response.headers.has("x-nonce")) {
       response.headers.set("x-nonce", nonce);
     }
@@ -170,18 +157,14 @@ export class SecurityGuard {
     ].join("; ");
   }
 
-  private static applyCorsHeaders(
-    request: NextRequest,
-    response: NextResponse
-  ): void {
+  private static applyCorsHeaders(request: NextRequest, response: NextResponse): void {
     const origin = request.headers.get("origin");
-
-    if (origin && this.isOriginAllowed(origin)) {
+    if (origin && SecurityGuard.isOriginAllowed(origin)) {
       response.headers.set("Access-Control-Allow-Origin", origin);
       response.headers.set("Access-Control-Allow-Credentials", "true");
       response.headers.set(
         "Access-Control-Expose-Headers",
-        this.EXPOSED_HEADERS.join(", ")
+        SecurityGuard.EXPOSED_HEADERS.join(", ")
       );
       response.headers.set("Vary", "Origin");
     }
@@ -191,13 +174,12 @@ export class SecurityGuard {
     try {
       const url = new URL(origin);
       const hostname = url.hostname;
-      
-      // Allow all Vercel preview deployments
-      if (hostname.includes('.vercel.app')) return true;
-      
-      return this.ALLOWED_ORIGINS.some((pattern) => {
+
+      if (hostname.includes(".vercel.app")) return true;
+
+      return SecurityGuard.ALLOWED_ORIGINS.some((pattern) => {
         if (!pattern) return false;
-        if (pattern.includes('*')) {
+        if (pattern.includes("*")) {
           const regex = new RegExp(
             "^" + pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace("*", ".*") + "$"
           );
