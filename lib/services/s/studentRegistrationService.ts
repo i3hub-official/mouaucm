@@ -64,7 +64,7 @@ export class StudentRegistrationService {
         protectedJamb,
         protectedMatric,
         protectedFirstName,
-        protectedLastName, // Fixed: changed from protectedSurname
+        protectedlastName, // Fixed: changed from protectedSurname
         protectedOtherName,
         protectedState,
         protectedLga,
@@ -145,7 +145,7 @@ export class StudentRegistrationService {
           jambRegNumber: protectedJamb.encrypted,
           nin: protectedNin.encrypted,
           firstName: protectedFirstName.encrypted,
-          lastName: protectedLastName.encrypted, // Fixed: using lastName
+          lastName: protectedlastName.encrypted, // Fixed: using lastName
           otherName: protectedOtherName.encrypted || null, // Use null instead of empty string
           gender: gender || null,
           dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null, // Convert to Date object
@@ -312,8 +312,8 @@ export class StudentRegistrationService {
       }
 
       if (lastName) { // Fixed: changed from lastName
-        const protectedLastName = await protectData(lastName.trim(), "name");
-        updateData.lastName = protectedLastName.encrypted; // Fixed: changed from lastName to lastName
+        const protectedlastName = await protectData(lastName.trim(), "name");
+        updateData.lastName = protectedlastName.encrypted; // Fixed: changed from lastName to lastName
       }
 
       if (otherName) {

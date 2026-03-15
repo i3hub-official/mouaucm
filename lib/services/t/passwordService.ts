@@ -381,7 +381,7 @@ export class TeacherPasswordService {
       // Decrypt fields for return
       const decryptedEmail = await unprotectData(typedTeacher.user.email, "email");
       const decryptedFirstName = await unprotectData(typedTeacher.firstName, "name");
-      const decryptedLastName = await unprotectData(typedTeacher.lastName, "name");
+      const decryptedlastName = await unprotectData(typedTeacher.lastName, "name");
       const decryptedOtherName = typedTeacher.otherName 
         ? await unprotectData(typedTeacher.otherName, "name") 
         : null;
@@ -397,7 +397,7 @@ export class TeacherPasswordService {
           isActive: typedTeacher.user.isActive,
           profile: {
             firstName: decryptedFirstName,
-            lastName: decryptedLastName,
+            lastName: decryptedlastName,
             otherName: decryptedOtherName,
             email: decryptedEmail,
             phone: decryptedPhone,

@@ -57,7 +57,7 @@ interface CourseWithProgress {
   instructor?: {
     id: string;
     firstName?: string | null;
-    lastname?: string | null;
+    lastName?: string | null;
     passportUrl?: string | null;
   } | null;
   _count: {
@@ -679,7 +679,7 @@ async function getEnrolledCourses(
             select: {
               id: true,
               firstName: true,
-              lastname: true,
+              lastName: true,
               passportUrl: true,
             },
           },

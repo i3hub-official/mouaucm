@@ -38,7 +38,7 @@ interface StudentProfile {
   matricNumber: string;
   jambRegNumber: string;
   firstName: string;
-  lastname: string;
+  lastName: string;
   otherName?: string | null;
   gender?: string | null;
   phone?: string | null;
@@ -162,7 +162,7 @@ export default async function StudentProfilePage() {
                     {studentProfile.otherName
                       ? `${studentProfile.otherName} `
                       : ""}
-                    {studentProfile.lastname}
+                    {studentProfile.lastName}
                   </div>
                 </div>
 
@@ -290,7 +290,7 @@ export default async function StudentProfilePage() {
                 {studentProfile.passportUrl ? (
                   <Image
                     src={studentProfile.passportUrl}
-                    alt={`${studentProfile.firstName} ${studentProfile.lastname}`}
+                    alt={`${studentProfile.firstName} ${studentProfile.lastName}`}
                     width={128}
                     height={128}
                     className="rounded-full object-cover"
@@ -622,7 +622,7 @@ async function getStudentProfile(studentId: string): Promise<StudentProfile> {
     matricNumber: student.matricNumber,
     jambRegNumber: student.jambRegNumber,
     firstName: student.firstName,
-    lastname: student.lastname,
+    lastName: student.lastName,
     otherName: student.otherName,
     gender: student.gender,
     phone: student.phone,
