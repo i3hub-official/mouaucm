@@ -57,7 +57,7 @@ export class orchestrator {
     SecurityGuard: true,           // Set to true to disable
     EnhancedRateEnforcer: true,     // Set to true to disable
     EncryptionEnforcer: true,       // Set to true to disable
-    SessionTokenValidator: true,    // Set to true to disable
+    SessionTokenValidator: false,    // Set to true to disable
     
     // Defense Layers
     UnifiedThreatDefense: false,     // Set to true to disable
