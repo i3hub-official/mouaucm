@@ -83,12 +83,28 @@ export class orchestrator {
     ],
   };
 
+  
+
   static async execute(request: NextRequest): Promise<NextResponse> {
     const globalStart = performance.now();
     let context: MiddlewareContext = {} as any;
     let authContext: AuthenticatedActionContext = {} as any;
     const results: LayerResult[] = [];
 
+      const ipInfo = ClientIPDetector.getClientIP(request);
+  
+  // Allow your production IP or specific paths
+  if (process.env.NODE_ENV === "production") {
+    // Allow your office IP or specific paths
+    const allowedIPs = process.env.ALLOWED_IPS?.split(',') || [];
+    const allowedPaths = ['/api/public', '/health'];
+    
+    if (allowedIPs.includes(ipInfo.ip) || allowedPaths.includes(request.nextUrl.pathname)) {
+      console.log(`[orchestrator] Bypassing security for ${ipInfo.ip} or path ${request.nextUrl.pathname}`);
+      return NextResponse.next();
+    }
+  }
+  
     try {
       // Initialize trusted sources once
       TrustedSourceManager.initialize();
