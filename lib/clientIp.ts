@@ -125,6 +125,24 @@ export class ClientIPDetector {
     // Linode
     { start: "45.33.0.0", end: "45.33.255.255" },
     { start: "45.56.0.0", end: "45.56.255.255" },
+    // Vercel IP Ranges
+    { start: "76.76.21.0", end: "76.76.21.255" }, // Vercel IP range
+    { start: "76.76.21.0", end: "76.76.21.255" },
+    // Netlify IP Ranges
+    { start: "75.2.0.0", end: "75.2.255.255" },
+    { start: "99.83.128.0", end: "99.83.255.255" },
+    { start: "199.232.0.0", end: "199.232.255.255" },
+    { start: "205.185.208.0", end: "205.185.223.255" },
+    { start: "13.32.0.0", end: "13.32.255.255" },
+    { start: "13.224.0.0", end: "13.224.255.255" },
+    { start: "13.249.0.0", end: "13.249.255.255" },
+    { start: "18.64.0.0", end: "18.64.255.255" },
+    { start: "18.66.0.0", end: "18.66.255.255" },
+    { start: "18.68.0.0", end: "18.68.255.255" },
+    { start: "18.154.0.0", end: "18.154.255.255" },
+    { start: "52.46.0.0", end: "52.46.255.255" },
+    { start: "54.230.0.0", end: "54.230.255.255" },
+    { start: "54.239.128.0", end: "54.239.255.255" },
   ];
 
   // Known Tor exit node patterns (simplified)
@@ -177,32 +195,83 @@ export class ClientIPDetector {
     const realIp = request.headers.get("x-real-ip");
     const cfIp = request.headers.get("cf-connecting-ip");
     const vercelIp = request.headers.get("x-vercel-forwarded-for");
+    const vercelIpAlt = request.headers.get("x-vercel-ip");
+    const netlifyIp = request.headers.get("x-nf-client-connection-ip");
 
     const ip =
       cfIp ??
       vercelIp ??
+      vercelIpAlt ??
+      netlifyIp ??
       realIp ??
       forwarded?.split(",")[0]?.trim() ??
       "0.0.0.0";
 
+    // Determine source
+    let source = "unknown";
+    if (cfIp) source = "cloudflare";
+    else if (vercelIp || vercelIpAlt) source = "vercel";
+    else if (netlifyIp) source = "netlify";
+    else if (realIp) source = "real-ip";
+    else if (forwarded) source = "forwarded";
+
+    // Detect if IP is from Vercel/Netlify datacenters
+    const isVercelDatacenter = this.isVercelIP(ip);
+    const isNetlifyDatacenter = this.isNetlifyIP(ip);
+
     return {
       ip,
-      source: cfIp
-        ? "cloudflare"
-        : vercelIp
-        ? "vercel"
-        : realIp
-        ? "real-ip"
-        : "forwarded",
+      source,
       confidence: ip === "0.0.0.0" ? "LOW" : "HIGH",
-      isProxy: !!forwarded,
+      isProxy: !!forwarded || !!cfIp || !!vercelIp || !!netlifyIp,
       isVPN: false,
       isTor: false,
-      isDatacenter: false,
+      isDatacenter: isVercelDatacenter || isNetlifyDatacenter || this.detectDatacenter(ip),
       originalHeaders: {},
       chain: [ip],
       geo: ip === "127.0.0.1" ? { country: "NG", city: "DevCity" } : {},
     };
+  }
+
+  /**
+   * Check if IP is from Vercel's network
+   */
+  private static isVercelIP(ip: string): boolean {
+    const vercelRanges = [
+      "76.76.21.0/24",
+    ];
+    
+    for (const range of vercelRanges) {
+      if (this.isInCIDR(ip, range)) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if IP is from Netlify's network
+   */
+  private static isNetlifyIP(ip: string): boolean {
+    const netlifyRanges = [
+      "75.2.0.0/16",
+      "99.83.128.0/17",
+      "199.232.0.0/16",
+      "205.185.208.0/20",
+      "13.32.0.0/15",
+      "13.224.0.0/14",
+      "13.249.0.0/16",
+      "18.64.0.0/14",
+      "18.66.0.0/15",
+      "18.68.0.0/16",
+      "18.154.0.0/15",
+      "52.46.0.0/18",
+      "54.230.0.0/16",
+      "54.239.128.0/18",
+    ];
+    
+    for (const range of netlifyRanges) {
+      if (this.isInCIDR(ip, range)) return true;
+    }
+    return false;
   }
 
   /**
@@ -287,7 +356,9 @@ export class ClientIPDetector {
     const isProxy = this.detectProxy(headers, chain);
     const isVPN = this.detectVPN(detectedIp, headers);
     const isTor = this.detectTor(detectedIp, headers);
-    const isDatacenter = this.detectDatacenter(detectedIp);
+    const isDatacenter = this.detectDatacenter(detectedIp) || 
+                         this.isVercelIP(detectedIp) || 
+                         this.isNetlifyIP(detectedIp);
 
     // Adjust confidence if behind proxy
     if (isProxy && confidence === "HIGH") {
@@ -820,9 +891,6 @@ export function getClientIP(request: NextRequest): string {
 /**
  * Get detailed IP info from NextRequest
  */
-/**
- * Get detailed IP info from NextRequest
- */
 export function getClientIPInfo(request: NextRequest): IPInfo {
   const info = ClientIPDetector.getClientIP(request);
   return {
@@ -947,14 +1015,47 @@ export class TrustedProxyConfig {
   }
 
   static trustVercel(): void {
-    // Vercel doesn't publish IP ranges, but we trust their headers
-    // This is handled by header priority in ClientIPDetector
+    // Vercel IP ranges
+    const vercelRanges = [
+      "76.76.21.0/24",
+    ];
+    vercelRanges.forEach((cidr) => this.addTrustedCIDR(cidr));
+  }
+
+  static trustNetlify(): void {
+    // Netlify IP ranges
+    const netlifyRanges = [
+      "75.2.0.0/16",
+      "99.83.128.0/17",
+      "199.232.0.0/16",
+      "205.185.208.0/20",
+      "13.32.0.0/15",
+      "13.224.0.0/14",
+      "13.249.0.0/16",
+      "18.64.0.0/14",
+      "18.66.0.0/15",
+      "18.68.0.0/16",
+      "18.154.0.0/15",
+      "52.46.0.0/18",
+      "54.230.0.0/16",
+      "54.239.128.0/18",
+    ];
+    netlifyRanges.forEach((cidr) => this.addTrustedCIDR(cidr));
   }
 
   static trustAWS(): void {
     // In production, fetch from:
     // https://ip-ranges.amazonaws.com/ip-ranges.json
     // and filter by service: "CLOUDFRONT"
+  }
+
+  /**
+   * Configure all major CDN providers
+   */
+  static trustAllCDNs(): void {
+    this.trustCloudflare();
+    this.trustVercel();
+    this.trustNetlify();
   }
 
   /**
@@ -1104,70 +1205,3 @@ export class IPBlocklist {
     }
   }
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// USAGE EXAMPLES
-// ─────────────────────────────────────────────────────────────────────────────
-
-/*
-// In middleware.ts
-import { ClientIPDetector, IPBlocklist, getClientIP } from '@/lib/clientIp';
-
-export function middleware(request: NextRequest) {
-  // Simple usage
-  const ip = getClientIP(request);
-  
-  // Check blocklist
-  if (IPBlocklist.isBlocked(ip)) {
-    return new NextResponse('Blocked', { status: 403 });
-  }
-  
-  // Detailed info
-  const ipInfo = ClientIPDetector.getClientIP(request);
-  
-  console.log(`Request from ${ipInfo.ip} (${ipInfo.source})`);
-  console.log(`  Confidence: ${ipInfo.confidence}`);
-  console.log(`  Proxy: ${ipInfo.isProxy}`);
-  console.log(`  VPN: ${ipInfo.isVPN}`);
-  console.log(`  Tor: ${ipInfo.isTor}`);
-  console.log(`  Datacenter: ${ipInfo.isDatacenter}`);
-  
-  // Add to request headers for downstream use
-  const response = NextResponse.next();
-  response.headers.set('x-client-ip', ipInfo.ip);
-  response.headers.set('x-ip-confidence', ipInfo.confidence);
-  response.headers.set('x-is-proxy', ipInfo.isProxy.toString());
-  
-  return response;
-}
-
-// In API route
-import { ClientIPDetector } from '@/lib/clientIp';
-
-export async function GET(request: NextRequest) {
-  const ipInfo = ClientIPDetector.getClientIP(request);
-  
-  // Get geolocation
-  const geo = await ClientIPDetector.getGeoLocation(ipInfo.ip);
-  
-  return NextResponse.json({
-    ip: ipInfo.ip,
-    country: geo?.country,
-    city: geo?.city,
-    isProxy: ipInfo.isProxy,
-  });
-}
-
-// Configure trusted proxies at startup
-import { TrustedProxyConfig } from '@/lib/clientIp';
-
-TrustedProxyConfig.trustCloudflare();
-TrustedProxyConfig.addTrustedProxy('10.0.0.1'); // Internal load balancer
-
-// Block suspicious IPs
-import { IPBlocklist } from '@/lib/clientIp';
-
-IPBlocklist.block('1.2.3.4'); // Permanent
-IPBlocklist.blockTemporary('5.6.7.8', 60 * 60 * 1000); // 1 hour
-IPBlocklist.blockCIDR('192.0.2.0/24'); // Entire range
-*/
