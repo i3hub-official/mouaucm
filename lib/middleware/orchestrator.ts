@@ -63,7 +63,7 @@ export class orchestrator {
     UnifiedThreatDefense: true,     // Set to true to disable
     
     // Secondary Layers
-    GeoGuard: true,                 // Set to true to disable
+    GeoGuard: false,                 // Set to true to disable
     CacheManager: false,             // Set to true to disable
     BehaviorAnalyst: false,          // Set to true to disable
     ComplianceMonitor: false,        // Set to true to disable
