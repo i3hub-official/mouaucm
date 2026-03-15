@@ -158,13 +158,17 @@ export class orchestrator {
     // ===========================================================
     // PATH-BASED BYPASS - Skip security for specific paths
     // ===========================================================
-    const bypassPaths = [
-      '/api/public',
-      '/health',
-      '/_next',
-      '/favicon.ico',
-      ...(process.env.NODE_ENV === 'development' ? ['/sr', '/check'] : [])
-    ];
+const bypassPaths = [
+  '/_next',
+  '/favicon.ico',
+  '/sw.js',
+  '/manifest.json',
+  '/robots.txt',
+  '/api/public',
+  '/health',
+  '/images',
+  '/fonts',
+];
 
     if (bypassPaths.some(path => request.nextUrl.pathname.startsWith(path))) {
       console.log(`[orchestrator] 🚧 Bypassing security for path: ${request.nextUrl.pathname}`);
