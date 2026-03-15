@@ -67,7 +67,7 @@ export class orchestrator {
     CacheManager: false,             // Set to true to disable
     BehaviorAnalyst: false,          // Set to true to disable
     ComplianceMonitor: false,        // Set to true to disable
-    RequestTransformer: false,       // Set to true to disable
+    RequestTransformer: true,       // Set to true to disable
     
     // Observability
     ActivityLogger: false,           // Set to true to disable
