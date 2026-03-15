@@ -70,7 +70,7 @@ export class orchestrator {
     RequestTransformer: true,       // Set to true to disable
     
     // Observability
-    ActivityLogger: true,           // Set to true to disable
+    ActivityLogger: false,           // Set to true to disable
   };
 
   // ===========================================================
