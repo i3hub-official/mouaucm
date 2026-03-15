@@ -56,14 +56,14 @@ export class orchestrator {
     // Foundation Layers
     SecurityGuard: false,           // Set to true to disable
     EnhancedRateEnforcer: false,     // Set to true to disable
-    EncryptionEnforcer: false,       // Set to true to disable
-    SessionTokenValidator: true,    // Set to true to disable
+    EncryptionEnforcer: true,       // Set to true to disable
+    SessionTokenValidator: false,    // Set to true to disable
     
     // Defense Layers
-    UnifiedThreatDefense: false,     // Set to true to disable
+    UnifiedThreatDefense: true,     // Set to true to disable
     
     // Secondary Layers
-    GeoGuard: false,                 // Set to true to disable
+    GeoGuard: true,                 // Set to true to disable
     CacheManager: false,             // Set to true to disable
     BehaviorAnalyst: false,          // Set to true to disable
     ComplianceMonitor: false,        // Set to true to disable
