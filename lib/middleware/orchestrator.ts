@@ -64,8 +64,8 @@ export class orchestrator {
     
     // Secondary Layers
     GeoGuard: true,                 // Set to true to disable
-    CacheManager: true,             // Set to true to disable
-    BehaviorAnalyst: true,          // Set to true to disable
+    CacheManager: false,             // Set to true to disable
+    BehaviorAnalyst: false,          // Set to true to disable
     ComplianceMonitor: false,        // Set to true to disable
     RequestTransformer: false,       // Set to true to disable
     
