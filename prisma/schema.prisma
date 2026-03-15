@@ -184,6 +184,7 @@ enum ResourceType {
   SYSTEM_CONFIG
   SECURITY_EVENT
   AUDIT_LOG
+  SYSTEM
 }
 
 enum SessionSecurityLevel {

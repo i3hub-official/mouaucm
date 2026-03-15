@@ -184,7 +184,8 @@ export const ResourceType = {
   EXAM_RESULT: 'EXAM_RESULT',
   SYSTEM_CONFIG: 'SYSTEM_CONFIG',
   SECURITY_EVENT: 'SECURITY_EVENT',
-  AUDIT_LOG: 'AUDIT_LOG'
+  AUDIT_LOG: 'AUDIT_LOG',
+  SYSTEM: 'SYSTEM'
 } as const
 
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]
