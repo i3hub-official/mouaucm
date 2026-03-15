@@ -402,7 +402,7 @@ model Student {
 
   // Academic information
   department    String
-  course        String
+  course        String? @default("NA") // Added course field with default value
   college       String
   state         String
   lga           String

@@ -1,0 +1,6 @@
+-- AlterEnum
+ALTER TYPE "AuditAction" ADD VALUE 'ACCOUNT_ACTIVATED';
+
+-- AlterTable
+ALTER TABLE "students" ALTER COLUMN "course" DROP NOT NULL,
+ALTER COLUMN "course" SET DEFAULT 'NA';

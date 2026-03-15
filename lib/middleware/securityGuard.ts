@@ -11,10 +11,14 @@ export class SecurityGuard {
     "https://mouaucm.vercel.app",
     "https://mouaucm-g1kvoi20t-i3hub.vercel.app",
     "https://mouaucm-r4f1pbdz8-i3hub.vercel.app",
-    "http://localhost",
+  "http://localhost",
     "https://localhost",
-    "http://192.168.0.*",
-    "https://192.168.0.*",
+    "http://127.0.0.1",
+    "https://127.0.0.1",
+    "http://192.168.*.*",
+    "https://192.168.*.*",
+    "http://10.*.*.*",
+    "https://10.*.*.*",
   ].filter(Boolean) as string[];
 
   private static readonly ALLOWED_METHODS = [

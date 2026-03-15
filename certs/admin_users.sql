@@ -1,0 +1,2 @@
+INSERT INTO "public"."admins" ("id", "email", "password", "name", "role", "isActive", "createdAt") VALUES
+('818c5ded-a020-407b-be1d-16bdeaae3768', 'ogwogp@gmail.com', '$2b$12$pETm9gr3.34tNFR64Ugy1upngL27fGpSm53765pMH3eO.oeuWSYBm', 'Ogwo GP', 'ADMIN', 't', '2025-09-15 21:24:49.273');

@@ -145,6 +145,19 @@ export class orchestrator {
     let authContext: AuthenticatedActionContext = {} as any;
     const results: LayerResult[] = [];
 
+      
+  // ===========================================================
+  // FIX: Allow network IP access in development
+  // ===========================================================
+  const host = request.headers.get('host') || '';
+  const isNetworkIP = host.startsWith('10.') || host.startsWith('192.168.');
+  
+  if (process.env.NODE_ENV === 'development' && isNetworkIP) {
+    console.log(`[orchestrator] 🌐 Network IP access detected: ${host} - allowing`);
+    // Just return next response without security layers for network IPs
+    return NextResponse.next();
+  }
+
     // ===========================================================
     // PHASE 0: BOT PROTECTION - Run first
     // ===========================================================

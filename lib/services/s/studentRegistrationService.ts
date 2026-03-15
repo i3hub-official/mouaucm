@@ -30,7 +30,7 @@ export class StudentRegistrationService {
       nin,
       department,
       college,
-      course, // Added missing course field
+      // course is not destructured - we'll use department instead
       admissionYear,
       password,
       passportUrl,
@@ -45,8 +45,9 @@ export class StudentRegistrationService {
     if (!nin?.trim()) throw new Error("NIN is required");
     if (!jambRegNumber?.trim())
       throw new Error("JAMB Registration Number is required");
-    if (!course?.trim()) throw new Error("Course is required"); // Added validation
-
+    if (!department?.trim()) throw new Error("Department is required");
+    if (!college?.trim()) throw new Error("College is required");
+  
     const passwordValidation = validatePasswordStrength(password);
     if (!passwordValidation.isValid) {
       throw new Error(`Weak password: ${passwordValidation.errors.join(", ")}`);
@@ -64,7 +65,7 @@ export class StudentRegistrationService {
         protectedJamb,
         protectedMatric,
         protectedFirstName,
-        protectedlastName, // Fixed: changed from protectedSurname
+        protectedLastName,
         protectedOtherName,
         protectedState,
         protectedLga,
@@ -84,14 +85,14 @@ export class StudentRegistrationService {
         lga ? protectData(lga.trim(), "location") : { encrypted: "" },
       ]);
 
-      // Extract search hashes (now guaranteed lowercase context)
+      // Extract search hashes
       const emailSearchHash = protectedEmail.searchHash!;
       const phoneSearchHash = protectedPhone.searchHash!;
       const ninSearchHash = protectedNin.searchHash!;
       const jambSearchHash = protectedJamb.searchHash!;
       const matricSearchHash = protectedMatric.searchHash || "";
 
-      // === UNIQUENESS CHECKS (Parallel + Accurate) ===
+      // === UNIQUENESS CHECKS ===
       const [
         existingNin,
         existingEmailUser,
@@ -133,7 +134,7 @@ export class StudentRegistrationService {
           passwordHash: protectedPassword.encrypted,
           role: "STUDENT",
           isActive: false,
-          image: finalPassportUrl, // Changed from passportUrl to image to match User model
+          image: finalPassportUrl,
         },
       });
 
@@ -145,20 +146,21 @@ export class StudentRegistrationService {
           jambRegNumber: protectedJamb.encrypted,
           nin: protectedNin.encrypted,
           firstName: protectedFirstName.encrypted,
-          lastName: protectedlastName.encrypted, // Fixed: using lastName
-          otherName: protectedOtherName.encrypted || null, // Use null instead of empty string
+          lastName: protectedLastName.encrypted,
+          otherName: protectedOtherName.encrypted || null,
           gender: gender || null,
-          dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null, // Convert to Date object
+          dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
           email: protectedEmail.encrypted,
           emailSearchHash: emailSearchHash || null,
           phone: protectedPhone.encrypted,
           phoneSearchHash: phoneSearchHash || null,
           jambRegSearchHash: jambSearchHash || null,
           ninSearchHash: ninSearchHash || null,
-          // Added missing course field
-          course: course.trim(),
-          department,
-          college,
+          matricSearchHash: matricSearchHash || null,
+          // Set course to the same value as department
+          course: department.trim(), 
+          department: department.trim(),
+          college: college.trim(),
           admissionYear: admissionYear ? Number(admissionYear) : null,
           passportUrl: finalPassportUrl,
           state: protectedState.encrypted || "",
@@ -186,9 +188,9 @@ export class StudentRegistrationService {
           details: {
             usedDefaultPassport: !passportUrl,
             hasMatricNumber: !!matricNumber,
-            department,
-            college,
-            course,
+            department: department.trim(),
+            college: college.trim(),
+            course: department.trim(), // Log that course = department
             identifiers: {
               nin: nin.slice(0, 4) + "****" + nin.slice(-3),
               jamb:
@@ -214,7 +216,7 @@ export class StudentRegistrationService {
     }
   }
 
-  // === OTHER METHODS (Updated to match new tiers) ===
+  // === OTHER METHODS ===
 
   static async verifyEmail(token: string) {
     const vt = await prisma.verificationToken.findUnique({ where: { token } });
@@ -284,10 +286,9 @@ export class StudentRegistrationService {
     data: Partial<StudentRegistrationData>
   ) {
     try {
-      // Extract fields that can be updated
       const {
         firstName,
-        lastName, // Fixed: changed from lastName
+        lastName,
         otherName,
         gender,
         dateOfBirth,
@@ -295,25 +296,22 @@ export class StudentRegistrationService {
         phone,
         department,
         college,
-        course, // Added course
         admissionYear,
         passportUrl,
         state,
         lga,
       } = data;
 
-      // Build update data object
       const updateData: any = {};
 
-      // Protect and add fields if provided
       if (firstName) {
         const protectedFirstName = await protectData(firstName.trim(), "name");
         updateData.firstName = protectedFirstName.encrypted;
       }
 
-      if (lastName) { // Fixed: changed from lastName
-        const protectedlastName = await protectData(lastName.trim(), "name");
-        updateData.lastName = protectedlastName.encrypted; // Fixed: changed from lastName to lastName
+      if (lastName) {
+        const protectedLastName = await protectData(lastName.trim(), "name");
+        updateData.lastName = protectedLastName.encrypted;
       }
 
       if (otherName) {
@@ -342,15 +340,13 @@ export class StudentRegistrationService {
       }
 
       if (department) {
-        updateData.department = department;
+        updateData.department = department.trim();
+        // Also update course to match department
+        updateData.course = department.trim();
       }
 
       if (college) {
-        updateData.college = college;
-      }
-
-      if (course) { // Added course update
-        updateData.course = course;
+        updateData.college = college.trim();
       }
 
       if (admissionYear) {
@@ -371,13 +367,11 @@ export class StudentRegistrationService {
         updateData.lga = protectedLga.encrypted;
       }
 
-      // Update student profile
       const student = await prisma.student.update({
         where: { id: studentId },
         data: updateData,
       });
 
-      // Log update
       await prisma.auditLog.create({
         data: {
           userId: student.userId,

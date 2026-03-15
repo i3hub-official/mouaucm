@@ -348,7 +348,7 @@ export type StudentGroupByOutputType = {
   passportUrl: string | null
   email: string
   department: string
-  course: string
+  course: string | null
   college: string
   state: string
   lga: string
@@ -405,7 +405,7 @@ export type StudentWhereInput = {
   passportUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   email?: Prisma.StringFilter<"Student"> | string
   department?: Prisma.StringFilter<"Student"> | string
-  course?: Prisma.StringFilter<"Student"> | string
+  course?: Prisma.StringNullableFilter<"Student"> | string | null
   college?: Prisma.StringFilter<"Student"> | string
   state?: Prisma.StringFilter<"Student"> | string
   lga?: Prisma.StringFilter<"Student"> | string
@@ -446,7 +446,7 @@ export type StudentOrderByWithRelationInput = {
   passportUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
-  course?: Prisma.SortOrder
+  course?: Prisma.SortOrderInput | Prisma.SortOrder
   college?: Prisma.SortOrder
   state?: Prisma.SortOrder
   lga?: Prisma.SortOrder
@@ -496,7 +496,7 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   gender?: Prisma.EnumGenderNullableFilter<"Student"> | $Enums.Gender | null
   passportUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   department?: Prisma.StringFilter<"Student"> | string
-  course?: Prisma.StringFilter<"Student"> | string
+  course?: Prisma.StringNullableFilter<"Student"> | string | null
   college?: Prisma.StringFilter<"Student"> | string
   state?: Prisma.StringFilter<"Student"> | string
   lga?: Prisma.StringFilter<"Student"> | string
@@ -531,7 +531,7 @@ export type StudentOrderByWithAggregationInput = {
   passportUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   department?: Prisma.SortOrder
-  course?: Prisma.SortOrder
+  course?: Prisma.SortOrderInput | Prisma.SortOrder
   college?: Prisma.SortOrder
   state?: Prisma.SortOrder
   lga?: Prisma.SortOrder
@@ -573,7 +573,7 @@ export type StudentScalarWhereWithAggregatesInput = {
   passportUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"Student"> | string
   department?: Prisma.StringWithAggregatesFilter<"Student"> | string
-  course?: Prisma.StringWithAggregatesFilter<"Student"> | string
+  course?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   college?: Prisma.StringWithAggregatesFilter<"Student"> | string
   state?: Prisma.StringWithAggregatesFilter<"Student"> | string
   lga?: Prisma.StringWithAggregatesFilter<"Student"> | string
@@ -607,7 +607,7 @@ export type StudentCreateInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -647,7 +647,7 @@ export type StudentUncheckedCreateInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -687,7 +687,7 @@ export type StudentUpdateInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -727,7 +727,7 @@ export type StudentUncheckedUpdateInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -767,7 +767,7 @@ export type StudentCreateManyInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -801,7 +801,7 @@ export type StudentUpdateManyMutationInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -834,7 +834,7 @@ export type StudentUncheckedUpdateManyInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1112,7 +1112,7 @@ export type StudentCreateWithoutUserInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1151,7 +1151,7 @@ export type StudentUncheckedCreateWithoutUserInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1206,7 +1206,7 @@ export type StudentUpdateWithoutUserInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1245,7 +1245,7 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1284,7 +1284,7 @@ export type StudentCreateWithoutEnrollmentsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1323,7 +1323,7 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1378,7 +1378,7 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1417,7 +1417,7 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1456,7 +1456,7 @@ export type StudentCreateWithoutAssignmentSubmissionsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1495,7 +1495,7 @@ export type StudentUncheckedCreateWithoutAssignmentSubmissionsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1550,7 +1550,7 @@ export type StudentUpdateWithoutAssignmentSubmissionsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1589,7 +1589,7 @@ export type StudentUncheckedUpdateWithoutAssignmentSubmissionsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1628,7 +1628,7 @@ export type StudentCreateWithoutSubmissionsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1667,7 +1667,7 @@ export type StudentUncheckedCreateWithoutSubmissionsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1722,7 +1722,7 @@ export type StudentUpdateWithoutSubmissionsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1761,7 +1761,7 @@ export type StudentUncheckedUpdateWithoutSubmissionsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1800,7 +1800,7 @@ export type StudentCreateWithoutExamResultsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1839,7 +1839,7 @@ export type StudentUncheckedCreateWithoutExamResultsInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -1894,7 +1894,7 @@ export type StudentUpdateWithoutExamResultsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1933,7 +1933,7 @@ export type StudentUncheckedUpdateWithoutExamResultsInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1972,7 +1972,7 @@ export type StudentCreateWithoutAttendanceInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -2011,7 +2011,7 @@ export type StudentUncheckedCreateWithoutAttendanceInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -2066,7 +2066,7 @@ export type StudentUpdateWithoutAttendanceInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2105,7 +2105,7 @@ export type StudentUncheckedUpdateWithoutAttendanceInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2144,7 +2144,7 @@ export type StudentCreateWithoutPortfoliosInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -2183,7 +2183,7 @@ export type StudentUncheckedCreateWithoutPortfoliosInput = {
   passportUrl?: string | null
   email: string
   department: string
-  course: string
+  course?: string | null
   college: string
   state: string
   lga: string
@@ -2238,7 +2238,7 @@ export type StudentUpdateWithoutPortfoliosInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2277,7 +2277,7 @@ export type StudentUncheckedUpdateWithoutPortfoliosInput = {
   passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   college?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   lga?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2567,7 +2567,7 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     passportUrl: string | null
     email: string
     department: string
-    course: string
+    course: string | null
     college: string
     state: string
     lga: string

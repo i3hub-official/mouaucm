@@ -606,6 +606,7 @@ export class ClientIPDetector {
     // 100.64.0.0/10 (Carrier-grade NAT)
     if (a === 100 && b >= 64 && b <= 127) return true;
 
+    
     // 192.0.0.0/24 (IETF Protocol)
     if (a === 192 && b === 0 && parts[2] === 0) return true;
 
