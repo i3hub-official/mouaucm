@@ -40,7 +40,6 @@ export interface StudentUser extends BaseUser {
   course: string;
   firstName: string;
   lastName: string;
-  lastName?: string; // Alias for lastName
   phone: string;
   admissionYear?: number;
 }
