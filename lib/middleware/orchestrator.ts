@@ -54,20 +54,20 @@ export class orchestrator {
   // ===========================================================
   private static readonly DISABLED_LAYERS = {
     // Foundation Layers
-    SecurityGuard: true,           // Set to true to disable
-    EnhancedRateEnforcer: true,     // Set to true to disable
-    EncryptionEnforcer: true,       // Set to true to disable
-    SessionTokenValidator: true,    // Set to true to disable
+    SecurityGuard: false,           // Set to true to disable
+    EnhancedRateEnforcer: false,     // Set to true to disable
+    EncryptionEnforcer: false,       // Set to true to disable
+    SessionTokenValidator: false,    // Set to true to disable
     
     // Defense Layers
-    UnifiedThreatDefense: true,     // Set to true to disable
+    UnifiedThreatDefense: false,     // Set to true to disable
     
     // Secondary Layers
-    GeoGuard: true,                 // Set to true to disable
-    CacheManager: true,             // Set to true to disable
+    GeoGuard: false,                 // Set to true to disable
+    CacheManager: false,             // Set to true to disable
     BehaviorAnalyst: false,          // Set to true to disable
     ComplianceMonitor: false,        // Set to true to disable
-    RequestTransformer: true,       // Set to true to disable
+    RequestTransformer: false,       // Set to true to disable
     
     // Observability
     ActivityLogger: false,           // Set to true to disable
