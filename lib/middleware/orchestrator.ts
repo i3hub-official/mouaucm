@@ -60,7 +60,7 @@ export class orchestrator {
     SessionTokenValidator: true,    // Set to true to disable
     
     // Defense Layers
-    UnifiedThreatDefense: true,     // Set to true to disable
+    UnifiedThreatDefense: false,     // Set to true to disable
     
     // Secondary Layers
     GeoGuard: false,                 // Set to true to disable
