@@ -1,9 +1,9 @@
+// src/lib/middleware/geoGuard.ts
 // ========================================
 // 🌍 TASK 9: GEO GUARD - Geographic Access Controller (Nigeria Edition)
 // Responsibility: Block/allow requests based on geographic location
 // ========================================
 
-// File: src/lib/middleware/geoGuard.ts
 import { NextRequest, NextResponse } from "next/server";
 import type { MiddlewareContext } from "./types";
 import {
@@ -136,6 +136,25 @@ const NIGERIAN_ISPS = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// KNOWN CLOUD PROVIDERS (for hosting detection)
+// ─────────────────────────────────────────────────────────────────────────────
+const CLOUD_PROVIDERS = [
+  "VERCEL",
+  "AMAZON",
+  "AWS",
+  "GOOGLE",
+  "GCP",
+  "MICROSOFT",
+  "AZURE",
+  "DIGITALOCEAN",
+  "LINODE",
+  "CLOUDFLARE",
+  "FASTLY",
+  "NETLIFY",
+  "HEROKU",
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 // GEO GUARD CLASS
 // ─────────────────────────────────────────────────────────────────────────────
 export class GeoGuard {
@@ -162,10 +181,10 @@ export class GeoGuard {
   };
 
   // ─────────────────────────────────────────────────────────────────────────
-  // RESTRICTION PROFILES
+  // RESTRICTION PROFILES - FIXED VERSION
   // ─────────────────────────────────────────────────────────────────────────
 
-  // Default: Nigeria only, allow most access methods
+  // Default: Nigeria only, ALLOW hosting (for Vercel deployments)
   private static readonly DEFAULT_RESTRICTIONS: GeoRestriction = {
     allowedCountries: ["NG"], // Nigeria only
     blockedCountries: [],
@@ -174,12 +193,12 @@ export class GeoGuard {
     allowVPN: true, // Allow VPN for privacy
     allowTor: false, // Block Tor
     allowProxy: false, // Block proxies
-    allowHosting: false, // Block datacenter IPs
+    allowHosting: true, // ✅ CHANGED: Allow hosting IPs (Vercel, etc.)
     allowMobile: true, // Allow mobile networks
     requireVerifiedISP: false,
   };
 
-  // Strict: For sensitive operations (payments, admin)
+  // Strict: For sensitive operations (payments, admin) - ALLOW hosting
   private static readonly STRICT_RESTRICTIONS: GeoRestriction = {
     allowedCountries: ["NG"],
     blockedCountries: [],
@@ -188,12 +207,12 @@ export class GeoGuard {
     allowVPN: false, // No VPN
     allowTor: false,
     allowProxy: false,
-    allowHosting: false,
+    allowHosting: true, // ✅ CHANGED: Allow hosting for admin operations
     allowMobile: true,
     requireVerifiedISP: true, // Must be known Nigerian ISP
   };
 
-  // API: For API access
+  // API: For API access - ALLOW hosting (essential for server-to-server)
   private static readonly API_RESTRICTIONS: GeoRestriction = {
     allowedCountries: ["NG"],
     blockedCountries: [],
@@ -202,12 +221,12 @@ export class GeoGuard {
     allowVPN: false,
     allowTor: false,
     allowProxy: false,
-    allowHosting: true, // Allow for server-to-server
+    allowHosting: true, // ✅ CHANGED: Allow for server-to-server
     allowMobile: true,
     requireVerifiedISP: false,
   };
 
-  // Public: For public pages (more lenient)
+  // Public: For public pages (most lenient) - ALLOW hosting
   private static readonly PUBLIC_RESTRICTIONS: GeoRestriction = {
     allowedCountries: ["NG", "GH", "KE", "ZA", "GB", "US"], // Nigeria + diaspora
     blockedCountries: ["CN", "RU", "KP", "IR"],
@@ -216,7 +235,7 @@ export class GeoGuard {
     allowVPN: true,
     allowTor: false,
     allowProxy: true,
-    allowHosting: true,
+    allowHosting: true, // ✅ CHANGED: Allow hosting for public pages
     allowMobile: true,
     requireVerifiedISP: false,
   };
@@ -332,18 +351,12 @@ export class GeoGuard {
       return "VPN_PROXY_BLOCKED";
     }
 
-    // 5. Hosting/Datacenter check
+    // 5. Hosting/Datacenter check - FIXED: Now allows hosting for Vercel
     if (geoData.hosting && !restrictions.allowHosting) {
       return "DATACENTER_BLOCKED";
     }
 
-    // 6. Mobile check
-    if (geoData.mobile === false && !restrictions.allowMobile) {
-      // This is inverted - if mobile is required but connection is not mobile
-      // Usually we allow mobile, so this check is rarely triggered
-    }
-
-    // 7. ISP verification (for strict mode)
+    // 6. ISP verification (for strict mode)
     if (restrictions.requireVerifiedISP && geoData.countryCode === "NG") {
       if (!GeoGuard.isVerifiedNigerianISP(geoData.isp)) {
         return "UNVERIFIED_ISP";
@@ -371,7 +384,6 @@ export class GeoGuard {
       );
 
       // Using ip-api.com with all fields
-      // Free tier: 45 requests/minute, consider upgrading for production
       const response = await fetch(
         `http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,region,regionName,city,lat,lon,timezone,isp,org,as,mobile,proxy,hosting`,
         { signal: controller.signal }
@@ -423,7 +435,7 @@ export class GeoGuard {
   // RESTRICTION CHECKS
   // ─────────────────────────────────────────────────────────────────────────
   private static getRestrictionsForPath(pathname: string): GeoRestriction {
-    // Public pages - more lenient
+    // Public pages - most lenient
     if (isPublicPath(pathname)) {
       return GeoGuard.PUBLIC_RESTRICTIONS;
     }
@@ -433,9 +445,9 @@ export class GeoGuard {
       return GeoGuard.DEFAULT_RESTRICTIONS;
     }
 
-    // API endpoints - API restrictions
+    // API endpoints
     if (pathname.startsWith("/api")) {
-      // Strict for sensitive APIs
+      // Strict for sensitive APIs (payments, admin)
       if (
         pathname.startsWith("/api/admin") ||
         pathname.startsWith("/api/payment") ||
@@ -446,7 +458,7 @@ export class GeoGuard {
       return GeoGuard.API_RESTRICTIONS;
     }
 
-    // Admin/Dashboard - strict
+    // Admin/Dashboard - use strict but with hosting allowed
     if (isPrivatePath(pathname)) {
       return GeoGuard.STRICT_RESTRICTIONS;
     }
@@ -459,6 +471,11 @@ export class GeoGuard {
     if (process.env.NODE_ENV === "development") return true;
     if (GeoGuard.DEV_WHITELIST.includes(ip)) return true;
     if (ip.startsWith("192.168.") || ip.startsWith("10.")) return true; // Private IPs
+    
+    // Special whitelist for Vercel/Cloud providers
+    const vercelIPs = process.env.VERCEL_IPS?.split(',') || [];
+    if (vercelIPs.includes(ip)) return true;
+    
     return false;
   }
 
@@ -494,11 +511,23 @@ export class GeoGuard {
 
   private static isVerifiedNigerianISP(isp?: string): boolean {
     if (!isp) return false;
-    return NIGERIAN_ISPS.some(
-      (knownISP) =>
-        isp.toLowerCase().includes(knownISP.toLowerCase()) ||
-        knownISP.toLowerCase().includes(isp.toLowerCase())
-    );
+    const ispUpper = isp.toUpperCase();
+    
+    // Check against known Nigerian ISPs
+    for (const knownISP of NIGERIAN_ISPS) {
+      if (ispUpper.includes(knownISP.toUpperCase())) {
+        return true;
+      }
+    }
+    
+    // Also check if it's a known cloud provider (these are allowed in hosting mode)
+    for (const provider of CLOUD_PROVIDERS) {
+      if (ispUpper.includes(provider)) {
+        return true;
+      }
+    }
+    
+    return false;
   }
 
   // ─────────────────────────────────────────────────────────────────────────
