@@ -97,7 +97,8 @@ let result;
     
     // Simple IP-based key for anonymous users
     const ip = ClientIPDetector.getClientIP(request).ip;
-    return `ip:${ip}`;
+   const ua = request.headers.get("user-agent") || "unknown";
+return `ip:${ip}:${this.simpleHash(ua)}`;
   }
 
   private static getDynamicConfig(
