@@ -88,8 +88,7 @@ export interface StudentProfile {
 export interface StudentRegistrationData {
   // Personal Information (Required)
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+   lastName: string; // Alias for lastname
   otherName?: string;
   gender?: Gender;
   dateOfBirth?: string; // String for form input, converted to Date in service
@@ -592,8 +591,7 @@ export interface AcademicTranscript {
     id: string;
     matricNumber: string;
     firstName: string;
-    lastname: string;
-    lastName?: string;
+        lastName?: string;
     otherName: string | null;
     email: string;
     phone: string;

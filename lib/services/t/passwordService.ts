@@ -2,10 +2,54 @@
 import { prisma } from "@/lib/server/prisma";
 import {
   protectData,
+  unprotectData, // Added missing import
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
 import crypto from "crypto";
+
+// Define the type for the teacher with user
+type TeacherWithUser = {
+  id: string;
+  employeeId: string; // Changed from teacherId to employeeId to match schema
+  firstName: string;
+  lastName: string;
+  otherName: string | null;
+  gender: string | null;
+  phone: string;
+  email: string;
+  department: string;
+  institution: string | null;
+  qualification: string | null;
+  specialization: string | null;
+  experience: string | null;
+  dateJoined: Date;
+  isActive: boolean;
+  passportUrl: string | null;
+  userId: string;
+  emailSearchHash: string | null;
+  phoneSearchHash: string | null;
+  employeeIdSearchHash: string | null;
+  lastActivityAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    passwordHash: string | null;
+    isActive: boolean;
+    emailVerified: Date | null;
+    role: string;
+    accountLocked: boolean;
+    lockedUntil: Date | null;
+    failedLoginAttempts: number;
+    lastFailedLoginAt: Date | null;
+    lastLoginAt: Date | null;
+    createdAt: Date;
+  };
+};
 
 export class TeacherPasswordService {
   static generateSecureToken(length = 32): string {
@@ -221,7 +265,7 @@ export class TeacherPasswordService {
       return {
         success: true,
         data: {
-          email: await this.decryptField(resetTokenData.user.email),
+          email: await unprotectData(resetTokenData.user.email, "email"),
           role: resetTokenData.user.role,
         },
         message: "Token is valid",
@@ -267,11 +311,14 @@ export class TeacherPasswordService {
         throw new Error("Invalid email or password");
       }
 
+      // Cast to the proper type with employeeId
+      const typedTeacher = teacher as TeacherWithUser;
+
       // Check if account is locked
       if (
-        teacher.user.accountLocked &&
-        teacher.user.lockedUntil &&
-        teacher.user.lockedUntil > new Date()
+        typedTeacher.user.accountLocked &&
+        typedTeacher.user.lockedUntil &&
+        typedTeacher.user.lockedUntil > new Date()
       ) {
         throw new Error(
           "Account is temporarily locked. Please try again later."
@@ -279,17 +326,17 @@ export class TeacherPasswordService {
       }
 
       // Verify password
-      if (!teacher.user.passwordHash) {
+      if (!typedTeacher.user.passwordHash) {
         throw new Error("Password is not set for this user.");
       }
       const isValidPassword = await verifyPassword(
         password,
-        teacher.user.passwordHash
+        typedTeacher.user.passwordHash
       );
 
       if (!isValidPassword) {
         // Increment failed attempts
-        const failedAttempts = teacher.user.failedLoginAttempts + 1;
+        const failedAttempts = typedTeacher.user.failedLoginAttempts + 1;
         const updateData: any = {
           failedLoginAttempts: failedAttempts,
           lastFailedLoginAt: new Date(),
@@ -302,7 +349,7 @@ export class TeacherPasswordService {
         }
 
         await prisma.user.update({
-          where: { id: teacher.user.id },
+          where: { id: typedTeacher.user.id },
           data: updateData,
         });
 
@@ -310,9 +357,9 @@ export class TeacherPasswordService {
       }
 
       // Reset failed attempts on successful login
-      if (teacher.user.failedLoginAttempts > 0) {
+      if (typedTeacher.user.failedLoginAttempts > 0) {
         await prisma.user.update({
-          where: { id: teacher.user.id },
+          where: { id: typedTeacher.user.id },
           data: {
             failedLoginAttempts: 0,
             lastFailedLoginAt: null,
@@ -324,32 +371,41 @@ export class TeacherPasswordService {
 
       // Update last login
       await prisma.user.update({
-        where: { id: teacher.user.id },
+        where: { id: typedTeacher.user.id },
         data: {
           lastLoginAt: new Date(),
           loginCount: { increment: 1 },
         },
       });
 
+      // Decrypt fields for return
+      const decryptedEmail = await unprotectData(typedTeacher.user.email, "email");
+      const decryptedFirstName = await unprotectData(typedTeacher.firstName, "name");
+      const decryptedLastName = await unprotectData(typedTeacher.lastName, "name");
+      const decryptedOtherName = typedTeacher.otherName 
+        ? await unprotectData(typedTeacher.otherName, "name") 
+        : null;
+      const decryptedPhone = await unprotectData(typedTeacher.phone, "phone");
+
       return {
         success: true,
         user: {
-          id: teacher.user.id,
-          email: await this.decryptField(teacher.user.email),
-          name: teacher.user.name,
-          role: teacher.user.role,
-          isActive: teacher.user.isActive,
+          id: typedTeacher.user.id,
+          email: decryptedEmail,
+          name: typedTeacher.user.name,
+          role: typedTeacher.user.role,
+          isActive: typedTeacher.user.isActive,
           profile: {
-            firstName: await this.decryptField(teacher.firstName),
-            lastname: await this.decryptField(teacher.lastname),
-            otherName: await this.decryptField(teacher.otherName),
-            email: await this.decryptField(teacher.user.email),
-            phone: await this.decryptField(teacher.phone),
-            department: teacher.department,
-            institution: teacher.institution,
-            qualification: teacher.qualification,
-            specialization: teacher.specialization,
-            teacherId: teacher.teacherId,
+            firstName: decryptedFirstName,
+            lastName: decryptedLastName,
+            otherName: decryptedOtherName,
+            email: decryptedEmail,
+            phone: decryptedPhone,
+            department: typedTeacher.department,
+            institution: typedTeacher.institution,
+            qualification: typedTeacher.qualification,
+            specialization: typedTeacher.specialization,
+            employeeId: typedTeacher.employeeId, // Changed from teacherId to employeeId
           },
         },
       };
@@ -461,7 +517,6 @@ export class TeacherPasswordService {
   ): Promise<string> {
     try {
       if (!encryptedField) return "";
-      const { unprotectData } = await import("@/lib/security/dataProtection");
       return await unprotectData(encryptedField, "email");
     } catch (error) {
       console.error("Decryption error:", error);

@@ -201,6 +201,8 @@ model User {
   passwordHash        String?
   greeting            String?   @default("Welcome back!")
   greetingNextChange  DateTime?
+  emailVerificationRequired Boolean @default(true)
+  passportUrl         String?
 
   // Authentication (NextAuth)
   accounts Account[]
@@ -357,6 +359,7 @@ model Student {
   phoneSearchHash   String? @unique(map: "students_phone_search_hash_key")
   jambRegSearchHash String? @unique(map: "students_jamb_reg_search_hash_key")
   ninSearchHash     String? @unique(map: "students_nin_search_hash_key")
+  matricSearchHash  String? @unique(map: "students_matric_search_hash_key")
 
   // Security fields
   lastActivityAt DateTime?
@@ -545,6 +548,7 @@ model Lecture {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime? // Soft delete
+  scheduledAt DateTime? // For scheduled publishing
 
   // Relations
   courseId    String

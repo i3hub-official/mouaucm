@@ -41,7 +41,7 @@ export class TeacherStudentManagementService {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                lastname: true,
+                lastName: true,
                 otherName: true,
                 email: true,
                 phone: true,
@@ -64,7 +64,7 @@ export class TeacherStudentManagementService {
             enrollmentId: enrollment.id,
             matricNumber: student.matricNumber,
             firstName: await unprotectData(student.firstName, "name"),
-            lastname: await unprotectData(student.lastname, "name"),
+            lastName: await unprotectData(student.lastName, "name"),
             otherName: student.otherName
               ? await unprotectData(student.otherName, "name")
               : null,
@@ -142,7 +142,7 @@ export class TeacherStudentManagementService {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                lastname: true,
+                lastName: true,
                 otherName: true,
                 email: true,
                 phone: true,
@@ -172,7 +172,7 @@ export class TeacherStudentManagementService {
             enrollmentId: enrollment.id,
             matricNumber: student.matricNumber,
             firstName: await unprotectData(student.firstName, "name"),
-            lastname: await unprotectData(student.lastname, "name"),
+            lastName: await unprotectData(student.lastName, "name"),
             otherName: student.otherName
               ? await unprotectData(student.otherName, "name")
               : null,
@@ -216,7 +216,7 @@ export class TeacherStudentManagementService {
           id: true,
           matricNumber: true,
           firstName: true,
-          lastname: true,
+          lastName: true,
           otherName: true,
           email: true,
           phone: true,
@@ -240,7 +240,7 @@ export class TeacherStudentManagementService {
         email: await unprotectData(student.email, "email"),
         phone: await unprotectData(student.phone, "phone"),
         firstName: await unprotectData(student.firstName, "name"),
-        lastname: await unprotectData(student.lastname, "name"),
+        lastName: await unprotectData(student.lastName, "name"),
         otherName: student.otherName
           ? await unprotectData(student.otherName, "name")
           : null,

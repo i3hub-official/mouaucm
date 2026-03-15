@@ -56,6 +56,8 @@ export type UserMinAggregateOutputType = {
   passwordHash: string | null
   greeting: string | null
   greetingNextChange: Date | null
+  emailVerificationRequired: boolean | null
+  passportUrl: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -78,6 +80,8 @@ export type UserMaxAggregateOutputType = {
   passwordHash: string | null
   greeting: string | null
   greetingNextChange: Date | null
+  emailVerificationRequired: boolean | null
+  passportUrl: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -100,6 +104,8 @@ export type UserCountAggregateOutputType = {
   passwordHash: number
   greeting: number
   greetingNextChange: number
+  emailVerificationRequired: number
+  passportUrl: number
   _all: number
 }
 
@@ -134,6 +140,8 @@ export type UserMinAggregateInputType = {
   passwordHash?: true
   greeting?: true
   greetingNextChange?: true
+  emailVerificationRequired?: true
+  passportUrl?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -156,6 +164,8 @@ export type UserMaxAggregateInputType = {
   passwordHash?: true
   greeting?: true
   greetingNextChange?: true
+  emailVerificationRequired?: true
+  passportUrl?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -178,6 +188,8 @@ export type UserCountAggregateInputType = {
   passwordHash?: true
   greeting?: true
   greetingNextChange?: true
+  emailVerificationRequired?: true
+  passportUrl?: true
   _all?: true
 }
 
@@ -287,6 +299,8 @@ export type UserGroupByOutputType = {
   passwordHash: string | null
   greeting: string | null
   greetingNextChange: Date | null
+  emailVerificationRequired: boolean
+  passportUrl: string | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -332,6 +346,8 @@ export type UserWhereInput = {
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   greeting?: Prisma.StringNullableFilter<"User"> | string | null
   greetingNextChange?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFilter<"User"> | boolean
+  passportUrl?: Prisma.StringNullableFilter<"User"> | string | null
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
@@ -370,6 +386,8 @@ export type UserOrderByWithRelationInput = {
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   greeting?: Prisma.SortOrderInput | Prisma.SortOrder
   greetingNextChange?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationRequired?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   student?: Prisma.StudentOrderByWithRelationInput
@@ -411,6 +429,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   greeting?: Prisma.StringNullableFilter<"User"> | string | null
   greetingNextChange?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFilter<"User"> | boolean
+  passportUrl?: Prisma.StringNullableFilter<"User"> | string | null
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.StudentWhereInput> | null
@@ -449,6 +469,8 @@ export type UserOrderByWithAggregationInput = {
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   greeting?: Prisma.SortOrderInput | Prisma.SortOrder
   greetingNextChange?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationRequired?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -479,6 +501,8 @@ export type UserScalarWhereWithAggregatesInput = {
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   greeting?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   greetingNextChange?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailVerificationRequired?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  passportUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -501,6 +525,8 @@ export type UserCreateInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -539,6 +565,8 @@ export type UserUncheckedCreateInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -577,6 +605,8 @@ export type UserUpdateInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -615,6 +645,8 @@ export type UserUncheckedUpdateInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -653,6 +685,8 @@ export type UserCreateManyInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -675,6 +709,8 @@ export type UserUpdateManyMutationInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -697,6 +733,8 @@ export type UserUncheckedUpdateManyInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -719,6 +757,8 @@ export type UserCountOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   greeting?: Prisma.SortOrder
   greetingNextChange?: Prisma.SortOrder
+  emailVerificationRequired?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -746,6 +786,8 @@ export type UserMaxOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   greeting?: Prisma.SortOrder
   greetingNextChange?: Prisma.SortOrder
+  emailVerificationRequired?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -768,6 +810,8 @@ export type UserMinOrderByAggregateInput = {
   passwordHash?: Prisma.SortOrder
   greeting?: Prisma.SortOrder
   greetingNextChange?: Prisma.SortOrder
+  emailVerificationRequired?: Prisma.SortOrder
+  passportUrl?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -1075,6 +1119,8 @@ export type UserCreateWithoutAccountsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
@@ -1112,6 +1158,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
@@ -1165,6 +1213,8 @@ export type UserUpdateWithoutAccountsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
@@ -1202,6 +1252,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
@@ -1239,6 +1291,8 @@ export type UserCreateWithoutSessionsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
@@ -1276,6 +1330,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
@@ -1329,6 +1385,8 @@ export type UserUpdateWithoutSessionsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
@@ -1366,6 +1424,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
@@ -1403,6 +1463,8 @@ export type UserCreateWithoutResetTokensInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -1440,6 +1502,8 @@ export type UserUncheckedCreateWithoutResetTokensInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -1493,6 +1557,8 @@ export type UserUpdateWithoutResetTokensInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -1530,6 +1596,8 @@ export type UserUncheckedUpdateWithoutResetTokensInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -1567,6 +1635,8 @@ export type UserCreateWithoutStudentInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
@@ -1604,6 +1674,8 @@ export type UserUncheckedCreateWithoutStudentInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
@@ -1657,6 +1729,8 @@ export type UserUpdateWithoutStudentInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
@@ -1694,6 +1768,8 @@ export type UserUncheckedUpdateWithoutStudentInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
@@ -1731,6 +1807,8 @@ export type UserCreateWithoutTeacherInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -1768,6 +1846,8 @@ export type UserUncheckedCreateWithoutTeacherInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -1821,6 +1901,8 @@ export type UserUpdateWithoutTeacherInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -1858,6 +1940,8 @@ export type UserUncheckedUpdateWithoutTeacherInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -1895,6 +1979,8 @@ export type UserCreateWithoutAdminInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -1932,6 +2018,8 @@ export type UserUncheckedCreateWithoutAdminInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -1985,6 +2073,8 @@ export type UserUpdateWithoutAdminInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -2022,6 +2112,8 @@ export type UserUncheckedUpdateWithoutAdminInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -2059,6 +2151,8 @@ export type UserCreateWithoutExamResultsRecordedInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -2096,6 +2190,8 @@ export type UserUncheckedCreateWithoutExamResultsRecordedInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -2149,6 +2245,8 @@ export type UserUpdateWithoutExamResultsRecordedInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -2186,6 +2284,8 @@ export type UserUncheckedUpdateWithoutExamResultsRecordedInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -2223,6 +2323,8 @@ export type UserCreateWithoutAttendanceMarkedInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -2260,6 +2362,8 @@ export type UserUncheckedCreateWithoutAttendanceMarkedInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -2313,6 +2417,8 @@ export type UserUpdateWithoutAttendanceMarkedInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -2350,6 +2456,8 @@ export type UserUncheckedUpdateWithoutAttendanceMarkedInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -2387,6 +2495,8 @@ export type UserCreateWithoutAuditLogsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -2424,6 +2534,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -2477,6 +2589,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -2514,6 +2628,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -2551,6 +2667,8 @@ export type UserCreateWithoutNotificationsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -2588,6 +2706,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -2641,6 +2761,8 @@ export type UserUpdateWithoutNotificationsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -2678,6 +2800,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -2715,6 +2839,8 @@ export type UserCreateWithoutMetricsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -2752,6 +2878,8 @@ export type UserUncheckedCreateWithoutMetricsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -2805,6 +2933,8 @@ export type UserUpdateWithoutMetricsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -2842,6 +2972,8 @@ export type UserUncheckedUpdateWithoutMetricsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -2879,6 +3011,8 @@ export type UserCreateWithoutSecurityEventsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -2916,6 +3050,8 @@ export type UserUncheckedCreateWithoutSecurityEventsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -2969,6 +3105,8 @@ export type UserUpdateWithoutSecurityEventsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -3006,6 +3144,8 @@ export type UserUncheckedUpdateWithoutSecurityEventsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -3043,6 +3183,8 @@ export type UserCreateWithoutUserActivitiesInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -3080,6 +3222,8 @@ export type UserUncheckedCreateWithoutUserActivitiesInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -3133,6 +3277,8 @@ export type UserUpdateWithoutUserActivitiesInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -3170,6 +3316,8 @@ export type UserUncheckedUpdateWithoutUserActivitiesInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -3207,6 +3355,8 @@ export type UserCreateWithoutUserPreferencesInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -3244,6 +3394,8 @@ export type UserUncheckedCreateWithoutUserPreferencesInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -3297,6 +3449,8 @@ export type UserUpdateWithoutUserPreferencesInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -3334,6 +3488,8 @@ export type UserUncheckedUpdateWithoutUserPreferencesInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -3371,6 +3527,8 @@ export type UserCreateWithoutRequestLogsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -3408,6 +3566,8 @@ export type UserUncheckedCreateWithoutRequestLogsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -3461,6 +3621,8 @@ export type UserUpdateWithoutRequestLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -3498,6 +3660,8 @@ export type UserUncheckedUpdateWithoutRequestLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -3535,6 +3699,8 @@ export type UserCreateWithoutDataProcessingLogsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
@@ -3572,6 +3738,8 @@ export type UserUncheckedCreateWithoutDataProcessingLogsInput = {
   passwordHash?: string | null
   greeting?: string | null
   greetingNextChange?: Date | string | null
+  emailVerificationRequired?: boolean
+  passportUrl?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
@@ -3625,6 +3793,8 @@ export type UserUpdateWithoutDataProcessingLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
@@ -3662,6 +3832,8 @@ export type UserUncheckedUpdateWithoutDataProcessingLogsInput = {
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greeting?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingNextChange?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passportUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -3829,6 +4001,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordHash?: boolean
   greeting?: boolean
   greetingNextChange?: boolean
+  emailVerificationRequired?: boolean
+  passportUrl?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   student?: boolean | Prisma.User$studentArgs<ExtArgs>
@@ -3868,6 +4042,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   greeting?: boolean
   greetingNextChange?: boolean
+  emailVerificationRequired?: boolean
+  passportUrl?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -3890,6 +4066,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordHash?: boolean
   greeting?: boolean
   greetingNextChange?: boolean
+  emailVerificationRequired?: boolean
+  passportUrl?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -3912,9 +4090,11 @@ export type UserSelectScalar = {
   passwordHash?: boolean
   greeting?: boolean
   greetingNextChange?: boolean
+  emailVerificationRequired?: boolean
+  passportUrl?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "isActive" | "lastLoginAt" | "loginCount" | "failedLoginAttempts" | "lastFailedLoginAt" | "accountLocked" | "lockedUntil" | "createdAt" | "updatedAt" | "deletedAt" | "passwordHash" | "greeting" | "greetingNextChange", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "isActive" | "lastLoginAt" | "loginCount" | "failedLoginAttempts" | "lastFailedLoginAt" | "accountLocked" | "lockedUntil" | "createdAt" | "updatedAt" | "deletedAt" | "passwordHash" | "greeting" | "greetingNextChange" | "emailVerificationRequired" | "passportUrl", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -3977,6 +4157,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     passwordHash: string | null
     greeting: string | null
     greetingNextChange: Date | null
+    emailVerificationRequired: boolean
+    passportUrl: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -4435,6 +4617,8 @@ export interface UserFieldRefs {
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly greeting: Prisma.FieldRef<"User", 'String'>
   readonly greetingNextChange: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailVerificationRequired: Prisma.FieldRef<"User", 'Boolean'>
+  readonly passportUrl: Prisma.FieldRef<"User", 'String'>
 }
     
 

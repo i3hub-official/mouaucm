@@ -31,7 +31,7 @@ export class StudentProfileService {
           id: true,
           matricNumber: true,
           firstName: true,
-          lastname: true,
+          lastName: true,
           otherName: true,
           email: true,
           phone: true,
@@ -71,7 +71,7 @@ export class StudentProfileService {
         unprotectData(student.email, "email"),
         unprotectData(student.phone, "phone"),
         unprotectData(student.firstName, "name"),
-        unprotectData(student.lastname, "name"),
+        unprotectData(student.lastName, "name"),
         student.otherName
           ? unprotectData(student.otherName, "name")
           : Promise.resolve(null),
@@ -203,7 +203,7 @@ export class StudentProfileService {
           id: true,
           matricNumber: true,
           firstName: true,
-          lastname: true,
+          lastName: true,
           otherName: true,
           email: true,
           phone: true,
@@ -241,7 +241,7 @@ export class StudentProfileService {
         unprotectData(updatedStudent.email, "email"),
         unprotectData(updatedStudent.phone, "phone"),
         unprotectData(updatedStudent.firstName, "name"),
-        unprotectData(updatedStudent.lastname, "name"),
+        unprotectData(updatedStudent.lastName, "name"),
         updatedStudent.otherName
           ? unprotectData(updatedStudent.otherName, "name")
           : Promise.resolve(null),
@@ -616,7 +616,8 @@ export class StudentProfileService {
         where: { userId },
         select: {
           firstName: true,
-          lastname: true,
+          lastName: true,
+            otherName: true,
           phone: true,
           passportUrl: true,
           state: true,
@@ -632,7 +633,8 @@ export class StudentProfileService {
 
       const requiredFields = [
         { key: "firstName", value: student.firstName },
-        { key: "lastname", value: student.lastname },
+        { key: "lastName", value: student.lastName },
+        { key: "otherName", value: student.otherName },
         { key: "phone", value: student.phone },
         { key: "passportUrl", value: student.passportUrl },
         { key: "state", value: student.state },

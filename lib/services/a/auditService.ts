@@ -11,7 +11,7 @@ import {
   AuditAction,
   ResourceType,
   SessionSecurityLevel,
-} from "@prisma/client";
+} from "@/lib/generated/prisma/enums";
 
 export class AdminAuditService {
   /**

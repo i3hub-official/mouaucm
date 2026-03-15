@@ -116,7 +116,9 @@ export const UserScalarFieldEnum = {
   deletedAt: 'deletedAt',
   passwordHash: 'passwordHash',
   greeting: 'greeting',
-  greetingNextChange: 'greetingNextChange'
+  greetingNextChange: 'greetingNextChange',
+  emailVerificationRequired: 'emailVerificationRequired',
+  passportUrl: 'passportUrl'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -214,6 +216,7 @@ export const StudentScalarFieldEnum = {
   phoneSearchHash: 'phoneSearchHash',
   jambRegSearchHash: 'jambRegSearchHash',
   ninSearchHash: 'ninSearchHash',
+  matricSearchHash: 'matricSearchHash',
   lastActivityAt: 'lastActivityAt',
   userId: 'userId'
 } as const
@@ -316,6 +319,7 @@ export const LectureScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
+  scheduledAt: 'scheduledAt',
   courseId: 'courseId'
 } as const
 

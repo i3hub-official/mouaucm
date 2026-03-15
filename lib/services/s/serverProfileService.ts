@@ -41,7 +41,7 @@ export class ServerProfileService {
           id: true,
           matricNumber: true,
           firstName: true,
-          lastname: true,
+          lastName: true,
           otherName: true,
           email: true,
           phone: true,
@@ -71,7 +71,7 @@ export class ServerProfileService {
       const [firstName, lastname, otherName, email, phone, state, lga] =
         await Promise.all([
           unprotectData(student.firstName, "name"),
-          unprotectData(student.lastname, "name"),
+          unprotectData(student.lastName, "name"),
           student.otherName
             ? unprotectData(student.otherName, "name")
             : Promise.resolve(null),
@@ -429,7 +429,7 @@ export class ServerProfileService {
             id: true,
             matricNumber: true,
             firstName: true,
-            lastname: true,
+            lastName: true,
             otherName: true,
             email: true,
             phone: true,

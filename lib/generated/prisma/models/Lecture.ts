@@ -48,6 +48,7 @@ export type LectureMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  scheduledAt: Date | null
   courseId: string | null
 }
 
@@ -63,6 +64,7 @@ export type LectureMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
+  scheduledAt: Date | null
   courseId: string | null
 }
 
@@ -79,6 +81,7 @@ export type LectureCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   deletedAt: number
+  scheduledAt: number
   courseId: number
   _all: number
 }
@@ -106,6 +109,7 @@ export type LectureMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  scheduledAt?: true
   courseId?: true
 }
 
@@ -121,6 +125,7 @@ export type LectureMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  scheduledAt?: true
   courseId?: true
 }
 
@@ -137,6 +142,7 @@ export type LectureCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
+  scheduledAt?: true
   courseId?: true
   _all?: true
 }
@@ -240,6 +246,7 @@ export type LectureGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
+  scheduledAt: Date | null
   courseId: string
   _count: LectureCountAggregateOutputType | null
   _avg: LectureAvgAggregateOutputType | null
@@ -279,6 +286,7 @@ export type LectureWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
+  scheduledAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringFilter<"Lecture"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
@@ -298,6 +306,7 @@ export type LectureOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
@@ -320,6 +329,7 @@ export type LectureWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
+  scheduledAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringFilter<"Lecture"> | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   submissions?: Prisma.SubmissionListRelationFilter
@@ -339,6 +349,7 @@ export type LectureOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   courseId?: Prisma.SortOrder
   _count?: Prisma.LectureCountOrderByAggregateInput
   _avg?: Prisma.LectureAvgOrderByAggregateInput
@@ -363,6 +374,7 @@ export type LectureScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Lecture"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lecture"> | Date | string | null
+  scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringWithAggregatesFilter<"Lecture"> | string
 }
 
@@ -379,6 +391,7 @@ export type LectureCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
   attendance?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
@@ -397,6 +410,7 @@ export type LectureUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   courseId: string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
@@ -415,6 +429,7 @@ export type LectureUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
   attendance?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
@@ -433,6 +448,7 @@ export type LectureUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
@@ -451,6 +467,7 @@ export type LectureCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   courseId: string
 }
 
@@ -467,6 +484,7 @@ export type LectureUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type LectureUncheckedUpdateManyInput = {
@@ -482,6 +500,7 @@ export type LectureUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -508,6 +527,7 @@ export type LectureCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
 }
 
@@ -528,6 +548,7 @@ export type LectureMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
 }
 
@@ -543,6 +564,7 @@ export type LectureMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+  scheduledAt?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
 }
 
@@ -639,6 +661,7 @@ export type LectureCreateWithoutCourseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
   attendance?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
@@ -656,6 +679,7 @@ export type LectureUncheckedCreateWithoutCourseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
@@ -702,6 +726,7 @@ export type LectureScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Lecture"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
+  scheduledAt?: Prisma.DateTimeNullableFilter<"Lecture"> | Date | string | null
   courseId?: Prisma.StringFilter<"Lecture"> | string
 }
 
@@ -718,6 +743,7 @@ export type LectureCreateWithoutSubmissionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
   attendance?: Prisma.AttendanceCreateNestedManyWithoutLectureInput
 }
@@ -735,6 +761,7 @@ export type LectureUncheckedCreateWithoutSubmissionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   courseId: string
   attendance?: Prisma.AttendanceUncheckedCreateNestedManyWithoutLectureInput
 }
@@ -768,6 +795,7 @@ export type LectureUpdateWithoutSubmissionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
   attendance?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
@@ -785,6 +813,7 @@ export type LectureUncheckedUpdateWithoutSubmissionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
 }
@@ -802,6 +831,7 @@ export type LectureCreateWithoutAttendanceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   course: Prisma.CourseCreateNestedOneWithoutLecturesInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutLectureInput
 }
@@ -819,6 +849,7 @@ export type LectureUncheckedCreateWithoutAttendanceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
   courseId: string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutLectureInput
 }
@@ -852,6 +883,7 @@ export type LectureUpdateWithoutAttendanceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   course?: Prisma.CourseUpdateOneRequiredWithoutLecturesNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
 }
@@ -869,6 +901,7 @@ export type LectureUncheckedUpdateWithoutAttendanceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
 }
@@ -886,6 +919,7 @@ export type LectureCreateManyCourseInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  scheduledAt?: Date | string | null
 }
 
 export type LectureUpdateWithoutCourseInput = {
@@ -901,6 +935,7 @@ export type LectureUpdateWithoutCourseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   submissions?: Prisma.SubmissionUpdateManyWithoutLectureNestedInput
   attendance?: Prisma.AttendanceUpdateManyWithoutLectureNestedInput
 }
@@ -918,6 +953,7 @@ export type LectureUncheckedUpdateWithoutCourseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutLectureNestedInput
   attendance?: Prisma.AttendanceUncheckedUpdateManyWithoutLectureNestedInput
 }
@@ -935,6 +971,7 @@ export type LectureUncheckedUpdateManyWithoutCourseInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -990,6 +1027,7 @@ export type LectureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  scheduledAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Lecture$submissionsArgs<ExtArgs>
@@ -1010,6 +1048,7 @@ export type LectureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  scheduledAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
@@ -1027,6 +1066,7 @@ export type LectureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  scheduledAt?: boolean
   courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecture"]>
@@ -1044,10 +1084,11 @@ export type LectureSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  scheduledAt?: boolean
   courseId?: boolean
 }
 
-export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "content" | "videoUrl" | "duration" | "orderIndex" | "isPublished" | "publishedAt" | "createdAt" | "updatedAt" | "deletedAt" | "courseId", ExtArgs["result"]["lecture"]>
+export type LectureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "content" | "videoUrl" | "duration" | "orderIndex" | "isPublished" | "publishedAt" | "createdAt" | "updatedAt" | "deletedAt" | "scheduledAt" | "courseId", ExtArgs["result"]["lecture"]>
 export type LectureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   submissions?: boolean | Prisma.Lecture$submissionsArgs<ExtArgs>
@@ -1081,6 +1122,7 @@ export type $LecturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
+    scheduledAt: Date | null
     courseId: string
   }, ExtArgs["result"]["lecture"]>
   composites: {}
@@ -1520,6 +1562,7 @@ export interface LectureFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Lecture", 'DateTime'>
+  readonly scheduledAt: Prisma.FieldRef<"Lecture", 'DateTime'>
   readonly courseId: Prisma.FieldRef<"Lecture", 'String'>
 }
     

@@ -71,7 +71,7 @@ export interface MiddlewareContext {
   integratedAt?: number;
   geo: any | null;
   sessionAgeMs: number | null;
-  headers: Record<string, string>; // Added headers property
+  headers: Record<string, string>; 
 }
 
 export type MiddlewareFunction = (

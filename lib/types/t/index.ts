@@ -133,8 +133,7 @@ export interface StudentBasicInfo {
   id: string;
   matricNumber: string;
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+   lastName: string; 
   otherName?: string | null;
   email: string;
   phone: string;
