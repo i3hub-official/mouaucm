@@ -2,31 +2,8 @@
 
 import { prisma } from "@/lib/server/prisma";
 import { protectData } from "@/lib/security/dataProtection";
+import { BalanceResponse, NINVerificationResult } from "@/lib/types/shared/index";
 
-interface NINVerificationResult {
-  exists: boolean;
-  data?: {
-    lastname?: string;
-    firstName?: string;
-    otherName?: string;
-    gender?: string;
-    dateOfBirth?: string;
-    phoneNumber?: string;
-    state?: string;
-    lga?: string;
-    residenceAddress?: string;
-    photo?: string;
-  };
-  requiresManualEntry?: boolean;
-}
-
-interface BalanceResponse {
-  status: "success" | "error" | string;
-  balance?: number;
-  currency?: string;
-  message?: string;
-  raw?: any;
-}
 
 export class NINVerificationService {
   private static readonly API_BASE_URL = "https://checkmyninbvn.com.ng/api";
@@ -143,11 +120,11 @@ export class NINVerificationService {
         return {
           exists: true,
           data: {
-            lastname: cachedRecord.lastname,
+            lastName: cachedRecord.lastName,
             firstName: cachedRecord.firstName,
             otherName: cachedRecord.otherName || "",
             gender: cachedRecord.gender,
-            dateOfBirth: cachedRecord.dateOfBirth,
+            dateOfBirth: cachedRecord.dateOfBirth ? cachedRecord.dateOfBirth.toISOString().split("T")[0] : "",
             phoneNumber: cachedRecord.phoneNumber,
             state: cachedRecord.state || "",
             lga: cachedRecord.lga || "",
@@ -193,7 +170,7 @@ export class NINVerificationService {
           nin: true,
           userId: true,
           firstName: true,
-          lastname: true,
+          lastName: true,
           otherName: true,
           gender: true,
           dateOfBirth: true,
@@ -249,7 +226,7 @@ export class NINVerificationService {
         await prisma.nINCache.update({
           where: { nin },
           data: {
-            lastname: ninData.lastname,
+            lastName: ninData.lastName,
             firstName: ninData.firstname,
             otherName: ninData.middlename,
             gender: ninData.gender,
@@ -267,7 +244,7 @@ export class NINVerificationService {
         await prisma.nINCache.create({
           data: {
             nin,
-            lastname: ninData.lastname,
+            lastName: ninData.lastName,
             firstName: ninData.firstname,
             otherName: ninData.middlename,
             gender: ninData.gender,

@@ -22,14 +22,14 @@ export interface UserProfile {
     id: string;
     matricNumber: string;
     firstName: string;
-    lastname: string;
+    lastName: string; // Changed from lastname to lastName
     department: string;
   };
   teacher?: {
     id: string;
-    teacherId: string;
+    employeeId: string; // Changed from teacherId to employeeId
     firstName: string;
-    lastname: string;
+    lastName: string; // Changed from lastname to lastName
     department: string;
   };
 }
@@ -58,6 +58,15 @@ export interface UserPreferences {
   assignmentReminders: boolean;
   gradeAlerts: boolean;
   lectureReminders: boolean;
+  smsNotifications?: boolean;
+  examReminders?: boolean;
+  theme?: string | null;
+  language?: string | null;
+  timezone?: string | null;
+  dateFormat?: string | null;
+  timeFormat?: string | null;
+  itemsPerPage?: number | null;
+  dashboardLayout?: any | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -90,16 +99,16 @@ export class UserService {
               id: true,
               matricNumber: true,
               firstName: true,
-              lastname: true,
+              lastName: true, // Changed from lastname to lastName
               department: true,
             },
           },
           teacher: {
             select: {
               id: true,
-              teacherId: true,
+              employeeId: true, // Changed from teacherId to employeeId
               firstName: true,
-              lastname: true,
+              lastName: true, // Changed from lastname to lastName
               department: true,
             },
           },
@@ -110,37 +119,47 @@ export class UserService {
 
       // Decrypt sensitive data
       const decryptedUser: UserProfile = {
-        ...user,
+        id: user.id,
         email: await unprotectData(user.email, "email"),
+        name: user.name,
+        role: user.role,
+        isActive: user.isActive,
+        emailVerified: user.emailVerified,
+        lastLoginAt: user.lastLoginAt,
+        createdAt: user.createdAt,
         student: undefined,
         teacher: undefined,
       };
 
       // Decrypt student data if exists
       if (user.student) {
-        const [firstName, lastname] = await Promise.all([
+        const [firstName, lastName] = await Promise.all([
           unprotectData(user.student.firstName, "name"),
-          unprotectData(user.student.lastname, "name"),
+          unprotectData(user.student.lastName, "name"),
         ]);
 
         decryptedUser.student = {
-          ...user.student,
+          id: user.student.id,
+          matricNumber: user.student.matricNumber,
           firstName,
-          lastname,
+          lastName,
+          department: user.student.department,
         };
       }
 
       // Decrypt teacher data if exists
       if (user.teacher) {
-        const [firstName, lastname] = await Promise.all([
+        const [firstName, lastName] = await Promise.all([
           unprotectData(user.teacher.firstName, "name"),
-          unprotectData(user.teacher.lastname, "name"),
+          unprotectData(user.teacher.lastName, "name"),
         ]);
 
         decryptedUser.teacher = {
-          ...user.teacher,
+          id: user.teacher.id,
+          employeeId: user.teacher.employeeId,
           firstName,
-          lastname,
+          lastName,
+          department: user.teacher.department,
         };
       }
 
@@ -187,12 +206,10 @@ export class UserService {
         // Protect the new email to get search hash for uniqueness check
         const protectedEmail = await protectData(profileData.email, "email");
         
-        // Check if email is already in use using search hash
+        // Check if email is already in use
         const existingUser = await prisma.user.findFirst({
           where: {
-            student: {
-              emailSearchHash: protectedEmail.searchHash
-            },
+            email: protectedEmail.encrypted,
             id: { not: userId },
           },
         });
@@ -203,11 +220,10 @@ export class UserService {
 
         updateData.email = protectedEmail.encrypted;
         updateData.emailVerified = null; // Require re-verification
-        updateData.emailVerificationRequired = true;
         updatedFields.push("email");
         requiresVerification = true;
 
-        // Also update student email if user is a student
+        // Also update student/teacher email if user is a student or teacher
         if (user.role === 'STUDENT') {
           const student = await prisma.student.findUnique({
             where: { userId },
@@ -215,6 +231,21 @@ export class UserService {
 
           if (student) {
             await prisma.student.update({
+              where: { userId },
+              data: {
+                email: protectedEmail.encrypted,
+                emailSearchHash: protectedEmail.searchHash,
+                updatedAt: new Date(),
+              },
+            });
+          }
+        } else if (user.role === 'TEACHER') {
+          const teacher = await prisma.teacher.findUnique({
+            where: { userId },
+          });
+
+          if (teacher) {
+            await prisma.teacher.update({
               where: { userId },
               data: {
                 email: protectedEmail.encrypted,
@@ -411,22 +442,22 @@ export class UserService {
         throw new Error("Invalid password");
       }
 
-      // Delete user (this will cascade delete related records)
-      await prisma.user.delete({
-        where: { id: userId },
-      });
-
-      // Log account deletion
+      // Log account deletion before deletion
       await prisma.auditLog.create({
         data: {
           userId,
-          action: AuditAction.ACCOUNT_DELETED,
+          action: AuditAction.ACCOUNT_DELETION,
           resourceType: "USER",
           resourceId: userId,
           details: {
             timestamp: new Date().toISOString(),
           },
         },
+      });
+
+      // Delete user (this will cascade delete related records)
+      await prisma.user.delete({
+        where: { id: userId },
       });
 
       return {
@@ -442,7 +473,23 @@ export class UserService {
   /**
    * Get user preferences
    */
-  static async getUserPreferences(userId: string): Promise<UserPreferences> {
+  static async getUserPreferences(userId: string): Promise<UserPreferences | null> {
+    try {
+      const preferences = await prisma.userPreferences.findUnique({
+        where: { userId },
+      });
+
+      return preferences;
+    } catch (error) {
+      console.error("Error getting user preferences:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get or create user preferences
+   */
+  static async getOrCreateUserPreferences(userId: string): Promise<UserPreferences> {
     try {
       let preferences = await prisma.userPreferences.findUnique({
         where: { userId },
@@ -458,13 +505,15 @@ export class UserService {
             assignmentReminders: true,
             gradeAlerts: true,
             lectureReminders: true,
+            smsNotifications: false,
+            examReminders: true,
           },
         });
       }
 
       return preferences;
     } catch (error) {
-      console.error("Error getting user preferences:", error);
+      console.error("Error getting or creating user preferences:", error);
       throw error;
     }
   }
@@ -480,6 +529,15 @@ export class UserService {
       assignmentReminders?: boolean;
       gradeAlerts?: boolean;
       lectureReminders?: boolean;
+      smsNotifications?: boolean;
+      examReminders?: boolean;
+      theme?: string;
+      language?: string;
+      timezone?: string;
+      dateFormat?: string;
+      timeFormat?: string;
+      itemsPerPage?: number;
+      dashboardLayout?: any;
     }
   ): Promise<PreferencesResponse> {
     try {
@@ -496,6 +554,15 @@ export class UserService {
           assignmentReminders: preferences.assignmentReminders ?? true,
           gradeAlerts: preferences.gradeAlerts ?? true,
           lectureReminders: preferences.lectureReminders ?? true,
+          smsNotifications: preferences.smsNotifications ?? false,
+          examReminders: preferences.examReminders ?? true,
+          theme: preferences.theme ?? "light",
+          language: preferences.language ?? "en",
+          timezone: preferences.timezone ?? "UTC",
+          dateFormat: preferences.dateFormat ?? "MM/DD/YYYY",
+          timeFormat: preferences.timeFormat ?? "12h",
+          itemsPerPage: preferences.itemsPerPage ?? 20,
+          dashboardLayout: preferences.dashboardLayout,
         },
       });
 

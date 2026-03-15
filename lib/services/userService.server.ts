@@ -2,6 +2,8 @@
 import { prisma } from "@/lib/server/prisma";
 import { protectData, unprotectData } from "@/lib/security/dataProtection";
 import { AuditAction } from "@/lib/generated/prisma/enums";
+import { UserWithRelations } from "@/lib/types/shared/index";
+
 
 export class UserServiceServer {
   /**
@@ -21,16 +23,16 @@ export class UserServiceServer {
               id: true,
               matricNumber: true,
               firstName: true,
-              lastname: true,
+              lastName: true,
               department: true,
             },
           },
           teacher: {
             select: {
               id: true,
-              teacherId: true,
+              employeeId: true, // Changed from teacherId to employeeId
               firstName: true,
-              lastname: true,
+              lastName: true,
               department: true,
             },
           },
@@ -40,7 +42,7 @@ export class UserServiceServer {
       if (!user) return null;
 
       // Decrypt sensitive data
-      const decryptedUser = {
+      const decryptedUser: UserWithRelations = {
         ...user,
         email: await unprotectData(user.email, "email"),
       };
@@ -49,7 +51,7 @@ export class UserServiceServer {
         decryptedUser.student = {
           ...user.student,
           firstName: await unprotectData(user.student.firstName, "name"),
-          lastname: await unprotectData(user.student.lastname, "name"),
+          lastName: await unprotectData(user.student.lastName, "name"),
         };
       }
 
@@ -57,7 +59,7 @@ export class UserServiceServer {
         decryptedUser.teacher = {
           ...user.teacher,
           firstName: await unprotectData(user.teacher.firstName, "name"),
-          lastname: await unprotectData(user.teacher.lastname, "name"),
+          lastName: await unprotectData(user.teacher.lastName, "name"),
         };
       }
 
@@ -94,6 +96,10 @@ export class UserServiceServer {
       const decryptedStudent = {
         ...student,
         email: await unprotectData(student.email, "email"),
+        firstName: await unprotectData(student.firstName, "name"),
+        lastName: await unprotectData(student.lastName, "name"),
+        otherName: student.otherName ? await unprotectData(student.otherName, "name") : null,
+        phone: student.phone ? await unprotectData(student.phone, "phone") : null,
         user: {
           ...student.user,
           email: await unprotectData(student.user.email, "email"),
@@ -110,10 +116,10 @@ export class UserServiceServer {
   /**
    * Find teacher by employee ID (server-side)
    */
-  static async findTeacherByTeacherId(teacherId: string) {
+  static async findTeacherByEmployeeId(employeeId: string) { // Renamed method
     try {
       const teacher = await prisma.teacher.findUnique({
-        where: { teacherId },
+        where: { employeeId }, // Changed from teacherId to employeeId
         include: {
           user: {
             select: {
@@ -133,6 +139,10 @@ export class UserServiceServer {
       const decryptedTeacher = {
         ...teacher,
         email: await unprotectData(teacher.email, "email"),
+        firstName: await unprotectData(teacher.firstName, "name"),
+        lastName: await unprotectData(teacher.lastName, "name"),
+        otherName: teacher.otherName ? await unprotectData(teacher.otherName, "name") : null,
+        phone: teacher.phone ? await unprotectData(teacher.phone, "phone") : null,
         user: {
           ...teacher.user,
           email: await unprotectData(teacher.user.email, "email"),
@@ -170,7 +180,7 @@ export class UserServiceServer {
       await prisma.auditLog.create({
         data: {
           userId,
-          action: "USER_LOGGED_IN",
+          action: AuditAction.USER_LOGGED_IN,
           resourceType: "USER",
           resourceId: userId,
           ipAddress,
@@ -226,7 +236,7 @@ export class UserServiceServer {
       await prisma.auditLog.create({
         data: {
           userId,
-          action: "USER_LOGIN_FAILED",
+          action: AuditAction.USER_LOGIN_FAILED,
           resourceType: "USER",
           resourceId: userId,
           details: {
@@ -378,16 +388,16 @@ export class UserServiceServer {
                 id: true,
                 matricNumber: true,
                 firstName: true,
-                lastname: true,
+                lastName: true,
                 department: true,
               },
             },
             teacher: {
               select: {
                 id: true,
-                teacherId: true,
+                employeeId: true, // Changed from teacherId to employeeId
                 firstName: true,
-                lastname: true,
+                lastName: true,
                 department: true,
               },
             },
@@ -404,7 +414,7 @@ export class UserServiceServer {
       // Decrypt sensitive data
       const decryptedUsers = await Promise.all(
         users.map(async (user) => {
-          const decryptedUser = {
+          const decryptedUser: UserWithRelations = {
             ...user,
             email: await unprotectData(user.email, "email"),
           };
@@ -413,7 +423,7 @@ export class UserServiceServer {
             decryptedUser.student = {
               ...user.student,
               firstName: await unprotectData(user.student.firstName, "name"),
-              lastname: await unprotectData(user.student.lastname, "name"),
+              lastName: await unprotectData(user.student.lastName, "name"),
             };
           }
 
@@ -421,7 +431,7 @@ export class UserServiceServer {
             decryptedUser.teacher = {
               ...user.teacher,
               firstName: await unprotectData(user.teacher.firstName, "name"),
-              lastname: await unprotectData(user.teacher.lastname, "name"),
+              lastName: await unprotectData(user.teacher.lastName, "name"),
             };
           }
 

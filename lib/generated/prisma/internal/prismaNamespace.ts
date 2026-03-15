@@ -411,7 +411,8 @@ export const ModelName = {
   UserActivity: 'UserActivity',
   UserPreferences: 'UserPreferences',
   RequestLog: 'RequestLog',
-  DataProcessingLog: 'DataProcessingLog'
+  DataProcessingLog: 'DataProcessingLog',
+  NINCache: 'NINCache'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -427,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "student" | "teacher" | "admin" | "course" | "lecture" | "enrollment" | "assignment" | "assignmentSubmission" | "submission" | "exam" | "examResult" | "attendance" | "portfolio" | "auditLog" | "notification" | "systemConfig" | "metric" | "rateLimit" | "securityEvent" | "userActivity" | "userPreferences" | "requestLog" | "dataProcessingLog"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "passwordResetToken" | "student" | "teacher" | "admin" | "course" | "lecture" | "enrollment" | "assignment" | "assignmentSubmission" | "submission" | "exam" | "examResult" | "attendance" | "portfolio" | "auditLog" | "notification" | "systemConfig" | "metric" | "rateLimit" | "securityEvent" | "userActivity" | "userPreferences" | "requestLog" | "dataProcessingLog" | "nINCache"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2503,6 +2504,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    NINCache: {
+      payload: Prisma.$NINCachePayload<ExtArgs>
+      fields: Prisma.NINCacheFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NINCacheFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NINCacheFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>
+        }
+        findFirst: {
+          args: Prisma.NINCacheFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NINCacheFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>
+        }
+        findMany: {
+          args: Prisma.NINCacheFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>[]
+        }
+        create: {
+          args: Prisma.NINCacheCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>
+        }
+        createMany: {
+          args: Prisma.NINCacheCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NINCacheCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>[]
+        }
+        delete: {
+          args: Prisma.NINCacheDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>
+        }
+        update: {
+          args: Prisma.NINCacheUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>
+        }
+        deleteMany: {
+          args: Prisma.NINCacheDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NINCacheUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NINCacheUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>[]
+        }
+        upsert: {
+          args: Prisma.NINCacheUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NINCachePayload>
+        }
+        aggregate: {
+          args: Prisma.NINCacheAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNINCache>
+        }
+        groupBy: {
+          args: Prisma.NINCacheGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NINCacheGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NINCacheCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NINCacheCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3121,6 +3196,31 @@ export const DataProcessingLogScalarFieldEnum = {
 export type DataProcessingLogScalarFieldEnum = (typeof DataProcessingLogScalarFieldEnum)[keyof typeof DataProcessingLogScalarFieldEnum]
 
 
+export const NINCacheScalarFieldEnum = {
+  id: 'id',
+  nin: 'nin',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  otherName: 'otherName',
+  gender: 'gender',
+  dateOfBirth: 'dateOfBirth',
+  phoneNumber: 'phoneNumber',
+  state: 'state',
+  lga: 'lga',
+  residenceAddress: 'residenceAddress',
+  photo: 'photo',
+  firstVerified: 'firstVerified',
+  lastVerified: 'lastVerified',
+  verificationCount: 'verificationCount',
+  lastVerifiedBy: 'lastVerifiedBy',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NINCacheScalarFieldEnum = (typeof NINCacheScalarFieldEnum)[keyof typeof NINCacheScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3556,6 +3656,7 @@ export type GlobalOmitConfig = {
   userPreferences?: Prisma.UserPreferencesOmit
   requestLog?: Prisma.RequestLogOmit
   dataProcessingLog?: Prisma.DataProcessingLogOmit
+  nINCache?: Prisma.NINCacheOmit
 }
 
 /* Types for Logging */

@@ -1110,3 +1110,51 @@ model DataProcessingLog {
   @@index([purpose])
   @@map("data_processing_logs")
 }
+
+
+// ===========================================================
+// 16. NIN CACHE - For caching NIN verification results
+// ===========================================================
+
+model NINCache {
+  id                String     @id @default(uuid())
+  
+  // NIN (National Identification Number) - unique identifier
+  nin               String     @unique(map: "nin_cache_nin_key")
+  
+  // Personal information from NIN
+  firstName         String     // First name from NIN
+  lastName          String     // Last name/surname from NIN
+  otherName         String?    // Middle/other name from NIN
+  gender            String    // Gender from NIN
+  dateOfBirth       DateTime  // Date of birth from NIN
+  phoneNumber       String    // Phone number from NIN
+  state             String    // State of birth
+  lga               String    // Local Government Area of birth
+  residenceAddress  String    // Residential address
+  photo             String?    // Base64 encoded photo or URL to photo
+  
+  // Verification tracking
+  firstVerified     DateTime   @default(now()) // When this NIN was first verified
+  lastVerified      DateTime   @updatedAt      // When this NIN was last verified
+  verificationCount Int        @default(1)     // Number of times this NIN has been verified
+  
+  // Optional: Add reference to user who last verified
+  lastVerifiedBy    String?    // User ID who last verified this NIN
+   
+  // Metadata
+  metadata          Json?      // Additional NIN data that doesn't fit other fields
+  
+  // Timestamps
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  
+  // Indexes for performance
+  @@index([nin])
+  @@index([lastName])
+  @@index([firstName])
+  @@index([dateOfBirth])
+  @@index([lastVerified])
+  @@index([verificationCount])
+  @@map("nin_cache")
+}

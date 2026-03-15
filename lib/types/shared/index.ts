@@ -347,15 +347,6 @@ export interface ThemePreferences {
   compactMode: boolean;
 }
 
-export interface UserPreferences {
-  theme: ThemePreferences;
-  notifications: NotificationSettings;
-  language: string;
-  timezone: string;
-  dateFormat: string;
-  timeFormat: "12h" | "24h";
-}
-
 // ===========================================================
 // Activity & Audit Types (Shared)
 // ===========================================================
@@ -460,4 +451,132 @@ export interface NetworkError {
   status?: number;
   statusText?: string;
   data?: any;
+}
+
+export interface NINVerificationResult {
+  exists: boolean;
+  data?: {
+    lastName?: string;
+    firstName?: string;
+    otherName?: string;
+    gender?: string;
+    dateOfBirth?: string;
+    phoneNumber?: string;
+    state?: string;
+    lga?: string;
+    residenceAddress?: string;
+    photo?: string;
+  };
+  requiresManualEntry?: boolean;
+}
+
+export interface BalanceResponse {
+  status: "success" | "error" | string;
+  balance?: number;
+  currency?: string;
+  message?: string;
+  raw?: any;
+}
+// Define types for better type safety
+export type UserWithRelations = {
+  id: string;
+  email: string;
+  name: string | null;
+  role: string;
+  isActive: boolean;
+  emailVerified: Date | null;
+  lastLoginAt: Date | null;
+  loginCount: number;
+  failedLoginAttempts: number;
+  lastFailedLoginAt: Date | null;
+  accountLocked: boolean;
+  lockedUntil: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+  student?: {
+    id: string;
+    matricNumber: string;
+    firstName: string;
+    lastName: string;
+    department: string;
+    [key: string]: any;
+  } | null;
+  teacher?: {
+    id: string;
+    employeeId: string; // Changed from teacherId to employeeId
+    firstName: string;
+    lastName: string;
+    department: string;
+    [key: string]: any;
+  } | null;
+};
+
+// Define response types
+export interface UserProfile {
+  id: string;
+  email: string;
+  name: string | null;
+  role: string;
+  isActive: boolean;
+  emailVerified: Date | null;
+  lastLoginAt: Date | null;
+  createdAt: Date;
+  student?: {
+    id: string;
+    matricNumber: string;
+    firstName: string;
+    lastName: string; // Changed from lastname to lastName
+    department: string;
+  };
+  teacher?: {
+    id: string;
+    employeeId: string; // Changed from teacherId to employeeId
+    firstName: string;
+    lastName: string; // Changed from lastname to lastName
+    department: string;
+  };
+}
+
+export interface ProfileUpdateResponse {
+  success: boolean;
+  message: string;
+  requiresVerification?: boolean;
+}
+
+export interface PasswordChangeResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface AccountDeletionResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface UserPreferences {
+  id: string;
+  userId: string;
+  emailNotifications: boolean;
+  pushNotifications: boolean;
+  assignmentReminders: boolean;
+  gradeAlerts: boolean;
+  lectureReminders: boolean;  
+  smsNotifications?: boolean;
+  examReminders?: boolean;
+  theme?: string | null;
+  language?: string | null;
+  timezone?: string | null;
+  dateFormat?: string | null;
+  timeFormat?: string | null;
+  itemsPerPage?: number | null;
+  dashboardLayout?: any | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface PreferencesResponse {
+  success: boolean;
+  message: string;
+  preferences?: UserPreferences;
 }

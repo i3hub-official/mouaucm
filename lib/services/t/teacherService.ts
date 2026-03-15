@@ -2,10 +2,14 @@
 import { prisma } from "@/lib/server/prisma";
 import {
   protectData,
+  unprotectData,
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
 import { TeacherUser } from "@/lib/types/t/index";
+import { PrismaTeacherResult } from "@/lib/types/t/index";
+// Define the actual return type from Prisma
+
 
 export class TeacherService {
   /**
@@ -35,31 +39,34 @@ export class TeacherService {
         return null;
       }
 
+      // Cast to proper type
+      const typedTeacher = teacher as PrismaTeacherResult;
+
       // Decrypt sensitive data
       const decryptedTeacher: TeacherUser = {
-        id: teacher.id,
-        teacherId: teacher.teacherId,
-        email: await this.decryptField(teacher.user.email, "email"),
-        phone: await this.decryptField(teacher.phone, "phone"),
-        firstName: await this.decryptField(teacher.firstName, "name"),
-        lastname: await this.decryptField(teacher.lastname, "name"),
-        otherName: teacher.otherName
-          ? await this.decryptField(teacher.otherName, "name")
+        id: typedTeacher.id,
+        teacherId: typedTeacher.employeeId, // Map employeeId to teacherId for the interface
+        email: await this.decryptField(typedTeacher.user.email, "email"),
+        phone: await this.decryptField(typedTeacher.phone, "phone"),
+        firstName: await this.decryptField(typedTeacher.firstName, "name"),
+        lastName: await this.decryptField(typedTeacher.lastName, "name"),
+        otherName: typedTeacher.otherName
+          ? await this.decryptField(typedTeacher.otherName, "name")
           : null,
-        department: teacher.department,
-        institution: teacher.institution,
-        qualification: teacher.qualification ?? undefined,
-        specialization: teacher.specialization ?? undefined,
-        experience: teacher.experience,
-        dateJoined: teacher.dateJoined,
-        isActive: teacher.isActive,
-        passportUrl: teacher.passportUrl,
+        department: typedTeacher.department,
+        institution: typedTeacher.institution || "", // Provide default empty string
+        qualification: typedTeacher.qualification ?? undefined,
+        specialization: typedTeacher.specialization ?? undefined,
+        experience: typedTeacher.experience,
+        dateJoined: typedTeacher.dateJoined,
+        isActive: typedTeacher.user.isActive,
+        passportUrl: typedTeacher.passportUrl,
         // Add required properties from user
         role: "TEACHER",
-        name: teacher.user.name ?? "",
-        emailVerified: teacher.user.emailVerified,
-        lastLoginAt: teacher.user.lastLoginAt,
-        createdAt: teacher.user.createdAt,
+        name: typedTeacher.user.name ?? "",
+        emailVerified: typedTeacher.user.emailVerified,
+        lastLoginAt: typedTeacher.user.lastLoginAt,
+        createdAt: typedTeacher.user.createdAt,
       };
 
       return decryptedTeacher;
@@ -96,31 +103,33 @@ export class TeacherService {
         return null;
       }
 
+      // Cast to proper type
+      const typedTeacher = teacher as PrismaTeacherResult;
+
       // Decrypt sensitive data
       const decryptedTeacher: TeacherUser = {
-        id: teacher.id,
-        teacherId: teacher.teacherId,
-        email: await this.decryptField(teacher.user.email, "email"),
-        phone: await this.decryptField(teacher.phone, "phone"),
-        firstName: await this.decryptField(teacher.firstName, "name"),
-        lastname: await this.decryptField(teacher.lastname, "name"),
-        otherName: teacher.otherName
-          ? await this.decryptField(teacher.otherName, "name")
+        id: typedTeacher.id,
+        teacherId: typedTeacher.employeeId,
+        email: await this.decryptField(typedTeacher.user.email, "email"),
+        phone: await this.decryptField(typedTeacher.phone, "phone"),
+        firstName: await this.decryptField(typedTeacher.firstName, "name"),
+        lastName: await this.decryptField(typedTeacher.lastName, "name"),
+        otherName: typedTeacher.otherName
+          ? await this.decryptField(typedTeacher.otherName, "name")
           : null,
-        department: teacher.department,
-        institution: teacher.institution,
-        qualification: teacher.qualification ?? undefined,
-        specialization: teacher.specialization ?? undefined,
-        experience: teacher.experience,
-        dateJoined: teacher.dateJoined,
-        isActive: teacher.isActive,
-        passportUrl: teacher.passportUrl,
-        // Add required properties from user
+        department: typedTeacher.department,
+        institution: typedTeacher.institution || "",
+        qualification: typedTeacher.qualification ?? undefined,
+        specialization: typedTeacher.specialization ?? undefined,
+        experience: typedTeacher.experience,
+        dateJoined: typedTeacher.dateJoined,
+        isActive: typedTeacher.user.isActive,
+        passportUrl: typedTeacher.passportUrl,
         role: "TEACHER",
-        name: teacher.user.name ?? "",
-        emailVerified: teacher.user.emailVerified,
-        lastLoginAt: teacher.user.lastLoginAt,
-        createdAt: teacher.user.createdAt,
+        name: typedTeacher.user.name ?? "",
+        emailVerified: typedTeacher.user.emailVerified,
+        lastLoginAt: typedTeacher.user.lastLoginAt,
+        createdAt: typedTeacher.user.createdAt,
       };
 
       return decryptedTeacher;
@@ -139,9 +148,7 @@ export class TeacherService {
 
       const teacher = await prisma.teacher.findFirst({
         where: {
-          user: {
-            email: protectedEmail.encrypted,
-          },
+          emailSearchHash: protectedEmail.searchHash,
         },
         include: {
           user: {
@@ -163,31 +170,33 @@ export class TeacherService {
         return null;
       }
 
+      // Cast to proper type
+      const typedTeacher = teacher as PrismaTeacherResult;
+
       // Decrypt sensitive data
       const decryptedTeacher: TeacherUser = {
-        id: teacher.id,
-        teacherId: teacher.teacherId,
-        email: await this.decryptField(teacher.user.email, "email"),
-        phone: await this.decryptField(teacher.phone, "phone"),
-        firstName: await this.decryptField(teacher.firstName, "name"),
-        lastname: await this.decryptField(teacher.lastname, "name"),
-        otherName: teacher.otherName
-          ? await this.decryptField(teacher.otherName, "name")
+        id: typedTeacher.id,
+        teacherId: typedTeacher.employeeId,
+        email: await this.decryptField(typedTeacher.user.email, "email"),
+        phone: await this.decryptField(typedTeacher.phone, "phone"),
+        firstName: await this.decryptField(typedTeacher.firstName, "name"),
+        lastName: await this.decryptField(typedTeacher.lastName, "name"),
+        otherName: typedTeacher.otherName
+          ? await this.decryptField(typedTeacher.otherName, "name")
           : null,
-        department: teacher.department,
-        institution: teacher.institution,
-        qualification: teacher.qualification ?? undefined,
-        specialization: teacher.specialization ?? undefined,
-        experience: teacher.experience,
-        dateJoined: teacher.dateJoined,
-        isActive: teacher.isActive,
-        passportUrl: teacher.passportUrl,
-        // Add required properties from user
+        department: typedTeacher.department,
+        institution: typedTeacher.institution || "",
+        qualification: typedTeacher.qualification ?? undefined,
+        specialization: typedTeacher.specialization ?? undefined,
+        experience: typedTeacher.experience,
+        dateJoined: typedTeacher.dateJoined,
+        isActive: typedTeacher.user.isActive,
+        passportUrl: typedTeacher.passportUrl,
         role: "TEACHER",
-        name: teacher.user.name ?? "",
-        emailVerified: teacher.user.emailVerified,
-        lastLoginAt: teacher.user.lastLoginAt,
-        createdAt: teacher.user.createdAt,
+        name: typedTeacher.user.name ?? "",
+        emailVerified: typedTeacher.user.emailVerified,
+        lastLoginAt: typedTeacher.user.lastLoginAt,
+        createdAt: typedTeacher.user.createdAt,
       };
 
       return decryptedTeacher;
@@ -200,12 +209,12 @@ export class TeacherService {
   /**
    * Get teacher by employee ID
    */
-  static async getTeacherByTeacherId(
-    teacherId: string
+  static async getTeacherByEmployeeId(
+    employeeId: string
   ): Promise<TeacherUser | null> {
     try {
       const teacher = await prisma.teacher.findUnique({
-        where: { teacherId },
+        where: { employeeId }, // Changed from teacherId to employeeId
         include: {
           user: {
             select: {
@@ -226,33 +235,36 @@ export class TeacherService {
         return null;
       }
 
+      // Cast to proper type
+      const typedTeacher = teacher as PrismaTeacherResult;
+
       // Decrypt sensitive data
-      const decryptedTeacher = {
-        ...teacher,
-        email: await this.decryptField(teacher.user.email, "email"),
-        phone: await this.decryptField(teacher.phone, "phone"),
-        firstName: await this.decryptField(teacher.firstName, "name"),
-        lastname: await this.decryptField(teacher.lastname, "name"),
-        otherName: teacher.otherName
-          ? await this.decryptField(teacher.otherName, "name")
+      const decryptedTeacher: TeacherUser = {
+        id: typedTeacher.id,
+        teacherId: typedTeacher.employeeId,
+        email: await this.decryptField(typedTeacher.user.email, "email"),
+        phone: await this.decryptField(typedTeacher.phone, "phone"),
+        firstName: await this.decryptField(typedTeacher.firstName, "name"),
+        lastName: await this.decryptField(typedTeacher.lastName, "name"),
+        otherName: typedTeacher.otherName
+          ? await this.decryptField(typedTeacher.otherName, "name")
           : null,
-        department: teacher.department,
-        institution: teacher.institution,
-        qualification: teacher.qualification,
-        specialization: teacher.specialization,
-        experience: teacher.experience,
-        dateJoined: teacher.dateJoined,
-        isActive: teacher.isActive,
-        passportUrl: teacher.passportUrl,
-        // Add required properties from user
+        department: typedTeacher.department,
+        institution: typedTeacher.institution || "",
+        qualification: typedTeacher.qualification ?? undefined,
+        specialization: typedTeacher.specialization ?? undefined,
+        experience: typedTeacher.experience,
+        dateJoined: typedTeacher.dateJoined,
+        isActive: typedTeacher.user.isActive,
+        passportUrl: typedTeacher.passportUrl,
         role: "TEACHER",
-        name: teacher.user.name ?? "",
-        emailVerified: teacher.user.emailVerified,
-        lastLoginAt: teacher.user.lastLoginAt,
-        createdAt: teacher.user.createdAt,
+        name: typedTeacher.user.name ?? "",
+        emailVerified: typedTeacher.user.emailVerified,
+        lastLoginAt: typedTeacher.user.lastLoginAt,
+        createdAt: typedTeacher.user.createdAt,
       };
 
-      return decryptedTeacher as TeacherUser;
+      return decryptedTeacher;
     } catch (error) {
       console.error("Error getting teacher by employee ID:", error);
       throw error;
@@ -263,9 +275,9 @@ export class TeacherService {
    * Create teacher
    */
   static async createTeacher(teacherData: {
-    teacherId: string;
+    employeeId: string; // Changed from teacherId to employeeId
     firstName: string;
-    lastname: string;
+    lastName: string;
     otherName?: string;
     email: string;
     phone: string;
@@ -275,7 +287,6 @@ export class TeacherService {
     specialization?: string;
     experience?: string;
     password: string;
-    userId: string;
   }) {
     try {
       // Check if email already exists
@@ -292,7 +303,7 @@ export class TeacherService {
 
       // Check if employee ID already exists
       const existingTeacher = await prisma.teacher.findFirst({
-        where: { teacherId: teacherData.teacherId },
+        where: { employeeId: teacherData.employeeId }, // Changed from teacherId to employeeId
       });
 
       if (existingTeacher) {
@@ -319,8 +330,9 @@ export class TeacherService {
           email: protectedEmail.encrypted,
           passwordHash: hashedPassword.encrypted,
           role: "TEACHER",
-          isActive: false, // Will be activated after email verification
+          isActive: false,
           emailVerified: null,
+          name: `${teacherData.firstName} ${teacherData.lastName}`,
         },
       });
 
@@ -328,11 +340,11 @@ export class TeacherService {
       const teacher = await prisma.teacher.create({
         data: {
           userId: user.id,
-          teacherId: teacherData.teacherId,
+          employeeId: teacherData.employeeId, // Changed from teacherId to employeeId
           firstName: (
             await protectData(teacherData.firstName, "name")
           ).encrypted,
-          lastname: (await protectData(teacherData.lastname, "name")).encrypted,
+          lastName: (await protectData(teacherData.lastName, "name")).encrypted,
           otherName: teacherData.otherName
             ? (
                 await protectData(teacherData.otherName, "name")
@@ -347,6 +359,13 @@ export class TeacherService {
           experience: teacherData.experience,
           dateJoined: new Date(),
           isActive: true,
+          emailSearchHash: protectedEmail.searchHash,
+          phoneSearchHash: (
+            await protectData(teacherData.phone, "phone")
+          ).searchHash,
+          employeeIdSearchHash: (
+            await protectData(teacherData.employeeId, "name")
+          ).searchHash,
         },
       });
 
@@ -355,10 +374,10 @@ export class TeacherService {
         data: {
           userId: user.id,
           action: "TEACHER_REGISTERED",
-          resourceType: "USER",
+          resourceType: "TEACHER",
           resourceId: teacher.id,
           details: {
-            teacherId: teacherData.teacherId,
+            employeeId: teacherData.employeeId,
             email: protectedEmail.encrypted,
             department: teacherData.department,
             institution: teacherData.institution,
@@ -366,7 +385,6 @@ export class TeacherService {
         },
       });
 
-      // In a real implementation, send verification email here
       console.log(`Teacher account created for: ${teacherData.email}`);
 
       return {
@@ -374,9 +392,9 @@ export class TeacherService {
         teacher: {
           id: teacher.id,
           userId: user.id,
-          email: protectedEmail.encrypted,
+          email: teacherData.email,
           firstName: teacherData.firstName,
-          lastname: teacherData.lastname,
+          lastName: teacherData.lastName,
           otherName: teacherData.otherName,
           phone: teacherData.phone,
           department: teacherData.department,
@@ -403,7 +421,7 @@ export class TeacherService {
     teacherId: string,
     profileData: {
       firstName?: string;
-      lastname?: string;
+      lastName?: string;
       otherName?: string;
       phone?: string;
       department?: string;
@@ -437,17 +455,17 @@ export class TeacherService {
       const updateData: any = {};
 
       if (profileData.firstName !== undefined) {
-        updateData.firstName = await protectData(profileData.firstName, "name");
+        updateData.firstName = (await protectData(profileData.firstName, "name")).encrypted;
       }
-      if (profileData.lastname !== undefined) {
-        updateData.lastname = await protectData(profileData.lastname, "name");
+      if (profileData.lastName !== undefined) {
+        updateData.lastName = (await protectData(profileData.lastName, "name")).encrypted;
       }
       if (profileData.otherName !== undefined) {
-        updateData.otherName = await protectData(profileData.otherName, "name");
+        updateData.otherName = (await protectData(profileData.otherName, "name")).encrypted;
       }
       if (profileData.phone !== undefined) {
-        updateData.phone = await protectData(profileData.phone, "phone");
         const protectedPhone = await protectData(profileData.phone, "phone");
+        updateData.phone = protectedPhone.encrypted;
         updateData.phoneSearchHash = protectedPhone.searchHash;
       }
       if (profileData.department !== undefined) {
@@ -483,7 +501,7 @@ export class TeacherService {
         data: {
           userId: teacher.userId,
           action: "PROFILE_UPDATED",
-          resourceType: "USER",
+          resourceType: "TEACHER",
           resourceId: teacherId,
           details: {
             updatedFields: Object.keys(profileData),
@@ -514,9 +532,7 @@ export class TeacherService {
 
       const teacher = await prisma.teacher.findFirst({
         where: {
-          user: {
-            email: protectedEmail.encrypted,
-          },
+          emailSearchHash: protectedEmail.searchHash,
         },
         include: {
           user: {
@@ -543,11 +559,22 @@ export class TeacherService {
         throw new Error("Invalid email or password");
       }
 
+      // Cast to proper type
+      const typedTeacher = teacher as PrismaTeacherResult & {
+        user: {
+          passwordHash: string | null;
+          accountLocked: boolean;
+          lockedUntil: Date | null;
+          failedLoginAttempts: number;
+          lastFailedLoginAt: Date | null;
+        }
+      };
+
       // Check if account is locked
       if (
-        teacher.user.accountLocked &&
-        teacher.user.lockedUntil &&
-        teacher.user.lockedUntil > new Date()
+        typedTeacher.user.accountLocked &&
+        typedTeacher.user.lockedUntil &&
+        typedTeacher.user.lockedUntil > new Date()
       ) {
         throw new Error(
           "Account is temporarily locked. Please try again later."
@@ -555,17 +582,17 @@ export class TeacherService {
       }
 
       // Verify password
-      if (!teacher.user.passwordHash) {
+      if (!typedTeacher.user.passwordHash) {
         throw new Error("Invalid email or password");
       }
       const isValidPassword = await verifyPassword(
         password,
-        teacher.user.passwordHash
+        typedTeacher.user.passwordHash
       );
 
       if (!isValidPassword) {
         // Increment failed attempts
-        const failedAttempts = teacher.user.failedLoginAttempts + 1;
+        const failedAttempts = typedTeacher.user.failedLoginAttempts + 1;
         const updateData: any = {
           failedLoginAttempts: failedAttempts,
           lastFailedLoginAt: new Date(),
@@ -578,7 +605,7 @@ export class TeacherService {
         }
 
         await prisma.user.update({
-          where: { id: teacher.user.id },
+          where: { id: typedTeacher.user.id },
           data: updateData,
         });
 
@@ -586,9 +613,9 @@ export class TeacherService {
       }
 
       // Reset failed attempts on successful login
-      if (teacher.user.failedLoginAttempts > 0) {
+      if (typedTeacher.user.failedLoginAttempts > 0) {
         await prisma.user.update({
-          where: { id: teacher.user.id },
+          where: { id: typedTeacher.user.id },
           data: {
             failedLoginAttempts: 0,
             lastFailedLoginAt: null,
@@ -600,7 +627,7 @@ export class TeacherService {
 
       // Update last login
       await prisma.user.update({
-        where: { id: teacher.user.id },
+        where: { id: typedTeacher.user.id },
         data: {
           lastLoginAt: new Date(),
           loginCount: { increment: 1 },
@@ -610,10 +637,10 @@ export class TeacherService {
       // Log successful login
       await prisma.auditLog.create({
         data: {
-          userId: teacher.user.id,
+          userId: typedTeacher.user.id,
           action: "USER_LOGGED_IN",
-          resourceType: "USER",
-          resourceId: teacher.id,
+          resourceType: "TEACHER",
+          resourceId: typedTeacher.id,
           details: {
             email: protectedEmail.encrypted,
             role: "TEACHER",
@@ -622,32 +649,32 @@ export class TeacherService {
       });
 
       // Decrypt sensitive data
-      const decryptedTeacher = {
-        ...teacher,
-        email: await this.decryptField(teacher.user.email, "email"),
-        phone: await this.decryptField(teacher.phone, "phone"),
-        firstName: await this.decryptField(teacher.firstName, "name"),
-        lastname: await this.decryptField(teacher.lastname, "name"),
-        otherName: teacher.otherName
-          ? await this.decryptField(teacher.otherName, "name")
+      const decryptedTeacher: TeacherUser = {
+        id: typedTeacher.id,
+        teacherId: typedTeacher.employeeId,
+        email: await this.decryptField(typedTeacher.user.email, "email"),
+        phone: await this.decryptField(typedTeacher.phone, "phone"),
+        firstName: await this.decryptField(typedTeacher.firstName, "name"),
+        lastName: await this.decryptField(typedTeacher.lastName, "name"),
+        otherName: typedTeacher.otherName
+          ? await this.decryptField(typedTeacher.otherName, "name")
           : null,
-        department: teacher.department,
-        institution: teacher.institution,
-        qualification: teacher.qualification,
-        specialization: teacher.specialization,
-        experience: teacher.experience,
-        dateJoined: teacher.dateJoined,
-        isActive: teacher.user.isActive,
-        passportUrl: teacher.passportUrl,
-        // Add required properties from user
+        department: typedTeacher.department,
+        institution: typedTeacher.institution || "",
+        qualification: typedTeacher.qualification ?? undefined,
+        specialization: typedTeacher.specialization ?? undefined,
+        experience: typedTeacher.experience,
+        dateJoined: typedTeacher.dateJoined,
+        isActive: typedTeacher.user.isActive,
+        passportUrl: typedTeacher.passportUrl,
         role: "TEACHER",
-        name: teacher.user.name ?? "",
-        emailVerified: teacher.user.emailVerified,
-        lastLoginAt: teacher.user.lastLoginAt,
-        createdAt: teacher.user.createdAt,
+        name: typedTeacher.user.name ?? "",
+        emailVerified: typedTeacher.user.emailVerified,
+        lastLoginAt: typedTeacher.user.lastLoginAt,
+        createdAt: typedTeacher.user.createdAt,
       };
 
-      return decryptedTeacher as TeacherUser;
+      return decryptedTeacher;
     } catch (error) {
       console.error("Teacher authentication error:", error);
       throw error;
@@ -674,7 +701,9 @@ export class TeacherService {
         where.department = filters.department;
       }
       if (filters?.isActive !== undefined) {
-        where.isActive = filters.isActive;
+        where.user = {
+          isActive: filters.isActive,
+        };
       }
 
       const [teachers, total] = await Promise.all([
@@ -700,17 +729,21 @@ export class TeacherService {
         prisma.teacher.count({ where }),
       ]);
 
+      // Cast to proper type
+      const typedTeachers = teachers as PrismaTeacherResult[];
+
       // Decrypt sensitive data for each teacher
       const decryptedTeachers = await Promise.all(
-        teachers.map(async (teacher) => ({
-          ...teacher,
-          email: await this.decryptField(teacher.user.email, "email"),
-          phone: await this.decryptField(teacher.phone, "phone"),
+        typedTeachers.map(async (teacher) => ({
+          id: teacher.id,
+          employeeId: teacher.employeeId,
           firstName: await this.decryptField(teacher.firstName, "name"),
-          lastname: await this.decryptField(teacher.lastname, "name"),
+          lastName: await this.decryptField(teacher.lastName, "name"),
           otherName: teacher.otherName
             ? await this.decryptField(teacher.otherName, "name")
             : null,
+          email: await this.decryptField(teacher.user.email, "email"),
+          phone: await this.decryptField(teacher.phone, "phone"),
           department: teacher.department,
           institution: teacher.institution,
           qualification: teacher.qualification,
@@ -719,6 +752,9 @@ export class TeacherService {
           dateJoined: teacher.dateJoined,
           isActive: teacher.user.isActive,
           passportUrl: teacher.passportUrl,
+          gender: teacher.gender,
+          userId: teacher.userId,
+          user: teacher.user,
         }))
       );
 
@@ -777,7 +813,14 @@ export class TeacherService {
                   mode: "insensitive",
                 },
               },
+              {
+                employeeId: {
+                  contains: query,
+                  mode: "insensitive",
+                },
+              },
             ],
+            ...where,
           },
           skip,
           take: limit,
@@ -799,17 +842,21 @@ export class TeacherService {
         prisma.teacher.count({ where }),
       ]);
 
+      // Cast to proper type
+      const typedTeachers = teachers as PrismaTeacherResult[];
+
       // Decrypt sensitive data for each teacher
       const decryptedTeachers = await Promise.all(
-        teachers.map(async (teacher) => ({
-          ...teacher,
-          email: await this.decryptField(teacher.user.email, "email"),
-          phone: await this.decryptField(teacher.phone, "phone"),
+        typedTeachers.map(async (teacher) => ({
+          id: teacher.id,
+          employeeId: teacher.employeeId,
           firstName: await this.decryptField(teacher.firstName, "name"),
-          lastname: await this.decryptField(teacher.lastname, "name"),
+          lastName: await this.decryptField(teacher.lastName, "name"),
           otherName: teacher.otherName
             ? await this.decryptField(teacher.otherName, "name")
             : null,
+          email: await this.decryptField(teacher.user.email, "email"),
+          phone: await this.decryptField(teacher.phone, "phone"),
           department: teacher.department,
           institution: teacher.institution,
           qualification: teacher.qualification,
@@ -818,6 +865,9 @@ export class TeacherService {
           dateJoined: teacher.dateJoined,
           isActive: teacher.user.isActive,
           passportUrl: teacher.passportUrl,
+          gender: teacher.gender,
+          userId: teacher.userId,
+          user: teacher.user,
         }))
       );
 
@@ -844,7 +894,6 @@ export class TeacherService {
     fieldType: "email" | "phone" | "name"
   ): Promise<string> {
     try {
-      const { unprotectData } = await import("@/lib/security/dataProtection");
       return await unprotectData(encryptedField, fieldType);
     } catch (error) {
       console.error("Error decrypting field:", error);

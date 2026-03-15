@@ -78,7 +78,8 @@ export const ModelName = {
   UserActivity: 'UserActivity',
   UserPreferences: 'UserPreferences',
   RequestLog: 'RequestLog',
-  DataProcessingLog: 'DataProcessingLog'
+  DataProcessingLog: 'DataProcessingLog',
+  NINCache: 'NINCache'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -674,6 +675,31 @@ export const DataProcessingLogScalarFieldEnum = {
 } as const
 
 export type DataProcessingLogScalarFieldEnum = (typeof DataProcessingLogScalarFieldEnum)[keyof typeof DataProcessingLogScalarFieldEnum]
+
+
+export const NINCacheScalarFieldEnum = {
+  id: 'id',
+  nin: 'nin',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  otherName: 'otherName',
+  gender: 'gender',
+  dateOfBirth: 'dateOfBirth',
+  phoneNumber: 'phoneNumber',
+  state: 'state',
+  lga: 'lga',
+  residenceAddress: 'residenceAddress',
+  photo: 'photo',
+  firstVerified: 'firstVerified',
+  lastVerified: 'lastVerified',
+  verificationCount: 'verificationCount',
+  lastVerifiedBy: 'lastVerifiedBy',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NINCacheScalarFieldEnum = (typeof NINCacheScalarFieldEnum)[keyof typeof NINCacheScalarFieldEnum]
 
 
 export const SortOrder = {

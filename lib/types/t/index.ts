@@ -15,8 +15,7 @@ export interface TeacherUser extends BaseUser {
   department: string;
   institution: string;
   firstName: string;
-  lastname: string;
-  lastName?: string; // Alias for lastname
+  lastName: string; // Alias for lastname
   otherName?: string | null;
   phone: string;
   qualification?: string;
@@ -519,3 +518,40 @@ export interface PaginatedResponse<T> {
     totalPages: number;
   };
 }
+
+export type PrismaTeacherResult = {
+  id: string;
+  employeeId: string; // Changed from teacherId to employeeId
+  firstName: string;
+  lastName: string;
+  otherName: string | null;
+  gender: string | null;
+  phone: string;
+  email: string;
+  department: string;
+  institution: string | null;
+  qualification: string | null;
+  specialization: string | null;
+  experience: string | null;
+  dateJoined: Date;
+  isActive: boolean;
+  passportUrl: string | null;
+  userId: string;
+  emailSearchHash: string | null;
+  phoneSearchHash: string | null;
+  employeeIdSearchHash: string | null;
+  lastActivityAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+  user: {
+    id: string;
+    email: string;
+    name: string | null;
+    role: string;
+    isActive: boolean;
+    emailVerified: Date | null;
+    lastLoginAt: Date | null;
+    createdAt: Date;
+  };
+};

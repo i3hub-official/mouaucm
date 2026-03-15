@@ -157,3 +157,8 @@ export type RequestLog = Prisma.RequestLogModel
  * 
  */
 export type DataProcessingLog = Prisma.DataProcessingLogModel
+/**
+ * Model NINCache
+ * 
+ */
+export type NINCache = Prisma.NINCacheModel
