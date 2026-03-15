@@ -5,12 +5,7 @@ const nextConfig: NextConfig = {
   compress: true,
   productionBrowserSourceMaps: false,
 
-  // turbopack: {},
-
-  // env: {
-  //   DATABASE_URL: process.env.DATABASE_URL,
-  //   DIRECT_URL: process.env.DIRECT_URL,
-  // },
+  turbopack: {},
 
   experimental: {
     serverActions: {
@@ -54,20 +49,6 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Optional: Redirect HTTP → HTTPS at Next.js level (works in dev + prod)
-  async redirects() {
-    return process.env.NODE_ENV === "production"
-      ? [
-          {
-            source: "/:path*",
-            has: [{ type: "header", key: "x-forwarded-proto", value: "http" }],
-            destination: "https://:host/:path*",
-            permanent: true,
-          },
-        ]
-      : [];
-  },
-
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
@@ -86,17 +67,7 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  // This is the magic: Force HTTPS in dev too (optional)
-  // Only enable if you want HTTPS in local dev (requires cert)
-  // Note: 'devServer' is not supported in next.config.ts. Use a custom server or proxy for HTTPS in development.
-
-  // Best for production: Let reverse proxy (Nginx, Vercel, Cloudflare) handle HTTPS
-  // But this ensures cookies are secure
-  // Add this if you use cookies/auth:
-  // → Will be respected by NextAuth, cookies, etc.
-  // (No code change needed — Next.js reads this automatically)
-  // But you can also set it in .env:
-  // COOKIE_SECURE=true
+ // COOKIE_SECURE=true
 };
 
 export default nextConfig;
