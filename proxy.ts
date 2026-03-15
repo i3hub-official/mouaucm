@@ -7,9 +7,10 @@ import { orchestrator } from "@/lib/middleware/orchestrator";
 // ─────────────────────────────────────────────────────────────────────────────
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon\\.ico|robots\\.txt|manifest\\.json|health|auth/callback).*)",
+    "/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.json).*)",
   ],
 };
+
 
 // REQUIRED: Must be named `proxy` when file is proxy.ts
 export async function proxy(request: NextRequest): Promise<NextResponse> {
@@ -73,8 +74,3 @@ function handleNotFound(request: NextRequest): NextResponse {
   return NextResponse.rewrite(url);
 }
 
-export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.json).*)",
-  ],
-};
