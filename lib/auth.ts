@@ -6,8 +6,9 @@ import {
   verifyPassword,
   protectData,
   generateSearchableHash,
+  unprotectData,
 } from "@/lib/security/dataProtection";
-import { title } from "process";
+import { AuditAction, Role } from "@/lib/generated/prisma/enums";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -34,11 +35,10 @@ export const authOptions: NextAuthOptions = {
             const protectedEmail = await protectData(identifier, "email");
             const emailSearchHash = protectedEmail.searchHash;
 
+            // Find user by email search hash
             user = await prisma.user.findFirst({
               where: {
-                student: {
-                  emailSearchHash: emailSearchHash,
-                },
+                email: protectedEmail.encrypted,
               },
               include: {
                 student: {
@@ -49,44 +49,51 @@ export const authOptions: NextAuthOptions = {
                     college: true,
                     course: true,
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                     otherName: true,
                   },
                 },
                 teacher: {
                   select: {
                     id: true,
+                    employeeId: true, // Changed from teacherId to employeeId
                     department: true,
-                    title: true,
+                    qualification: true,
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                   },
                 },
                 admin: {
                   select: {
+                    id: true,
+                    employeeId: true, // Changed from adminId to employeeId
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                   },
                 },
               },
             });
           } else {
             // For matric/staff ID login
+            const upperIdentifier = identifier.toUpperCase();
+            
             user = await prisma.user.findFirst({
               where: {
                 OR: [
                   {
                     student: {
-                      matricNumber: { equals: identifier.toUpperCase() },
+                      matricNumber: upperIdentifier,
                     },
                   },
                   {
                     teacher: {
-                      teacherId: { equals: identifier.toUpperCase() },
+                      employeeId: upperIdentifier, // Changed from teacherId to employeeId
                     },
                   },
                   {
-                    admin: { adminId: { equals: identifier.toUpperCase() } },
+                    admin: {
+                      employeeId: upperIdentifier, // Changed from adminId to employeeId
+                    },
                   },
                 ],
               },
@@ -99,24 +106,26 @@ export const authOptions: NextAuthOptions = {
                     college: true,
                     course: true,
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                     otherName: true,
                   },
                 },
                 teacher: {
                   select: {
-                    teacherId: true,
+                    id: true,
+                    employeeId: true, // Changed from teacherId to employeeId
                     department: true,
-                    title: true,
+                    qualification: true,
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                   },
                 },
                 admin: {
                   select: {
-                    adminId: true,
+                    id: true,
+                    employeeId: true, // Changed from adminId to employeeId
                     firstName: true,
-                    lastname: true,
+                    lastName: true,
                   },
                 },
               },
@@ -170,38 +179,50 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
+          // Decrypt name fields
+          let firstName = "";
+          let lastName = "";
+          let otherName = "";
+
+          if (user.student) {
+            firstName = await unprotectData(user.student.firstName, "name");
+            lastName = await unprotectData(user.student.lastName, "name");
+            otherName = user.student.otherName 
+              ? await unprotectData(user.student.otherName, "name") 
+              : "";
+          } else if (user.teacher) {
+            firstName = await unprotectData(user.teacher.firstName, "name");
+            lastName = await unprotectData(user.teacher.lastName, "name");
+          } else if (user.admin) {
+            firstName = await unprotectData(user.admin.firstName, "name");
+            lastName = await unprotectData(user.admin.lastName, "name");
+          }
+
           // Format user name based on role
           let userName = "";
           let fullName = "";
 
           if (user.student) {
-            // Decrypt name fields for student (you might want to cache this or handle differently)
-            // For now, we'll use a placeholder or matric number
             userName = user.student.matricNumber;
-            fullName = `${user.student.lastname} ${user.student.firstName}`;
+            fullName = `${lastName} ${firstName}${otherName ? ` ${otherName}` : ""}`;
           } else if (user.teacher) {
-            userName = user.teacher.title
-              ? `${user.teacher.title} ${userName}`
-              : userName;
-            fullName = user.teacher.title
-              ? `${user.teacher.title} ${fullName}`
-              : fullName;
+            userName = user.teacher.employeeId; // Changed from teacherId to employeeId
+            fullName = `${lastName} ${firstName}`;
           } else if (user.admin) {
-            userName = user.admin.lastname + " " + user.admin.firstName;
-            fullName = `${user.admin.lastname} ${user.admin.firstName}`;
+            userName = user.admin.employeeId; // Changed from adminId to employeeId
+            fullName = `${lastName} ${firstName}`;
           }
 
           // Create audit log for successful login
           await prisma.auditLog.create({
             data: {
               userId: user.id,
-              action: "USER_LOGGED_IN",
+              action: AuditAction.USER_LOGGED_IN,
               resourceType: "USER",
               details: {
                 role: user.role,
                 identifier,
                 loginMethod: "credentials",
-                userAgent: req?.headers?.["user-agent"] ?? "unknown",
               },
               ipAddress: getIp(req),
               userAgent: req?.headers?.["user-agent"] ?? "unknown",
@@ -222,8 +243,8 @@ export const authOptions: NextAuthOptions = {
               user.student?.department ?? user.teacher?.department ?? null,
 
             // Staff specific
-            adminId: "adminId" in (user.admin ?? {}) ? user.admin?.firstName ?? null : null,
-            title: user.teacher?.title ?? null,
+            employeeId: user.teacher?.employeeId ?? user.admin?.employeeId ?? null, // Unified field
+            qualification: user.teacher?.qualification ?? null,
 
             // Additional info
             fullName: fullName,
@@ -233,7 +254,7 @@ export const authOptions: NextAuthOptions = {
           console.error("Auth error:", error);
           await prisma.auditLog.create({
             data: {
-              action: "AUTH_ERROR",
+              action: AuditAction.AUTH_ERROR,
               resourceType: "USER",
               details: {
                 identifier,
@@ -260,11 +281,11 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.matricNumber = user.matricNumber;
-        token.teacherId = user.teacherId;
+        token.employeeId = user.employeeId; // Changed from teacherId to employeeId
         token.department = user.department;
         token.college = user.college;
         token.course = user.course;
-        token.title = user.title;
+        token.qualification = user.qualification;
         token.fullName = user.fullName;
         token.userName = user.userName;
       }
@@ -277,11 +298,11 @@ export const authOptions: NextAuthOptions = {
       }
       session.user.role = token.role as string;
       session.user.matricNumber = token.matricNumber as string | null;
-      session.user.teacherId = token.teacherId as string | null;
+      session.user.employeeId = token.employeeId as string | null; // Changed from teacherId to employeeId
       session.user.department = token.department as string | null;
       session.user.college = token.college as string | null;
       session.user.course = token.course as string | null;
-      session.user.title = token.title as string | null;
+      session.user.qualification = token.qualification as string | null;
       session.user.fullName = token.fullName as string | null;
       session.user.userName = token.userName as string | null;
       return session;
@@ -331,7 +352,7 @@ async function logFailed(
     await prisma.auditLog.create({
       data: {
         userId,
-        action: "USER_LOGIN_FAILED",
+        action: AuditAction.USER_LOGIN_FAILED,
         resourceType: "USER",
         details: {
           identifier,
@@ -367,7 +388,7 @@ async function handleFailedLogin(user: any, identifier: string, req: any) {
     await prisma.auditLog.create({
       data: {
         userId: user.id,
-        action: "USER_LOGIN_FAILED",
+        action: AuditAction.USER_LOGIN_FAILED,
         resourceType: "USER",
         details: {
           identifier,
@@ -392,35 +413,13 @@ declare module "next-auth" {
   interface User {
     role: string;
     matricNumber?: string | null;
-    teacherId?: string | null;
+    employeeId?: string | null; // Changed from teacherId to employeeId (unified)
     department?: string | null;
     college?: string | null;
     course?: string | null;
-    title?: string | null;
+    qualification?: string | null;
     fullName?: string | null;
     userName?: string | null;
-    student?: {
-      id: string;
-      matricNumber: string;
-      department: string;
-      college: string;
-      course: string;
-      firstName: string;
-      lastname: string;
-      otherName: string;
-    } | null;
-    teacher?: {
-      teacherId: string;
-      department: string;
-      title: string;
-      firstName: string;
-      lastname: string;
-    } | null;
-    admin?: {
-      adminId?: string;
-      firstName: string;
-      lastname: string;
-    } | null;
   }
 
   interface Session {
@@ -431,11 +430,11 @@ declare module "next-auth" {
       image?: string | null;
       role: string;
       matricNumber?: string | null;
-      teacherId?: string | null;
+      employeeId?: string | null; // Changed from teacherId to employeeId
       department?: string | null;
       college?: string | null;
       course?: string | null;
-      title?: string | null;
+      qualification?: string | null;
       fullName?: string | null;
       userName?: string | null;
     };
@@ -446,11 +445,11 @@ declare module "next-auth/jwt" {
   interface JWT {
     role: string;
     matricNumber?: string | null;
-    teacherId?: string | null;
+    employeeId?: string | null; // Changed from teacherId to employeeId
     department?: string | null;
     college?: string | null;
     course?: string | null;
-    title?: string | null;
+    qualification?: string | null;
     fullName?: string | null;
     userName?: string | null;
   }

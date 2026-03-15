@@ -5,7 +5,7 @@ import { JWTUtils, type TokenPayload } from "@/lib/server/jwt";
 import { nanoid } from "nanoid";
 import { ClientIPDetector } from "@/lib/clientIp";
 import type { MiddlewareContext } from "./types";
-import { Role } from "@/lib/generated/prisma/enums";
+import { Role, AuditAction } from "@/lib/generated/prisma/enums";
 
 interface SessionUser {
   id: string;
@@ -13,7 +13,7 @@ interface SessionUser {
   email: string;
   role: Role;
   matricNumber?: string | null;
-  teacherId?: string | null;
+  employeeId?: string | null; // Changed from teacherId to employeeId
   department?: string | null;
 }
 
@@ -34,6 +34,37 @@ interface SessionValidationResult {
     | "SYSTEM_ERROR";
   securityLevel: "low" | "medium" | "high";
 }
+
+// Define type for Prisma session with user
+type SessionWithUser = {
+  id: string;
+  sessionToken: string;
+  userId: string;
+  expires: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  deviceFingerprint: string | null;
+  userAgent: string | null;
+  ipAddress: string | null;
+  securityLevel: string;
+  lastAccessedAt: Date;
+  refreshCount: number;
+  user: {
+    id: string;
+    name: string | null;
+    email: string;
+    role: Role;
+    isActive: boolean;
+    student: {
+      matricNumber: string;
+      department: string;
+    } | null;
+    teacher: {
+      employeeId: string; // Changed from teacherId to employeeId
+      department: string;
+    } | null;
+  };
+};
 
 export class SessionTokenValidator {
   private static readonly CONFIG = {
@@ -193,8 +224,18 @@ export class SessionTokenValidator {
             email: true,
             role: true,
             isActive: true,
-            student: { select: { matricNumber: true, department: true } },
-            teacher: { select: { teacherId: true, department: true } },
+            student: { 
+              select: { 
+                matricNumber: true, 
+                department: true 
+              } 
+            },
+            teacher: { 
+              select: { 
+                employeeId: true, // Changed from teacherId to employeeId
+                department: true 
+              } 
+            },
           },
         },
       },
@@ -206,19 +247,22 @@ export class SessionTokenValidator {
       return SessionTokenValidator.invalid("USER_INACTIVE");
     }
 
-    if (session.expires < new Date()) {
-      await SessionTokenValidator.cleanupSession(session.id, "SESSION_EXPIRED");
+    // Cast to proper type
+    const typedSession = session as SessionWithUser;
+
+    if (typedSession.expires < new Date()) {
+      await SessionTokenValidator.cleanupSession(typedSession.id, "SESSION_EXPIRED");
       return SessionTokenValidator.invalid("TOKEN_EXPIRED");
     }
 
     // Device fingerprint check
     const fpCheck = SessionTokenValidator.checkFingerprint(
-      session.deviceFingerprint,
+      typedSession.deviceFingerprint,
       request
     );
     if (!fpCheck.valid) {
       await SessionTokenValidator.flagSuspicious(
-        session.userId,
+        typedSession.userId,
         "DEVICE_MISMATCH",
         request,
         ipInfo
@@ -226,13 +270,13 @@ export class SessionTokenValidator {
       return SessionTokenValidator.invalid("DEVICE_MISMATCH");
     }
 
-    const needsRefresh = session.expires.getTime() - Date.now() < 2 * 3600000; // < 2h
+    const needsRefresh = typedSession.expires.getTime() - Date.now() < 2 * 3600000; // < 2h
 
     return {
       isValid: true,
       needsRefresh,
       shouldLogout: false,
-      user: SessionTokenValidator.mapUser(session.user),
+      user: SessionTokenValidator.mapUser(typedSession.user),
       action: needsRefresh ? "refresh" : "continue",
       securityLevel: fpCheck.level,
     };
@@ -259,6 +303,18 @@ export class SessionTokenValidator {
           email: true,
           role: true,
           isActive: true,
+          student: { 
+            select: { 
+              matricNumber: true, 
+              department: true 
+            } 
+          },
+          teacher: { 
+            select: { 
+              employeeId: true, // Changed from teacherId to employeeId
+              department: true 
+            } 
+          },
         },
       });
 
@@ -269,7 +325,7 @@ export class SessionTokenValidator {
         isValid: true,
         needsRefresh: true,
         shouldLogout: false,
-        user: { ...user, matricNumber: null, department: null },
+        user: SessionTokenValidator.mapUser(user),
         action: "refresh",
         securityLevel: "medium",
       };
@@ -296,8 +352,18 @@ export class SessionTokenValidator {
           email: true,
           role: true,
           isActive: true,
-          student: { select: { matricNumber: true, department: true } },
-          teacher: { select: { teacherId: true, department: true } },
+          student: { 
+            select: { 
+              matricNumber: true, 
+              department: true 
+            } 
+          },
+          teacher: { 
+            select: { 
+              employeeId: true, // Changed from teacherId to employeeId
+              department: true 
+            } 
+          },
         },
       });
 
@@ -346,7 +412,7 @@ export class SessionTokenValidator {
         email: user.email,
         schoolId: user.id,
         role: user.role,
-        schoolNumber: user.matricNumber || "",
+        schoolNumber: user.matricNumber || user.employeeId || "",
       }),
     ]);
 
@@ -405,7 +471,7 @@ export class SessionTokenValidator {
         await prisma.auditLog.create({
           data: {
             userId: session.userId,
-            action: "SESSION_TERMINATED",
+            action: AuditAction.SESSION_TERMINATED,
             details: { reason: result.errorCode, source: "validator" },
             ipAddress: ipInfo.ip,
             userAgent: request.headers.get("user-agent") || "unknown",
@@ -454,6 +520,8 @@ export class SessionTokenValidator {
     response.headers.set("x-user-email", user.email);
     if (user.matricNumber)
       response.headers.set("x-user-matric", user.matricNumber);
+    if (user.employeeId) // Changed from teacherId to employeeId
+      response.headers.set("x-user-employee-id", user.employeeId);
     if (user.department)
       response.headers.set("x-user-department", user.department);
     response.headers.set("x-authenticated", "true");
@@ -504,8 +572,8 @@ export class SessionTokenValidator {
       name: user.name,
       email: user.email,
       role: user.role,
-      matricNumber:
-        user.student?.matricNumber || user.teacher?.teacherId || null,
+      matricNumber: user.student?.matricNumber || null,
+      employeeId: user.teacher?.employeeId || null, // Changed from teacherId to employeeId
       department: user.student?.department || user.teacher?.department || null,
     };
   }
@@ -535,7 +603,7 @@ export class SessionTokenValidator {
     const count = await prisma.auditLog.count({
       where: {
         userId,
-        action: "SESSION_REFRESHED",
+        action: AuditAction.SESSION_REFRESHED,
         createdAt: { gte: minuteAgo },
       },
     });
@@ -560,7 +628,11 @@ export class SessionTokenValidator {
     return NextResponse.redirect(url);
   }
 
-  // Auditing
+// src/lib/middleware/sessionTokenValidator.ts
+
+// ... (all your existing code remains the same until line ~650)
+
+  // Auditing - FIX THIS METHOD
   private static async auditEvent(
     request: NextRequest,
     result: SessionValidationResult,
@@ -568,18 +640,21 @@ export class SessionTokenValidator {
     duration: number
   ) {
     if (!result.isValid || result.action === "refresh") {
-      // Fixed: Use valid enum values for the action field
-      const action =
-        result.action === "refresh"
-          ? "SESSION_REFRESHED"
-          : result.isValid
-          ? "SESSION_INVALIDATED"
-          : "SESSION_TERMINATED";
+      // Use proper enum values
+      let action: AuditAction;
+      
+      if (result.action === "refresh") {
+        action = AuditAction.SESSION_REFRESHED;
+      } else if (result.isValid) {
+        action = AuditAction.SESSION_INVALIDATED;
+      } else {
+        action = AuditAction.SESSION_TERMINATED;
+      }
 
       await prisma.auditLog.create({
         data: {
           userId: result.user?.id || null,
-          action, // Use the corrected action value
+          action, // This is now the enum value
           details: {
             path: request.nextUrl.pathname,
             error: result.errorCode,
@@ -592,6 +667,7 @@ export class SessionTokenValidator {
     }
   }
 
+  // FIX THIS METHOD - Use the enum value instead of string with type assertion
   private static async auditError(
     request: NextRequest,
     error: any,
@@ -600,7 +676,7 @@ export class SessionTokenValidator {
     await prisma.auditLog.create({
       data: {
         userId: null,
-        action: "VALIDATOR_ERROR",
+        action: AuditAction.SESSION_VALIDATOR_ERROR, // Use the enum value directly
         details: {
           error: error.message || "unknown",
           path: request.nextUrl.pathname,
@@ -620,7 +696,7 @@ export class SessionTokenValidator {
     await prisma.auditLog.create({
       data: {
         userId,
-        action: "SUSPICIOUS_ACTIVITY",
+        action: AuditAction.SUSPICIOUS_ACTIVITY_DETECTED,
         details: { reason, path: request.nextUrl.pathname },
         ipAddress: ipInfo.ip,
         userAgent: request.headers.get("user-agent") || "unknown",

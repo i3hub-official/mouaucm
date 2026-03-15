@@ -33,6 +33,7 @@ export type TeacherMinAggregateOutputType = {
   gender: $Enums.Gender | null
   phone: string | null
   email: string | null
+  title: string | null
   department: string | null
   institution: string | null
   qualification: string | null
@@ -60,6 +61,7 @@ export type TeacherMaxAggregateOutputType = {
   gender: $Enums.Gender | null
   phone: string | null
   email: string | null
+  title: string | null
   department: string | null
   institution: string | null
   qualification: string | null
@@ -87,6 +89,7 @@ export type TeacherCountAggregateOutputType = {
   gender: number
   phone: number
   email: number
+  title: number
   department: number
   institution: number
   qualification: number
@@ -116,6 +119,7 @@ export type TeacherMinAggregateInputType = {
   gender?: true
   phone?: true
   email?: true
+  title?: true
   department?: true
   institution?: true
   qualification?: true
@@ -143,6 +147,7 @@ export type TeacherMaxAggregateInputType = {
   gender?: true
   phone?: true
   email?: true
+  title?: true
   department?: true
   institution?: true
   qualification?: true
@@ -170,6 +175,7 @@ export type TeacherCountAggregateInputType = {
   gender?: true
   phone?: true
   email?: true
+  title?: true
   department?: true
   institution?: true
   qualification?: true
@@ -270,6 +276,7 @@ export type TeacherGroupByOutputType = {
   gender: $Enums.Gender | null
   phone: string
   email: string
+  title: string | null
   department: string
   institution: string | null
   qualification: string | null
@@ -318,6 +325,7 @@ export type TeacherWhereInput = {
   gender?: Prisma.EnumGenderNullableFilter<"Teacher"> | $Enums.Gender | null
   phone?: Prisma.StringFilter<"Teacher"> | string
   email?: Prisma.StringFilter<"Teacher"> | string
+  title?: Prisma.StringNullableFilter<"Teacher"> | string | null
   department?: Prisma.StringFilter<"Teacher"> | string
   institution?: Prisma.StringNullableFilter<"Teacher"> | string | null
   qualification?: Prisma.StringNullableFilter<"Teacher"> | string | null
@@ -349,6 +357,7 @@ export type TeacherOrderByWithRelationInput = {
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
   department?: Prisma.SortOrder
   institution?: Prisma.SortOrderInput | Prisma.SortOrder
   qualification?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -387,6 +396,7 @@ export type TeacherWhereUniqueInput = Prisma.AtLeast<{
   lastName?: Prisma.StringFilter<"Teacher"> | string
   otherName?: Prisma.StringNullableFilter<"Teacher"> | string | null
   gender?: Prisma.EnumGenderNullableFilter<"Teacher"> | $Enums.Gender | null
+  title?: Prisma.StringNullableFilter<"Teacher"> | string | null
   department?: Prisma.StringFilter<"Teacher"> | string
   institution?: Prisma.StringNullableFilter<"Teacher"> | string | null
   qualification?: Prisma.StringNullableFilter<"Teacher"> | string | null
@@ -414,6 +424,7 @@ export type TeacherOrderByWithAggregationInput = {
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
   department?: Prisma.SortOrder
   institution?: Prisma.SortOrderInput | Prisma.SortOrder
   qualification?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -447,6 +458,7 @@ export type TeacherScalarWhereWithAggregatesInput = {
   gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"Teacher"> | $Enums.Gender | null
   phone?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
   email?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
+  title?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
   department?: Prisma.StringWithAggregatesFilter<"Teacher"> | string
   institution?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
   qualification?: Prisma.StringNullableWithAggregatesFilter<"Teacher"> | string | null
@@ -474,6 +486,7 @@ export type TeacherCreateInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -504,6 +517,7 @@ export type TeacherUncheckedCreateInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -534,6 +548,7 @@ export type TeacherUpdateInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -564,6 +579,7 @@ export type TeacherUncheckedUpdateInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -594,6 +610,7 @@ export type TeacherCreateManyInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -621,6 +638,7 @@ export type TeacherUpdateManyMutationInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -647,6 +665,7 @@ export type TeacherUncheckedUpdateManyInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -679,6 +698,7 @@ export type TeacherCountOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   department?: Prisma.SortOrder
   institution?: Prisma.SortOrder
   qualification?: Prisma.SortOrder
@@ -706,6 +726,7 @@ export type TeacherMaxOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   department?: Prisma.SortOrder
   institution?: Prisma.SortOrder
   qualification?: Prisma.SortOrder
@@ -733,6 +754,7 @@ export type TeacherMinOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   department?: Prisma.SortOrder
   institution?: Prisma.SortOrder
   qualification?: Prisma.SortOrder
@@ -840,6 +862,7 @@ export type TeacherCreateWithoutUserInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -869,6 +892,7 @@ export type TeacherUncheckedCreateWithoutUserInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -914,6 +938,7 @@ export type TeacherUpdateWithoutUserInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -943,6 +968,7 @@ export type TeacherUncheckedUpdateWithoutUserInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -972,6 +998,7 @@ export type TeacherCreateWithoutInstructedCoursesInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -1001,6 +1028,7 @@ export type TeacherUncheckedCreateWithoutInstructedCoursesInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -1035,6 +1063,7 @@ export type TeacherCreateWithoutCreatedCoursesInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -1064,6 +1093,7 @@ export type TeacherUncheckedCreateWithoutCreatedCoursesInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -1109,6 +1139,7 @@ export type TeacherUpdateWithoutInstructedCoursesInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1138,6 +1169,7 @@ export type TeacherUncheckedUpdateWithoutInstructedCoursesInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1178,6 +1210,7 @@ export type TeacherUpdateWithoutCreatedCoursesInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1207,6 +1240,7 @@ export type TeacherUncheckedUpdateWithoutCreatedCoursesInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1236,6 +1270,7 @@ export type TeacherCreateWithoutAssignmentsInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -1265,6 +1300,7 @@ export type TeacherUncheckedCreateWithoutAssignmentsInput = {
   gender?: $Enums.Gender | null
   phone: string
   email: string
+  title?: string | null
   department: string
   institution?: string | null
   qualification?: string | null
@@ -1310,6 +1346,7 @@ export type TeacherUpdateWithoutAssignmentsInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1339,6 +1376,7 @@ export type TeacherUncheckedUpdateWithoutAssignmentsInput = {
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   department?: Prisma.StringFieldUpdateOperationsInput | string
   institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1417,6 +1455,7 @@ export type TeacherSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   gender?: boolean
   phone?: boolean
   email?: boolean
+  title?: boolean
   department?: boolean
   institution?: boolean
   qualification?: boolean
@@ -1449,6 +1488,7 @@ export type TeacherSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   gender?: boolean
   phone?: boolean
   email?: boolean
+  title?: boolean
   department?: boolean
   institution?: boolean
   qualification?: boolean
@@ -1477,6 +1517,7 @@ export type TeacherSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   gender?: boolean
   phone?: boolean
   email?: boolean
+  title?: boolean
   department?: boolean
   institution?: boolean
   qualification?: boolean
@@ -1505,6 +1546,7 @@ export type TeacherSelectScalar = {
   gender?: boolean
   phone?: boolean
   email?: boolean
+  title?: boolean
   department?: boolean
   institution?: boolean
   qualification?: boolean
@@ -1523,7 +1565,7 @@ export type TeacherSelectScalar = {
   userId?: boolean
 }
 
-export type TeacherOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "firstName" | "lastName" | "otherName" | "gender" | "phone" | "email" | "department" | "institution" | "qualification" | "specialization" | "experience" | "dateJoined" | "isActive" | "passportUrl" | "createdAt" | "updatedAt" | "deletedAt" | "lastActivityAt" | "emailSearchHash" | "phoneSearchHash" | "employeeIdSearchHash" | "userId", ExtArgs["result"]["teacher"]>
+export type TeacherOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "firstName" | "lastName" | "otherName" | "gender" | "phone" | "email" | "title" | "department" | "institution" | "qualification" | "specialization" | "experience" | "dateJoined" | "isActive" | "passportUrl" | "createdAt" | "updatedAt" | "deletedAt" | "lastActivityAt" | "emailSearchHash" | "phoneSearchHash" | "employeeIdSearchHash" | "userId", ExtArgs["result"]["teacher"]>
 export type TeacherInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   instructedCourses?: boolean | Prisma.Teacher$instructedCoursesArgs<ExtArgs>
@@ -1555,6 +1597,7 @@ export type $TeacherPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     gender: $Enums.Gender | null
     phone: string
     email: string
+    title: string | null
     department: string
     institution: string | null
     qualification: string | null
@@ -2006,6 +2049,7 @@ export interface TeacherFieldRefs {
   readonly gender: Prisma.FieldRef<"Teacher", 'Gender'>
   readonly phone: Prisma.FieldRef<"Teacher", 'String'>
   readonly email: Prisma.FieldRef<"Teacher", 'String'>
+  readonly title: Prisma.FieldRef<"Teacher", 'String'>
   readonly department: Prisma.FieldRef<"Teacher", 'String'>
   readonly institution: Prisma.FieldRef<"Teacher", 'String'>
   readonly qualification: Prisma.FieldRef<"Teacher", 'String'>

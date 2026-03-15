@@ -7,75 +7,8 @@ import {
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
 import { AuditAction } from "@/lib/generated/prisma/enums";
+import { UserProfile, ProfileUpdateResponse, PasswordChangeResponse, AccountDeletionResponse, UserPreferences, PreferencesResponse } from "@/lib/types/shared";
 
-// Define response types
-export interface UserProfile {
-  id: string;
-  email: string;
-  name: string | null;
-  role: string;
-  isActive: boolean;
-  emailVerified: Date | null;
-  lastLoginAt: Date | null;
-  createdAt: Date;
-  student?: {
-    id: string;
-    matricNumber: string;
-    firstName: string;
-    lastName: string; // Changed from lastname to lastName
-    department: string;
-  };
-  teacher?: {
-    id: string;
-    employeeId: string; // Changed from teacherId to employeeId
-    firstName: string;
-    lastName: string; // Changed from lastname to lastName
-    department: string;
-  };
-}
-
-export interface ProfileUpdateResponse {
-  success: boolean;
-  message: string;
-  requiresVerification?: boolean;
-}
-
-export interface PasswordChangeResponse {
-  success: boolean;
-  message: string;
-}
-
-export interface AccountDeletionResponse {
-  success: boolean;
-  message: string;
-}
-
-export interface UserPreferences {
-  id: string;
-  userId: string;
-  emailNotifications: boolean;
-  pushNotifications: boolean;
-  assignmentReminders: boolean;
-  gradeAlerts: boolean;
-  lectureReminders: boolean;
-  smsNotifications?: boolean;
-  examReminders?: boolean;
-  theme?: string | null;
-  language?: string | null;
-  timezone?: string | null;
-  dateFormat?: string | null;
-  timeFormat?: string | null;
-  itemsPerPage?: number | null;
-  dashboardLayout?: any | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface PreferencesResponse {
-  success: boolean;
-  message: string;
-  preferences?: UserPreferences;
-}
 
 export class UserService {
   /**

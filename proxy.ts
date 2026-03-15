@@ -73,5 +73,3 @@ function handleNotFound(request: NextRequest): NextResponse {
   return NextResponse.rewrite(url);
 }
 
-// Optional: Force Node.js runtime (recommended for full defense stack)
-export const runtime = "nodejs";

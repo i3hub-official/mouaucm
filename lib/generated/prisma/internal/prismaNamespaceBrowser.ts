@@ -234,6 +234,7 @@ export const TeacherScalarFieldEnum = {
   gender: 'gender',
   phone: 'phone',
   email: 'email',
+  title: 'title',
   department: 'department',
   institution: 'institution',
   qualification: 'qualification',
