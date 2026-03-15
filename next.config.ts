@@ -80,22 +80,6 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60,
   },
 
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-        net: false,
-        tls: false,
-      };
-      config.externals = [
-        ...(config.externals || []),
-        "@prisma/client",
-        "@prisma/engines",
-      ];
-    }
-    return config;
-  },
-
   output: process.env.DOCKER_BUILD ? "standalone" : undefined,
 
   compiler: {
