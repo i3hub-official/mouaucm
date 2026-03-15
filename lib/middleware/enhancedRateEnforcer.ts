@@ -9,7 +9,8 @@ import { ClientIPDetector } from "@/lib/clientIp";
  * EnhancedRateEnforcer — The Smart Traffic Cop
  */
 export class EnhancedRateEnforcer {
-  private static readonly CONFIGS = {
+
+    private static readonly CONFIGS = {
     auth: {
       signin: { windowMs: 15 * 60 * 1000, limit: 10, burst: 5 }, // Increased limits
       signup: { windowMs: 60 * 60 * 1000, limit: 5, burst: 2 },
@@ -33,40 +34,49 @@ export class EnhancedRateEnforcer {
       context
     );
 
+     // Only rate-limit API routes
+  if (!request.nextUrl.pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
     // Development bypass
     if (process.env.NODE_ENV !== "production") {
       return NextResponse.next();
     }
 
     // Skip rate limiting for static assets
-    if (request.nextUrl.pathname.startsWith('/_next') || 
-        request.nextUrl.pathname.startsWith('/static') ||
-        request.nextUrl.pathname === '/favicon.ico') {
-      return NextResponse.next();
-    }
+   if (
+  request.nextUrl.pathname.startsWith('/_next') ||
+  request.nextUrl.pathname.startsWith('/static') ||
+  request.nextUrl.pathname.startsWith('/images') ||
+  request.nextUrl.pathname === '/favicon.ico' ||
+  request.nextUrl.pathname === '/sw.js' ||
+  request.nextUrl.pathname === '/manifest.json' ||
+  request.nextUrl.pathname === '/robots.txt'
+) {
+  return NextResponse.next();
+}
 
     const actionType = authContext.actionType;
 
     // Dynamic key
     const key = this.getRateLimitKey(request, context, authContext);
     const config = this.getDynamicConfig(actionType, authContext);
+let result;
 
     try {
-      const result = await rateLimit(request, {
-        windowMs: config.windowMs,
-        limit: config.limit,
-        key,
-        namespace: `rate_${actionType}_${
-          authContext.isAuthenticated ? "auth" : "anon"
-        }`,
-        burst: config.burst,
-      });
+      result = await rateLimit(request, {
+    windowMs: config.windowMs,
+    limit: config.limit,
+    key,
+    namespace: `rate_${actionType}_${authContext.isAuthenticated ? "auth" : "anon"}`,
+    burst: config.burst,
+  });
 
       return this.buildResponse(result, config);
     } catch (error) {
-      console.error("[RateEnforcer] Error:", error);
-      // Fail open - don't block requests on error
-      return NextResponse.next();
+    console.error("[RateEnforcer] rateLimit crashed:", error);
+  return NextResponse.next();
     }
   }
 
@@ -119,7 +129,17 @@ export class EnhancedRateEnforcer {
     },
     config: any
   ): NextResponse {
-    const { success, limit, remaining, reset } = result;
+   if (
+  !result ||
+  typeof result.limit !== "number" ||
+  typeof result.remaining !== "number" ||
+  typeof result.reset !== "number"
+) {
+  console.warn("[RateEnforcer] Invalid rateLimit result, skipping");
+  return NextResponse.next();
+}
+
+const { success, limit, remaining, reset } = result;
     
     // Always allow in production if there's any doubt
     if (!success && process.env.NODE_ENV === "production") {
