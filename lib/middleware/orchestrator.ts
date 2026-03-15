@@ -1,5 +1,6 @@
 // src/lib/middleware/orchestrator.ts
 import { NextRequest, NextResponse } from "next/server";
+import { performance } from "perf_hooks";
 
 // Core
 import { ContextBuilder } from "./contextBuilder";
@@ -20,7 +21,6 @@ import { ActivityLogger } from "./activityLogger";
 
 // Utilities
 import { ResponseMerger } from "./responseMerger";
-import { IntegrationUtils } from "./integration-utils";
 import { Defense } from "./UnifiedThreatDefenseSystem";
 import { ComprehensiveHealthMonitor } from "./healthMonitor";
 
@@ -30,6 +30,7 @@ import { enhancedExecute } from "./executionWrapper";
 // IP Detection — THE SOURCE OF TRUTH
 import { ClientIPDetector } from "@/lib/clientIp";
 
+// NEW: Bot Protection
 import { BotProtection } from "./botProtection";
 
 // Types
@@ -55,40 +56,37 @@ export class orchestrator {
   // ===========================================================
   private static readonly DISABLED_LAYERS = {
     // Foundation Layers
-    SecurityGuard: false,           // Set to true to disable
-    EnhancedRateEnforcer: false,     // Set to true to disable
-    EncryptionEnforcer: false,       // Set to true to disable
-    SessionTokenValidator: false,    // Set to true to disable
+    SecurityGuard: false,
+    EnhancedRateEnforcer: false,
+    EncryptionEnforcer: false,
+    SessionTokenValidator: false,
     
     // Defense Layers
-    UnifiedThreatDefense: false,     // Set to true to disable
+    UnifiedThreatDefense: false,
     
     // Secondary Layers
-    GeoGuard: false,                 // Set to true to disable
-    CacheManager: false,             // Set to true to disable
-    BehaviorAnalyst: false,          // Set to true to disable
-    ComplianceMonitor: false,        // Set to true to disable
-    RequestTransformer: false,       // Set to true to disable
+    GeoGuard: false,
+    CacheManager: false,
+    BehaviorAnalyst: false,
+    ComplianceMonitor: false,
+    RequestTransformer: false,
     
     // Observability
-    ActivityLogger: false,           // Set to true to disable
+    ActivityLogger: false,
   };
 
   // ===========================================================
   // ENVIRONMENT-BASED DISABLE - Disable layers in specific environments
   // ===========================================================
   private static shouldDisableLayer(layerName: string): boolean {
-    // Check if explicitly disabled
     if (this.DISABLED_LAYERS[layerName as keyof typeof this.DISABLED_LAYERS]) {
       return true;
     }
 
-    // Disable specific layers in development
     if (process.env.NODE_ENV === 'development') {
       const devDisabledLayers = [
-        'EnhancedRateEnforcer',  // Disable rate limiting in dev
-        'GeoGuard',              // Disable geo blocking in dev
-        // Add more as needed
+        'EnhancedRateEnforcer',
+        'GeoGuard',
       ];
       
       if (devDisabledLayers.includes(layerName)) {
@@ -97,7 +95,6 @@ export class orchestrator {
       }
     }
 
-    // Disable based on feature flags
     if (process.env.DISABLE_SECURITY === 'true') {
       const securityLayers = ['SecurityGuard', 'EncryptionEnforcer', 'SessionTokenValidator'];
       if (securityLayers.includes(layerName)) {
@@ -148,38 +145,80 @@ export class orchestrator {
     let authContext: AuthenticatedActionContext = {} as any;
     const results: LayerResult[] = [];
 
-    const bot = BotProtection.inspect(request);
-const decision = BotProtection.enforce(bot.score);
-if (decision) {
-  return decision;
-}
+    // ===========================================================
+    // PHASE 0: BOT PROTECTION - Run first
+    // ===========================================================
+    const botInfo = BotProtection.inspect(request);
+    
+    // Add bot score to headers for downstream use
+    request.headers.set('x-bot-score', botInfo.score.toString());
+    request.headers.set('x-bot-reason', botInfo.reason.join(', '));
+    
+    // Calculate abuse header score
+    const abuseScores = BotProtection.getAbuseHeaderScore(request);
+    const totalAbuseScore = Math.round(
+      Object.values(abuseScores).reduce((a, b) => a + b, 0) / 
+      Object.keys(abuseScores).length
+    );
+    request.headers.set('x-abuse-score', totalAbuseScore.toString());
+
+    // Check for existing challenge verification
+    const challengePassed = request.cookies.get('bot-challenge-passed')?.value === 'true';
+    const verifiedParam = request.nextUrl.searchParams.get('verified');
+    
+    // If coming back from challenge with verification
+    if (verifiedParam === 'true' && !challengePassed) {
+      const response = NextResponse.redirect(new URL(request.nextUrl.pathname, request.url));
+      response.cookies.set('bot-challenge-passed', 'true', {
+        maxAge: 3600,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+      });
+      return response;
+    }
+
+    // Enforce bot protection (skip if challenge already passed)
+    const botDecision = BotProtection.enforce(botInfo.score, request, challengePassed);
+    if (botDecision) {
+      console.log(`[BotProtection] Blocked request with score ${botInfo.score}:`, botInfo.reason);
+      return botDecision;
+    }
+
+    // ===========================================================
+    // PATH-BASED BYPASS - Skip security for static assets
+    // ===========================================================
+    const bypassPaths = [
+      '/_next',
+      '/favicon.ico',
+      '/sw.js',
+      '/manifest.json',
+      '/robots.txt',
+      '/api/public',
+      '/health',
+      '/images',
+      '/fonts',
+      '/icons',
+    ];
+
+    if (bypassPaths.some(path => request.nextUrl.pathname.startsWith(path))) {
+      console.log(`[orchestrator] 🚧 Bypassing security for path: ${request.nextUrl.pathname}`);
+      const response = NextResponse.next();
+      response.headers.set('x-bot-score', botInfo.score.toString());
+      response.headers.set('x-abuse-score', totalAbuseScore.toString());
+      return response;
+    }
 
     // ===========================================================
     // TEMPORARY BYPASS - Use this to completely bypass all security
     // ===========================================================
     if (process.env.BYPASS_ALL_SECURITY === 'true') {
       console.warn('⚠️⚠️⚠️ ALL SECURITY LAYERS BYPASSED ⚠️⚠️⚠️');
-      return NextResponse.next();
-    }
-
-    // ===========================================================
-    // PATH-BASED BYPASS - Skip security for specific paths
-    // ===========================================================
-const bypassPaths = [
-  '/_next',
-  '/favicon.ico',
-  '/sw.js',
-  '/manifest.json',
-  '/robots.txt',
-  '/api/public',
-  '/health',
-  '/images',
-  '/fonts',
-];
-
-    if (bypassPaths.some(path => request.nextUrl.pathname.startsWith(path))) {
-      console.log(`[orchestrator] 🚧 Bypassing security for path: ${request.nextUrl.pathname}`);
-      return NextResponse.next();
+      const response = NextResponse.next();
+      response.headers.set('x-bot-score', botInfo.score.toString());
+      response.headers.set('x-abuse-score', totalAbuseScore.toString());
+      return response;
     }
 
     try {
@@ -187,14 +226,14 @@ const bypassPaths = [
       TrustedSourceManager.initialize();
 
       // ──────────────────────────────
-      // PHASE 0: Get Real Client IP (Critical Foundation)
+      // PHASE 1: Get Real Client IP (Critical Foundation)
       // ──────────────────────────────
       const ipInfo = ClientIPDetector.getClientIP(request);
       
       console.log(`[orchestrator] Request from IP: ${ipInfo.ip}, Source: ${ipInfo.source}, Confidence: ${ipInfo.confidence}`);
 
       // ──────────────────────────────
-      // PHASE 1: Build Context (with real IP)
+      // PHASE 2: Build Context (with real IP)
       // ──────────────────────────────
       const contextExec = await enhancedExecute(
         () => ContextBuilder.build(request),
@@ -214,6 +253,9 @@ const bypassPaths = [
         isProxy: ipInfo.isProxy || ipInfo.isVPN || ipInfo.isTor || ipInfo.isDatacenter,
         country: ipInfo.geo?.country || "XX",
         region: ipInfo.geo?.city || "XX",
+        botScore: botInfo.score,
+        abuseScore: totalAbuseScore,
+        botReason: botInfo.reason,
       });
 
       authContext = AuthenticatedActionHandler.enhanceContext(request, context);
@@ -223,6 +265,8 @@ const bypassPaths = [
         result: NextResponse.next(),
         logs: [
           `IP: ${ipInfo.ip} (${ipInfo.source})`,
+          `Bot Score: ${botInfo.score}`,
+          `Abuse Score: ${totalAbuseScore}`,
           `Action: ${authContext.actionType}`,
           `Sensitivity: ${authContext.sensitivity}`,
         ],
@@ -232,7 +276,7 @@ const bypassPaths = [
       });
 
       // ──────────────────────────────
-      // PHASE 2: Foundation Security
+      // PHASE 3: Foundation Security
       // ──────────────────────────────
       console.log("[orchestrator] Starting FOUNDATION layers...");
       let response = await orchestrator.executeLayer(
@@ -245,11 +289,11 @@ const bypassPaths = [
 
       if (orchestrator.shouldEarlyExit(response, results)) {
         console.log("[orchestrator] Early exit triggered in FOUNDATION phase");
-        return orchestrator.finalize(request, response, results, globalStart, ipInfo.ip);
+        return orchestrator.finalize(request, response, results, globalStart, ipInfo.ip, botInfo.score, totalAbuseScore);
       }
 
       // ──────────────────────────────
-      // PHASE 3: AI Defense (uses real IP)
+      // PHASE 4: AI Defense (uses real IP)
       // ──────────────────────────────
       if (!this.shouldDisableLayer("UnifiedThreatDefense")) {
         console.log("[orchestrator] Starting DEFENSE layer...");
@@ -280,7 +324,7 @@ const bypassPaths = [
 
         if (!["ALLOW", "RATE_LIMIT"].includes(action)) {
           console.log(`[DEFENSE] ${action} → ${ipInfo.ip} blocked (Score: ${score})`);
-          return orchestrator.finalize(request, defenseExec.result, results, globalStart, ipInfo.ip);
+          return orchestrator.finalize(request, defenseExec.result, results, globalStart, ipInfo.ip, botInfo.score, totalAbuseScore);
         }
 
         response = defenseExec.result;
@@ -289,7 +333,7 @@ const bypassPaths = [
       }
 
       // ──────────────────────────────
-      // PHASE 4: Secondary Layer
+      // PHASE 5: Secondary Layer
       // ──────────────────────────────
       console.log("[orchestrator] Starting SECONDARY layers...");
       response = await orchestrator.executeLayer(
@@ -302,7 +346,7 @@ const bypassPaths = [
       );
 
       // ──────────────────────────────
-      // PHASE 5: Async Logging (with real IP)
+      // PHASE 6: Async Logging (with real IP)
       // ──────────────────────────────
       if (!this.shouldDisableLayer("ActivityLogger")) {
         enhancedExecute(() => ActivityLogger.log(request, authContext), {
@@ -313,11 +357,11 @@ const bypassPaths = [
       }
 
       console.log("[orchestrator] All layers completed successfully");
-      return orchestrator.finalize(request, response, results, globalStart, ipInfo.ip);
+      return orchestrator.finalize(request, response, results, globalStart, ipInfo.ip, botInfo.score, totalAbuseScore);
     } catch (error) {
       console.error(`[orchestrator] CRASH after ${(performance.now() - globalStart).toFixed(1)}ms:`, error);
       const resp = NextResponse.json({ error: "System failure" }, { status: 503 });
-      return orchestrator.finalize(request, resp, results, globalStart, "crash");
+      return orchestrator.finalize(request, resp, results, globalStart, "crash", 0, 0);
     }
   }
 
@@ -333,7 +377,6 @@ const bypassPaths = [
     let response = base;
 
     for (const layer of layers) {
-      // Check if this layer is disabled
       if (this.shouldDisableLayer(layer.name)) {
         console.log(`[orchestrator] 🚧 Layer ${layer.name} is disabled, skipping...`);
         results.push({
@@ -374,13 +417,13 @@ const bypassPaths = [
           request,
         });
 
-          if (!exec.success || exec.result.status === 403) {
-        console.error(`🔥 BLOCKED BY ${layer.name}:`, {
-          path: request.nextUrl.pathname,
-          status: exec.result.status,
-          headers: Object.fromEntries(exec.result.headers.entries())
-        });
-      }
+        if (!exec.success || exec.result.status === 403) {
+          console.error(`🔥 BLOCKED BY ${layer.name}:`, {
+            path: request.nextUrl.pathname,
+            status: exec.result.status,
+            headers: Object.fromEntries(exec.result.headers.entries())
+          });
+        }
 
         console.log(`[orchestrator] Layer ${layer.name} completed:`, {
           success: exec.success,
@@ -431,7 +474,9 @@ const bypassPaths = [
     response: NextResponse,
     results: LayerResult[],
     start: number,
-    clientIp: string
+    clientIp: string,
+    botScore: number,
+    abuseScore: number
   ): NextResponse {
     const total = performance.now() - start;
 
@@ -443,20 +488,34 @@ const bypassPaths = [
       chain: results.map((r) => r.name),
     });
 
+    // Add security headers
     const defense = results.find((r) => r.name === "UnifiedThreatDefense");
     if (defense) {
       response.headers.set("X-Threat-Final", defense.threatScore?.toFixed(1) || "0");
       response.headers.set("X-Defense-Action", defense.decision || "ALLOW");
-      response.headers.set("X-Abuse-Score", bot.score.toString());
     }
+    
+    // Add bot protection headers
+    response.headers.set("X-Bot-Score", botScore.toString());
+    response.headers.set("X-Abuse-Score", abuseScore.toString());
+    
+    // Add IP reputation header (simplified)
+    const ipReputation = botScore > 70 ? "POOR" : botScore > 40 ? "FAIR" : "GOOD";
+    response.headers.set("X-IP-Reputation", ipReputation);
 
     ComprehensiveHealthMonitor.recordRequest(total, response.status);
-    orchestrator.printSummary(results, total, clientIp);
+    orchestrator.printSummary(results, total, clientIp, botScore, abuseScore);
 
     return response;
   }
 
-  private static printSummary(results: LayerResult[], total: number, ip: string) {
+  private static printSummary(
+    results: LayerResult[], 
+    total: number, 
+    ip: string, 
+    botScore?: number,
+    abuseScore?: number
+  ) {
     if (process.env.NODE_ENV !== "development") return;
 
     console.log("\norchestrator SUMMARY");
@@ -469,6 +528,7 @@ const bypassPaths = [
       console.log(`${i + 1}. ${icon} ${r.name.padEnd(25)} → ${status}${time}${extra}`);
     });
     console.log("=".repeat(90));
-    console.log(`IP: ${ip} | Total: ${total.toFixed(1)}ms | Defense: ${process.env.BYPASS_ALL_SECURITY === 'true' ? 'BYPASSED' : 'ACTIVE'}\n`);
+    console.log(`IP: ${ip} | Bot: ${botScore || 0} | Abuse: ${abuseScore || 0} | Total: ${total.toFixed(1)}ms`);
+    console.log(`Defense: ${process.env.BYPASS_ALL_SECURITY === 'true' ? 'BYPASSED' : 'ACTIVE'}\n`);
   }
 }
