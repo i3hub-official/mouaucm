@@ -167,6 +167,7 @@ enum AuditAction {
   EXAM_COMPLETED
   GRADE_RECEIVED
   ACCOUNT_ACTIVATED
+
 }
 
 enum ResourceType {
