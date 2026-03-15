@@ -30,6 +30,8 @@ import { enhancedExecute } from "./executionWrapper";
 // IP Detection — THE SOURCE OF TRUTH
 import { ClientIPDetector } from "@/lib/clientIp";
 
+import { BotProtection } from "./botProtection";
+
 // Types
 import type { MiddlewareContext } from "./types";
 import type { AuthenticatedActionContext } from "./authenticatedActionHandler";
@@ -145,6 +147,12 @@ export class orchestrator {
     let context: MiddlewareContext = {} as any;
     let authContext: AuthenticatedActionContext = {} as any;
     const results: LayerResult[] = [];
+
+    const bot = BotProtection.inspect(request);
+const decision = BotProtection.enforce(bot.score);
+if (decision) {
+  return decision;
+}
 
     // ===========================================================
     // TEMPORARY BYPASS - Use this to completely bypass all security
@@ -439,6 +447,7 @@ const bypassPaths = [
     if (defense) {
       response.headers.set("X-Threat-Final", defense.threatScore?.toFixed(1) || "0");
       response.headers.set("X-Defense-Action", defense.decision || "ALLOW");
+      response.headers.set("X-Abuse-Score", bot.score.toString());
     }
 
     ComprehensiveHealthMonitor.recordRequest(total, response.status);
