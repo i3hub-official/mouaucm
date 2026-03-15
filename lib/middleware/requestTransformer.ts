@@ -24,12 +24,32 @@ export class RequestTransformer {
     /onload\s*=/gi,
   ];
 
+  // Whitelist of safe paths that shouldn't be heavily scanned
+  private static readonly SAFE_PATH_PREFIXES = [
+    '/_next',
+    '/static',
+    '/images',
+    '/favicon.ico',
+    '/api/auth',  // Auth endpoints might contain special chars
+    '/api/public',
+    '/health',
+    '/sr',
+    '/check',
+  ];
+
   static transform(
     request: NextRequest,
     context: MiddlewareContext
   ): NextResponse {
-    if (process.env.NODE_ENV !== "production") {
+    // Development bypass (keep this for dev)
+    if (process.env.NODE_ENV === "development") {
       console.log("[RequestTransformer] Dev mode → bypassed");
+      return NextResponse.next();
+    }
+    
+    // Production bypass for static assets and auth routes
+    const pathname = request.nextUrl.pathname;
+    if (this.SAFE_PATH_PREFIXES.some(prefix => pathname.startsWith(prefix))) {
       return NextResponse.next();
     }
     
@@ -37,36 +57,50 @@ export class RequestTransformer {
       // PHASE 1: EARLY MALICIOUS DETECTION — NUCLEAR RESPONSE
       const fullUrl = request.url;
       const queryString = request.nextUrl.search;
-      const pathname = request.nextUrl.pathname;
       const userAgent = request.headers.get("user-agent") || "";
+      
+      // Only check GET parameters for dangerous patterns
+      // POST body is handled separately by your API routes
+      const paramValues = request.method === 'GET' 
+        ? Array.from(request.nextUrl.searchParams.values())
+        : []; // Skip POST body params in middleware
 
       const maliciousInput = [
         fullUrl,
         queryString,
         pathname,
         userAgent,
-        ...Array.from(request.nextUrl.searchParams.values()),
-      ].some((str) =>
-        this.DANGEROUS_PATTERNS.some((pattern) => pattern.test(str))
-      );
+        ...paramValues,
+      ].some((str) => {
+        // Skip empty strings
+        if (!str) return false;
+        
+        // Check each pattern
+        return this.DANGEROUS_PATTERNS.some((pattern) => {
+          try {
+            return pattern.test(str);
+          } catch {
+            return false;
+          }
+        });
+      });
 
       if (maliciousInput) {
         console.log(
           `[REQUEST TRANSFORMER] NUCLEAR THREAT DETECTED → NEUTRALIZING`
         );
 
-        // THIS IS WHERE YOU PUT THE CODE — FINAL VERSION
         const blockUrl = new URL("/security/blocked", request.url);
         blockUrl.searchParams.set(
           "id",
           `MAL-${Date.now().toString(36).toUpperCase()}-${Math.random()
             .toString(36)
-            .substr(2, 4)}`
+            .substring(2, 6)}`
         );
         blockUrl.searchParams.set("score", "99.9");
         blockUrl.searchParams.set(
           "reason",
-          "SQL_INJECTION_XSS_PATH_TRAVERSAL_COMBO"
+          "MALICIOUS_PAYLOAD_DETECTED"
         );
         blockUrl.searchParams.set("action", "NEUTRALIZE");
 
@@ -84,7 +118,6 @@ export class RequestTransformer {
         response.headers.set("Expires", "0");
 
         return response;
-        // END OF THE CODE YOU ASKED FOR
       }
 
       // PHASE 2: Normal transformation (safe requests only)
@@ -106,7 +139,10 @@ export class RequestTransformer {
       const transformedRequest = new NextRequest(url.toString(), {
         method: request.method,
         headers,
-        body: request.body,
+        body: request.method !== 'GET' && request.method !== 'HEAD' 
+          ? request.body 
+          : undefined,
+        // @ts-ignore - duplex is experimental but needed for streams
         duplex: request.body ? "half" : undefined,
       });
 
@@ -119,14 +155,20 @@ export class RequestTransformer {
 
       return response;
     } catch (error) {
-      // Any error = potential bypass attempt → NEUTRALIZE
       console.error(
-        "[REQUEST TRANSFORMER] Critical failure → neutralizing:",
+        "[REQUEST TRANSFORMER] Critical failure:",
         error
       );
 
+      // In production, log but don't block on errors
+      if (process.env.NODE_ENV === "production") {
+        console.error("[REQUEST TRANSFORMER] Error details:", error);
+        return NextResponse.next(); // Allow request to proceed
+      }
+
+      // In development, still show the error
       const blockUrl = new URL("/security/blocked", request.url);
-      blockUrl.searchParams.set("reason", "TRANSFORMER_FAILURE_SUSPICIOUS");
+      blockUrl.searchParams.set("reason", "TRANSFORMER_FAILURE");
       blockUrl.searchParams.set("score", "98");
       blockUrl.searchParams.set("action", "NEUTRALIZE");
 
@@ -139,14 +181,15 @@ export class RequestTransformer {
   // Safe sanitization (only runs if no malicious pattern found)
   private static sanitizeSearchParams(searchParams: URLSearchParams): void {
     for (const [key, value] of searchParams.entries()) {
-      const cleanKey = value.trim().substring(0, 200);
-      const cleanValue = value.trim().substring(0, 1000);
-
-      if (cleanKey !== key || cleanValue !== value) {
-        searchParams.delete(key);
-        if (cleanKey && cleanValue) {
-          searchParams.set(cleanKey, cleanValue);
-        }
+      // Truncate extremely long values (potential DoS)
+      if (value.length > 1000) {
+        searchParams.set(key, value.substring(0, 1000));
+      }
+      
+      // Remove null bytes and control characters
+      const cleanValue = value.replace(/[\x00-\x1F\x7F]/g, '');
+      if (cleanValue !== value) {
+        searchParams.set(key, cleanValue);
       }
     }
   }
@@ -157,15 +200,20 @@ export class RequestTransformer {
       headers.set("user-agent", ua.substring(0, 500) + "...");
     }
 
-    // Remove dangerous headers
-    ["x-forwarded-for", "x-real-ip", "x-original-url"].forEach((h) => {
-      if (headers.has(h)) headers.delete(h);
-    });
+    // Only remove spoofing headers, not essential ones
+    if (headers.has("x-forwarded-for") && headers.get("x-forwarded-for")?.includes(',')) {
+      // Keep the first IP if there are multiple
+      const forwardedFor = headers.get("x-forwarded-for");
+      if (forwardedFor) {
+        const firstIp = forwardedFor.split(',')[0].trim();
+        headers.set("x-forwarded-for", firstIp);
+      }
+    }
   }
 
   private static generateRequestId(): string {
     return `req_${Date.now().toString(36)}-${Math.random()
       .toString(36)
-      .substr(2, 6)}`;
+      .substring(2, 7)}`;
   }
 }
