@@ -15,7 +15,7 @@ import {
 import { format, isPast } from "date-fns";
 import { cn } from "@/lib/utils";
 
-interface AssignmentWithDetails {
+export interface AssignmentWithDetails {
   id: string;
   title: string;
   description?: string | null;
