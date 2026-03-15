@@ -7,6 +7,7 @@ import { orchestrator } from "@/lib/middleware/orchestrator";
 // ─────────────────────────────────────────────────────────────────────────────
 export const config = {
   matcher: [
+    "/api/:path*",
     "/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.json).*)",
   ],
 };
