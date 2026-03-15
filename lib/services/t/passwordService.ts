@@ -2,7 +2,7 @@
 import { prisma } from "@/lib/server/prisma";
 import {
   protectData,
-  unprotectData, // Added missing import
+  unprotectData,
   verifyPassword,
   validatePasswordStrength,
 } from "@/lib/security/dataProtection";
@@ -11,7 +11,7 @@ import crypto from "crypto";
 // Define the type for the teacher with user
 type TeacherWithUser = {
   id: string;
-  employeeId: string; // Changed from teacherId to employeeId to match schema
+  employeeId: string;
   firstName: string;
   lastName: string;
   otherName: string | null;
@@ -281,7 +281,7 @@ export class TeacherPasswordService {
    */
   static async authenticateTeacher(email: string, password: string) {
     try {
-      // Find teacher by email
+      // Find teacher by email - FIX: Include all required fields in the select
       const teacher = await prisma.teacher.findFirst({
         where: {
           user: {
@@ -298,10 +298,12 @@ export class TeacherPasswordService {
               isActive: true,
               emailVerified: true,
               failedLoginAttempts: true,
+              lastFailedLoginAt: true, // Add this
               lastLoginAt: true,
               role: true,
               accountLocked: true,
               lockedUntil: true,
+              createdAt: true, // Add this
             },
           },
         },
@@ -311,8 +313,48 @@ export class TeacherPasswordService {
         throw new Error("Invalid email or password");
       }
 
-      // Cast to the proper type with employeeId
-      const typedTeacher = teacher as TeacherWithUser;
+      // Instead of casting, manually construct the typed object
+      const typedTeacher: TeacherWithUser = {
+        id: teacher.id,
+        employeeId: teacher.employeeId,
+        firstName: teacher.firstName,
+        lastName: teacher.lastName,
+        otherName: teacher.otherName,
+        gender: teacher.gender,
+        phone: teacher.phone,
+        email: teacher.email,
+        department: teacher.department,
+        institution: teacher.institution,
+        qualification: teacher.qualification,
+        specialization: teacher.specialization,
+        experience: teacher.experience,
+        dateJoined: teacher.dateJoined,
+        isActive: teacher.isActive,
+        passportUrl: teacher.passportUrl,
+        userId: teacher.userId,
+        emailSearchHash: teacher.emailSearchHash,
+        phoneSearchHash: teacher.phoneSearchHash,
+        employeeIdSearchHash: teacher.employeeIdSearchHash,
+        lastActivityAt: teacher.lastActivityAt,
+        createdAt: teacher.createdAt,
+        updatedAt: teacher.updatedAt,
+        deletedAt: teacher.deletedAt,
+        user: {
+          id: teacher.user.id,
+          email: teacher.user.email,
+          name: teacher.user.name,
+          passwordHash: teacher.user.passwordHash,
+          isActive: teacher.user.isActive,
+          emailVerified: teacher.user.emailVerified,
+          role: teacher.user.role,
+          accountLocked: teacher.user.accountLocked,
+          lockedUntil: teacher.user.lockedUntil,
+          failedLoginAttempts: teacher.user.failedLoginAttempts,
+          lastFailedLoginAt: teacher.user.lastFailedLoginAt,
+          lastLoginAt: teacher.user.lastLoginAt,
+          createdAt: teacher.user.createdAt,
+        },
+      };
 
       // Check if account is locked
       if (
@@ -381,7 +423,7 @@ export class TeacherPasswordService {
       // Decrypt fields for return
       const decryptedEmail = await unprotectData(typedTeacher.user.email, "email");
       const decryptedFirstName = await unprotectData(typedTeacher.firstName, "name");
-      const decryptedlastName = await unprotectData(typedTeacher.lastName, "name");
+      const decryptedLastName = await unprotectData(typedTeacher.lastName, "name");
       const decryptedOtherName = typedTeacher.otherName 
         ? await unprotectData(typedTeacher.otherName, "name") 
         : null;
@@ -397,7 +439,7 @@ export class TeacherPasswordService {
           isActive: typedTeacher.user.isActive,
           profile: {
             firstName: decryptedFirstName,
-            lastName: decryptedlastName,
+            lastName: decryptedLastName,
             otherName: decryptedOtherName,
             email: decryptedEmail,
             phone: decryptedPhone,
@@ -405,7 +447,7 @@ export class TeacherPasswordService {
             institution: typedTeacher.institution,
             qualification: typedTeacher.qualification,
             specialization: typedTeacher.specialization,
-            employeeId: typedTeacher.employeeId, // Changed from teacherId to employeeId
+            employeeId: typedTeacher.employeeId,
           },
         },
       };

@@ -46,11 +46,19 @@ export class StudentDashboardService {
         throw new Error("Student not found");
       }
 
+   
       // If studentResponse is { success, student }, extract student, else assume it's StudentProfile
       const student =
         typeof studentResponse === "object" && "student" in studentResponse
           ? (studentResponse as any).student
           : studentResponse;
+
+
+              // Create a default academic rank based on admission year or set a default
+    const academicRank = student.admissionYear 
+      ? `${new Date().getFullYear() - student.admissionYear} Year` 
+      : "Student";
+
 
       // Create student profile
       const studentProfile: StudentProfile = {
@@ -76,6 +84,8 @@ export class StudentDashboardService {
         state: student.state,
         lga: student.lga,
         isActive: student.isActive,
+        academicRank: academicRank, // Add academic rank to profile
+        dateEnrolled: student.dateEnrolled, // Add date enrolled to profile
         role: "STUDENT",
         createdAt: student.createdAt,
       };

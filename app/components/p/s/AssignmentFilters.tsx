@@ -2,7 +2,7 @@
 "use client";
 
 import { FilterIcon, Search } from "lucide-react";
-import { AssignmentWithDetails } from "./AssignmentCard.js";
+import { AssignmentWithDetails } from "./AssignmentCard";
 
 interface AssignmentFiltersProps {
   assignments: AssignmentWithDetails[];

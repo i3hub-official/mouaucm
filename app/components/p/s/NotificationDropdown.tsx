@@ -10,13 +10,13 @@ import { Notification } from "@/lib/types/s";
 interface NotificationDropdownProps {
   isOpen: boolean;
   onClose: () => void;
-  userId: string; // Add userId prop
+  userId: string; 
 }
 
 export function NotificationDropdown({
   isOpen,
   onClose,
-  userId, // Add userId prop
+  userId, 
 }: NotificationDropdownProps) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);

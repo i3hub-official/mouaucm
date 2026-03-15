@@ -18,7 +18,7 @@ export class StudentEmailService {
       return (
         process.env.NEXT_PUBLIC_BASE_URL_II || // 1st priority
         process.env.NEXT_PUBLIC_BASE_URL || // 2nd fallback
-        "https://10.16.217.13:3002" // final fallback (local dev)
+        "https://10.30.14.44:3000" // final fallback (local dev)
       );
     }
 

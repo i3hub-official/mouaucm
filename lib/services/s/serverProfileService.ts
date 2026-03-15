@@ -90,6 +90,11 @@ export class ServerProfileService {
         .join(" ")
         .trim();
 
+            // Create a default academic rank based on admission year or set a default
+    const academicRank = student.admissionYear 
+      ? `${new Date().getFullYear() - student.admissionYear} Year` 
+      : "Student";
+
       return {
         id: student.id,
         matricNumber: student.matricNumber,
@@ -109,6 +114,8 @@ export class ServerProfileService {
         state: state || "",
         lga: lga || "",
         isActive: student.isActive,
+        academicRank,
+        dateEnrolled: student.dateEnrolled,
         createdAt:
           student.user?.createdAt || student.dateEnrolled || student.createdAt,
         role: "STUDENT" as const,
