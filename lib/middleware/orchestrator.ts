@@ -13,11 +13,11 @@ import { EncryptionEnforcer } from "./encryptionEnforcer";
 import { SessionTokenValidator } from "./sessionTokenValidator";
 import { GeoGuard } from "./geoGuard";
 import { TrustedSourceManager } from "./trustedSourceManager";
-import { BehaviorAnalyst } from "./behaviorAnalyst";
-import { ComplianceMonitor } from "./complianceMonitor";
-import { RequestTransformer } from "./requestTransformer";
-import { CacheManager } from "./cacheManager";
-import { ActivityLogger } from "./activityLogger";
+// import { BehaviorAnalyst } from "./behaviorAnalyst";
+// import { ComplianceMonitor } from "./complianceMonitor";
+// import { RequestTransformer } from "./requestTransformer";
+// import { CacheManager } from "./cacheManager";
+// import { ActivityLogger } from "./activityLogger";
 
 // Utilities
 import { ResponseMerger } from "./responseMerger";
@@ -71,16 +71,16 @@ export class orchestrator {
     DEFENSE: [
       { name: "UnifiedThreatDefense", fn: Defense.defend, critical: true },
     ],
-    SECONDARY: [
-      { name: "GeoGuard", fn: GeoGuard.guard },
-      { name: "CacheManager", fn: CacheManager.manage },
-      { name: "BehaviorAnalyst", fn: BehaviorAnalyst.analyze },
-      { name: "ComplianceMonitor", fn: ComplianceMonitor.monitor },
-      { name: "RequestTransformer", fn: RequestTransformer.transform },
-    ],
-    OBSERVABILITY: [
-      { name: "ActivityLogger", fn: ActivityLogger.log, async: true },
-    ],
+    // SECONDARY: [
+    //   { name: "GeoGuard", fn: GeoGuard.guard },
+    //   { name: "CacheManager", fn: CacheManager.manage },
+    //   { name: "BehaviorAnalyst", fn: BehaviorAnalyst.analyze },
+    //   { name: "ComplianceMonitor", fn: ComplianceMonitor.monitor },
+    //   { name: "RequestTransformer", fn: RequestTransformer.transform },
+    // ],
+    // OBSERVABILITY: [
+    //   { name: "ActivityLogger", fn: ActivityLogger.log, async: true },
+    // ],
   };
 
   static async execute(request: NextRequest): Promise<NextResponse> {
@@ -206,23 +206,23 @@ export class orchestrator {
       // ──────────────────────────────
       // PHASE 4: Secondary Layer
       // ──────────────────────────────
-      response = await orchestrator.executeLayer(
-        request,
-        authContext,
-        orchestrator.LAYERS.SECONDARY,
-        results,
-        "SECONDARY",
-        response
-      );
+      // response = await orchestrator.executeLayer(
+      //   request,
+      //   authContext,
+      //   orchestrator.LAYERS.SECONDARY,
+      //   results,
+      //   "SECONDARY",
+      //   response
+      // );
 
       // ──────────────────────────────
       // PHASE 5: Async Logging (with real IP)
       // ──────────────────────────────
-      enhancedExecute(() => ActivityLogger.log(request, authContext), {
-        fallback: undefined,
-        name: "ActivityLogger",
-        context: authContext,
-      }).catch(() => {});
+      // enhancedExecute(() => ActivityLogger.log(request, authContext), {
+      //   fallback: undefined,
+      //   name: "ActivityLogger",
+      //   context: authContext,
+      // }).catch(() => {});
 
       return orchestrator.finalize(
         request,
